@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 4-Signal Dashboard — SDR Operating System</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #0E1E35;
+    --navy2:  #1B2A4A;
+    --green:  #10B981;
+    --dgreen: #059669;
+    --lgreen: #D1FAE5;
+    --tgreen: #ECFDF5;
+    --red:    #EF4444;
+    --lred:   #FEE2E2;
+    --tred:   #FFF5F5;
+    --gold:   #C9A84C;
+    --amber:  #F59E0B;
+    --slate:  #64748B;
+    --light:  #F1F5F9;
+    --border: #E2E8F0;
+    --white:  #FFFFFF;
+    --text:   #0F172A;
+    --muted:  #64748B;
+    --card:   #FFFFFF;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F8FAFC;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--navy);
+    padding: 48px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--gold);
+  }
+  .header-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    background: rgba(201,168,76,0.12);
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 5vw, 44px);
+    color: #FFFFFF;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .header h1 span { color: var(--green); }
+  .header-sub {
+    font-size: 16px;
+    color: #94A3B8;
+    max-width: 480px;
+    margin: 0 auto 24px;
+    line-height: 1.6;
+  }
+  .header-author {
+    font-size: 13px;
+    color: #64748B;
+  }
+  .header-author strong { color: var(--gold); }
+
+  /* ── MAIN ── */
+  .main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 16px 64px;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .howto {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .howto-icon {
+    width: 36px; height: 36px;
+    background: var(--tgreen);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+  .howto-text p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .howto-text p strong { color: var(--text); }
+
+  /* ── SIGNAL GRID ── */
+  .signal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 540px) {
+    .signal-grid { grid-template-columns: 1fr; }
+  }
+
+  .signal-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    position: relative;
+  }
+  .signal-card.fired {
+    border-color: var(--red);
+    background: var(--tred);
+  }
+  .signal-card.holding {
+    border-color: var(--green);
+    background: var(--tgreen);
+  }
+
+  .sig-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .fires-badge {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--muted);
+    background: var(--light);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .sig-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .sig-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .input-wrap {
+    display: flex;
+    align-items: center;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+  .input-wrap:focus-within { border-color: var(--navy); }
+  .input-wrap label {
+    font-size: 12px;
+    color: var(--muted);
+    padding: 0 12px;
+    flex: 1;
+    white-space: nowrap;
+  }
+  .input-wrap input {
+    width: 70px;
+    border: none;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--navy);
+    background: transparent;
+    text-align: right;
+    padding: 12px 4px 12px 0;
+  }
+  .input-wrap .pct-label {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 0 12px 0 2px;
+  }
+
+  /* Bar */
+  .bar-wrap {
+    height: 6px;
+    background: var(--light);
+    border-radius: 3px;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  .bar-fill {
+    height: 6px;
+    border-radius: 3px;
+    transition: width 0.3s ease, background 0.3s;
+    background: var(--border);
+  }
+  .bar-threshold {
+    position: absolute;
+    top: -4px;
+    width: 2px;
+    height: 14px;
+    background: var(--navy2);
+    border-radius: 1px;
+    opacity: 0.4;
+  }
+  .bar-threshold-label {
+    position: absolute;
+    top: 12px;
+    font-size: 9px;
+    color: var(--muted);
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  .sig-result {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: inline-block;
+    background: var(--light);
+    color: var(--muted);
+    transition: all 0.25s;
+  }
+  .sig-result.alert {
+    background: var(--lred);
+    color: #B91C1C;
+  }
+  .sig-result.safe {
+    background: var(--lgreen);
+    color: #065F46;
+  }
+
+  /* ── VERDICT ── */
+  .verdict {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+  }
+  .verdict.all-clear { border-color: var(--green); }
+  .verdict.warning   { border-color: var(--amber); }
+  .verdict.danger    { border-color: var(--red); }
+
+  .verdict-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .verdict-label { font-size: 13px; color: var(--muted); }
+  .verdict-score {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--navy);
+  }
+
+  .signal-bars { display: flex; gap: 4px; margin-bottom: 14px; }
+  .mini-bar {
+    flex: 1; height: 8px; border-radius: 4px;
+    background: var(--light);
+    transition: background 0.3s;
+  }
+  .mini-bar.fired { background: var(--red); }
+  .mini-bar.holding { background: var(--green); }
+  .mini-bar.empty { background: var(--border); }
+
+  .verdict-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .verdict-desc strong { color: var(--text); }
+
+  /* ── PRIORITY ACTION ── */
+  .priority {
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    display: none;
+  }
+  .priority.show { display: block; }
+  .priority-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .priority-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .priority-item:last-child { border-bottom: none; }
+  .priority-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .priority-dot.warn { background: var(--amber); }
+  .priority-text { font-size: 13px; color: #CBD5E1; line-height: 1.5; }
+  .priority-text strong { color: #FFFFFF; }
+
+  /* ── RESET ── */
+  .reset-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 32px;
+  }
+  .reset-btn:hover { background: var(--light); color: var(--text); }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--navy);
+    text-align: center;
+    padding: 32px 24px;
+  }
+  .footer-catchphrase {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .footer-name {
+    font-size: 13px;
+    color: #64748B;
+    margin-bottom: 20px;
+  }
+  .footer-name strong { color: #94A3B8; }
+  .footer-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .footer-link {
+    font-size: 13px;
+    color: #64748B;
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1px solid #1E3A5F;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  .footer-link:hover { border-color: var(--gold); color: var(--gold); }
+  .footer-book {
+    margin-top: 20px;
+    padding: 14px 24px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 12px;
+    font-size: 13px;
+    color: #94A3B8;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+  .footer-book strong { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-tag">THE SDR OPERATING SYSTEM · PILLAR 4</div>
+  <h1>The 4-Signal<br><span>Early Warning</span> Dashboard</h1>
+  <p class="header-sub">Enter your numbers. Find out which pillar is failing before it hits the forecast.</p>
+  <p class="header-author">Built by <strong>Wilberforce Moyo</strong> · 18 Years SDR Operations</p>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div class="howto">
+    <div class="howto-icon">→</div>
+    <div class="howto-text">
+      <p><strong>How to use this tool:</strong> Enter your current numbers for each signal. The dashboard tells you instantly which threshold has been crossed and what to do first. All four signals should be reviewed every week.</p>
+    </div>
+  </div>
+
+  <div class="signal-grid" id="signal-grid">
+
+    <!-- SIGNAL 01 -->
+    <div class="signal-card" id="card-0">
+      <div class="sig-tag">
+        <span>SIGNAL 01 · INPUT CONTROL</span>
+        <span class="fires-badge">Mon AM</span>
+      </div>
+      <div class="sig-name">Account Re-Entry Rate</div>
+      <div class="sig-desc">% of accounts entering the workflow this week that were previously removed</div>
+      <div class="input-wrap">
+        <label>Your rate this week</label>
+        <input type="number" min="0" max="100" step="1" placeholder="0" id="val-0" oninput="update(0)">
+        <span class="pct-label">%</span>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-fill" id="fill-0" style="width:0%"></div>
+        <div class="bar-threshold" style="left:15%"></div>
+        <div class="bar-threshold-label" style="left:15%">15% threshold</div>
+      </div>
+      <span class="sig-result" id="status-0">Enter a value</span>
+    </div>
+
+    <!-- SIGNAL 02 -->
+    <div class="signal-card" id="card-1">
+      <div class="sig-tag">
+        <span>SIGNAL 02 · EXECUTION</span>
+        <span class="fires-badge">Tue AM</span>
+      </div>
+      <div class="sig-name">Sequence Abandonment Rate</div>
+      <div class="sig-desc">% of active sequences dropped before step 4</div>
+      <div class="input-wrap">
+        <label>Your rate this week</label>
+        <input type="number" min="0" max="100" step="1" placeholder="0" id="val-1" oninput="update(1)">
+        <span class="pct-label">%</span>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-fill" id="fill-1" style="width:0%"></div>
+        <div class="bar-threshold" style="left:20%"></div>
+        <div class="bar-threshold-label" style="left:20%">20% threshold</div>
+      </div>
+      <span class="sig-result" id="status-1">Enter a value</span>
+    </div>
+
+    <!-- SIGNAL 03 -->
+    <div class="signal-card" id="card-2">
+      <div class="sig-tag">
+        <span>SIGNAL 03 · RHYTHM</span>
+        <span class="fires-badge">Mon AM</span>
+      </div>
+      <div class="sig-name">Pipeline Composition Score</div>
+      <div class="sig-desc">% of active accounts that cleared both input filters</div>
+      <div class="input-wrap">
+        <label>Your score this week</label>
+        <input type="number" min="0" max="100" step="1" placeholder="0" id="val-2" oninput="update(2)">
+        <span class="pct-label">%</span>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-fill" id="fill-2" style="width:0%"></div>
+        <div class="bar-threshold" style="left:70%"></div>
+        <div class="bar-threshold-label" style="left:70%">70% threshold</div>
+      </div>
+      <span class="sig-result" id="status-2">Enter a value</span>
+    </div>
+
+    <!-- SIGNAL 04 -->
+    <div class="signal-card" id="card-3">
+      <div class="sig-tag">
+        <span>SIGNAL 04 · QUALITY</span>
+        <span class="fires-badge">Fri AM</span>
+      </div>
+      <div class="sig-name">Meeting-to-Opportunity Rate</div>
+      <div class="sig-desc">% of meetings converting to opportunities (4-week rolling average)</div>
+      <div class="input-wrap">
+        <label>Your rate (4-wk avg)</label>
+        <input type="number" min="0" max="100" step="1" placeholder="0" id="val-3" oninput="update(3)">
+        <span class="pct-label">%</span>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-fill" id="fill-3" style="width:0%"></div>
+        <div class="bar-threshold" style="left:40%"></div>
+        <div class="bar-threshold-label" style="left:40%">40% threshold</div>
+      </div>
+      <span class="sig-result" id="status-3">Enter a value</span>
+    </div>
+
+  </div>
+
+  <!-- VERDICT -->
+  <div class="verdict" id="verdict">
+    <div class="verdict-top">
+      <span class="verdict-label">System health</span>
+      <span class="verdict-score" id="verdict-score">—</span>
+    </div>
+    <div class="signal-bars" id="mini-bars">
+      <div class="mini-bar empty" id="mini-0"></div>
+      <div class="mini-bar empty" id="mini-1"></div>
+      <div class="mini-bar empty" id="mini-2"></div>
+      <div class="mini-bar empty" id="mini-3"></div>
+    </div>
+    <div class="verdict-desc" id="verdict-desc">Enter your numbers above to see your system health score.</div>
+  </div>
+
+  <!-- PRIORITY ACTIONS -->
+  <div class="priority" id="priority-box">
+    <div class="priority-label">PRIORITY ACTIONS</div>
+    <div id="priority-list"></div>
+  </div>
+
+  <button class="reset-btn" onclick="resetAll()">Reset all values</button>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-catchphrase">Reducing Variance. Increasing Predictability.</div>
+  <div class="footer-name"><strong>Wilberforce Moyo</strong> · The SDR Operating System</div>
+  <div class="footer-links">
+    <a href="https://linkedin.com/in/wilberforce-moyo-236543256" class="footer-link" target="_blank">Follow on LinkedIn</a>
+  </div>
+  <div class="footer-book">
+    <strong>The SDR Operating System</strong> — a book on removing variance and installing pipeline predictability — is being written in public on LinkedIn. Follow along.
+  </div>
+</div>
+
+<script>
+const cfg = [
+  {
+    threshold: 15, direction: 'above',
+    name: 'Account Re-Entry Rate',
+    pillar: 'Input Control',
+    alertMsg: 'FIRED — Input Control failing',
+    safeMsg: 'Holding — filters are working',
+    action: '<strong>Stop sequences immediately.</strong> Audit your filter criteria. Identify which accounts are re-entering and who is adding them.',
+    barColor: '#EF4444',
+    safeColor: '#10B981'
+  },
+  {
+    threshold: 20, direction: 'above',
+    name: 'Sequence Abandonment Rate',
+    pillar: 'Execution',
+    alertMsg: 'FIRED — Execution standard breaking down',
+    safeMsg: 'Holding — reps completing sequences',
+    action: '<strong>Identify which step reps are dropping at.</strong> Audit that step — is it too complex or low-value? Fix the standard, not the rep.',
+    barColor: '#EF4444',
+    safeColor: '#10B981'
+  },
+  {
+    threshold: 70, direction: 'below',
+    name: 'Pipeline Composition Score',
+    pillar: 'Rhythm',
+    alertMsg: 'FIRED — Quality decaying upstream',
+    safeMsg: 'Healthy — composition above threshold',
+    action: '<strong>Run a full workflow audit.</strong> Remove accounts that have not cleared both input filters before sequences continue.',
+    barColor: '#EF4444',
+    safeColor: '#10B981'
+  },
+  {
+    threshold: 40, direction: 'below',
+    name: 'Meeting-to-Opportunity Rate',
+    pillar: 'Quality',
+    alertMsg: 'FIRED — Volume hiding a quality gap',
+    safeMsg: 'Healthy — conversion above threshold',
+    action: '<strong>Do not chase more meetings.</strong> Trace back to Input Control — the problem started before the meeting was booked.',
+    barColor: '#EF4444',
+    safeColor: '#10B981'
+  }
+];
+
+const vals = [null, null, null, null];
+
+function update(i) {
+  const raw = document.getElementById('val-' + i).value;
+  vals[i] = raw === '' ? null : Math.min(100, Math.max(0, parseInt(raw, 10)));
+  render(i);
+  renderVerdict();
+}
+
+function render(i) {
+  const v = vals[i];
+  const s = cfg[i];
+  const card = document.getElementById('card-' + i);
+  const fill = document.getElementById('fill-' + i);
+  const status = document.getElementById('status-' + i);
+
+  if (v === null || isNaN(v)) {
+    card.className = 'signal-card';
+    fill.style.width = '0%';
+    fill.style.background = '#E2E8F0';
+    status.className = 'sig-result';
+    status.textContent = 'Enter a value';
+    return;
+  }
+
+  const fired = s.direction === 'above' ? v > s.threshold : v < s.threshold;
+  const pct = Math.min(v, 100);
+  fill.style.width = pct + '%';
+
+  if (fired) {
+    card.className = 'signal-card fired';
+    fill.style.background = s.barColor;
+    status.className = 'sig-result alert';
+    status.textContent = s.alertMsg;
+  } else {
+    card.className = 'signal-card holding';
+    fill.style.background = s.safeColor;
+    status.className = 'sig-result safe';
+    status.textContent = s.safeMsg;
+  }
+}
+
+function renderVerdict() {
+  const entered = vals.filter(v => v !== null && !isNaN(v));
+  if (entered.length === 0) {
+    document.getElementById('verdict-score').textContent = '—';
+    document.getElementById('verdict-desc').innerHTML = 'Enter your numbers above to see your system health score.';
+    document.getElementById('priority-box').className = 'priority';
+    for (let i=0;i<4;i++) document.getElementById('mini-'+i).className='mini-bar empty';
+    return;
+  }
+
+  const firedList = [];
+  vals.forEach((v, i) => {
+    const mb = document.getElementById('mini-' + i);
+    if (v === null || isNaN(v)) { mb.className = 'mini-bar empty'; return; }
+    const s = cfg[i];
+    const fired = s.direction === 'above' ? v > s.threshold : v < s.threshold;
+    mb.className = 'mini-bar ' + (fired ? 'fired' : 'holding');
+    if (fired) firedList.push(i);
+  });
+
+  const n = entered.length;
+  const f = firedList.length;
+  const healthy = n - f;
+  document.getElementById('verdict-score').textContent = healthy + ' / ' + n + ' signals holding';
+
+  const vEl = document.getElementById('verdict');
+  const desc = document.getElementById('verdict-desc');
+
+  if (f === 0) {
+    vEl.className = 'verdict all-clear';
+    desc.innerHTML = 'All measured signals are within threshold. Your pipeline engine is running clean. Keep the weekly diagnostic cadence.';
+  } else if (f === 1) {
+    vEl.className = 'verdict warning';
+    desc.innerHTML = 'One signal fired. You have caught it early — single-pillar failures are fixable before they compound into a pipeline problem. Act this week.';
+  } else if (f === 2) {
+    vEl.className = 'verdict danger';
+    desc.innerHTML = 'Two signals fired. The system is under stress. The first failure is almost certainly feeding the second. Start at the upstream signal.';
+  } else {
+    vEl.className = 'verdict danger';
+    desc.innerHTML = '<strong>Three or more signals fired.</strong> This is a structural problem. Start at Input Control — every other pillar runs on the quality of what enters the workflow.';
+  }
+
+  const pBox = document.getElementById('priority-box');
+  const pList = document.getElementById('priority-list');
+
+  if (f > 0) {
+    pBox.className = 'priority show';
+    pList.innerHTML = firedList.map((i, rank) => `
+      <div class="priority-item">
+        <div class="priority-dot${rank > 0 ? ' warn' : ''}"></div>
+        <div class="priority-text">
+          <strong>${cfg[i].pillar} — ${cfg[i].name}</strong><br>
+          ${cfg[i].action}
+        </div>
+      </div>
+    `).join('');
+  } else {
+    pBox.className = 'priority';
+  }
+}
+
+function resetAll() {
+  for (let i=0;i<4;i++) {
+    vals[i] = null;
+    document.getElementById('val-' + i).value = '';
+    render(i);
+  }
+  renderVerdict();
+}
+</script>
+</body>
+</html>
