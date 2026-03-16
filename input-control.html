@@ -4,505 +4,338 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Input Control Filter — SDR Operating System</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:   #0E1E35;
+    --navy2:  #1B2A4A;
+    --green:  #10B981;
+    --dgreen: #059669;
+    --lgreen: #D1FAE5;
+    --tgreen: #ECFDF5;
+    --red:    #EF4444;
+    --dred:   #DC2626;
+    --lred:   #FEE2E2;
+    --tred:   #FFF5F5;
+    --amber:  #F59E0B;
+    --lamber: #FEF3C7;
+    --tamber: #FFFBEB;
+    --gold:   #C9A84C;
+    --slate:  #64748B;
+    --light:  #F1F5F9;
+    --border: #E2E8F0;
+    --white:  #FFFFFF;
+    --text:   #0F172A;
+    --muted:  #64748B;
+    --card:   #FFFFFF;
+    --bg:     #F8FAFC;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 0; }
 
-:root{
-  --bg:#F7F6F2;
-  --card:#FFFFFF;
-  --navy:#0E1E35;
-  --navy2:#1B2A4A;
-  --green:#059669;
-  --lgreen:#D1FAE5;
-  --tgreen:#ECFDF5;
-  --red:#DC2626;
-  --lred:#FEE2E2;
-  --tred:#FFF5F5;
-  --amber:#D97706;
-  --lamber:#FEF3C7;
-  --tamber:#FFFBEB;
-  --gold:#C9A84C;
-  --slate:#64748B;
-  --border:#E2E8F0;
-  --text:#0F172A;
-  --muted:#64748B;
-}
+  /* NAV */
+  .nav { background: #060F1C; padding: 10px 16px; text-align: center; font-size: 12px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; }
+  .nav span { color: #475569; font-weight: 600; letter-spacing: 0.06em; }
+  .nav a { color: #94A3B8; text-decoration: none; transition: color 0.2s; }
+  .nav a:hover { color: var(--gold); }
+  .nav a.active { color: var(--gold); }
 
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  /* HEADER */
+  .header { background: var(--navy); padding: 48px 24px 40px; text-align: center; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gold); }
+  .header-tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: var(--gold); background: rgba(201,168,76,0.12); padding: 6px 14px; border-radius: 20px; margin-bottom: 20px; }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 5vw, 44px); color: #fff; line-height: 1.15; margin-bottom: 12px; }
+  .header h1 span { color: var(--green); }
+  .header-sub { font-size: 16px; color: #94A3B8; max-width: 480px; margin: 0 auto 24px; line-height: 1.6; }
+  .header-author { font-size: 13px; color: #64748B; }
+  .header-author strong { color: var(--gold); }
 
-/* ── HEADER ── */
-.hdr{background:var(--navy);padding:52px 24px 44px;position:relative;overflow:hidden}
-.hdr::after{content:'';position:absolute;right:-60px;top:-60px;width:280px;height:280px;border:40px solid rgba(255,255,255,0.03);border-radius:50%}
-.hdr::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),transparent)}
-.hdr-inner{max-width:680px;margin:0 auto;position:relative}
-.hdr-pill{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--gold);background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);padding:5px 12px;border-radius:20px;margin-bottom:20px}
-.hdr-pill span{width:6px;height:6px;background:var(--gold);border-radius:50%;display:inline-block}
-h1{font-family:'Syne',sans-serif;font-size:clamp(26px,4.5vw,40px);font-weight:800;color:#fff;line-height:1.1;margin-bottom:10px}
-h1 em{color:var(--gold);font-style:normal}
-.hdr-sub{font-size:15px;color:#94A3B8;line-height:1.6;max-width:460px}
+  /* MAIN */
+  .main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
 
-/* ── LAYOUT ── */
-.wrap{max-width:680px;margin:0 auto;padding:32px 16px 80px}
+  /* ACCOUNT INPUT */
+  .account-bar { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 28px; display: flex; align-items: center; gap: 12px; }
+  .account-bar label { font-size: 13px; color: var(--muted); white-space: nowrap; }
+  .account-bar input { flex: 1; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600; color: var(--navy); background: transparent; min-width: 0; }
+  .account-bar input::placeholder { color: var(--border); font-weight: 400; }
 
-/* ── SECTION LABEL ── */
-.sec-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;color:var(--muted);margin-bottom:12px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
-.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
+  /* SECTION LABEL */
+  .sec-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-/* ── FILTER CARDS ── */
-.filter-block{background:var(--card);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:20px;transition:border-color 0.3s}
-.filter-block.pass{border-color:var(--green)}
-.filter-block.fail{border-color:var(--red)}
-.filter-block.partial{border-color:var(--amber)}
+  /* FILTER CARD */
+  .filter-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 16px; transition: border-color 0.3s; }
+  .filter-card.pass { border-left: 4px solid var(--green); }
+  .filter-card.fail { border-left: 4px solid var(--red); }
+  .filter-card.weak { border-left: 4px solid var(--amber); }
 
-.filter-hdr{padding:18px 22px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px}
-.filter-num{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--border);transition:color 0.3s;line-height:1}
-.filter-block.pass .filter-num{color:var(--green)}
-.filter-block.fail .filter-num{color:var(--red)}
-.filter-block.partial .filter-num{color:var(--amber)}
-.filter-title-wrap{}
-.filter-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:2px}
-.filter-desc{font-size:12px;color:var(--muted)}
+  .filter-header { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 14px; }
+  .filter-num { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--border); transition: color 0.3s; line-height: 1; width: 36px; flex-shrink: 0; }
+  .filter-card.pass .filter-num { color: var(--green); }
+  .filter-card.fail .filter-num { color: var(--red); }
+  .filter-card.weak .filter-num { color: var(--amber); }
+  .filter-name { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+  .filter-desc { font-size: 13px; color: var(--muted); }
 
-.filter-body{padding:20px 22px}
-.signal-group{margin-bottom:20px}
-.signal-group:last-child{margin-bottom:0}
-.signal-group-title{font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
+  .filter-body { padding: 16px 20px; }
+  .group-title { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; margin-top: 16px; }
+  .group-title:first-child { margin-top: 0; }
 
-.signal-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
-.signal-item:last-child{border-bottom:none;padding-bottom:0}
-.signal-check{width:20px;height:20px;border:2px solid var(--border);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all 0.2s;background:#fff}
-.signal-check.checked{background:var(--green);border-color:var(--green)}
-.signal-check.checked::after{content:'';width:5px;height:9px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px);display:block}
-.signal-label{flex:1}
-.signal-text{font-size:14px;color:var(--text);line-height:1.4;cursor:pointer}
-.signal-text.checked-text{color:var(--muted);text-decoration:line-through}
-.signal-weight{font-size:11px;font-weight:600;padding:2px 7px;border-radius:6px;background:var(--bg);color:var(--muted);white-space:nowrap;margin-left:auto;flex-shrink:0}
+  .signal-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .signal-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .sig-check { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; transition: all 0.2s; background: #fff; }
+  .sig-check.on { background: var(--green); border-color: var(--green); }
+  .sig-check.on::after { content: ''; width: 5px; height: 9px; border: 2px solid #fff; border-top: none; border-left: none; transform: rotate(45deg) translate(-1px,-1px); display: block; }
+  .sig-text { flex: 1; font-size: 14px; color: var(--text); line-height: 1.4; cursor: pointer; }
+  .sig-text.done { color: var(--muted); text-decoration: line-through; }
+  .sig-badge { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 6px; background: var(--light); color: var(--muted); flex-shrink: 0; white-space: nowrap; }
 
-/* ── FILTER RESULT STRIP ── */
-.filter-result{padding:12px 22px;background:var(--bg);display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border)}
-.filter-score{font-family:'Syne',sans-serif;font-size:14px;font-weight:700}
-.filter-badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:8px}
-.badge-pass{background:var(--lgreen);color:#065F46}
-.badge-fail{background:var(--lred);color:#991B1B}
-.badge-partial{background:var(--lamber);color:#92400E}
-.badge-na{background:var(--border);color:var(--muted)}
+  /* PROGRESS */
+  .progress-row { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .progress-row label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .progress-bar { flex: 1; height: 5px; background: var(--light); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 5px; border-radius: 3px; transition: width 0.4s, background 0.3s; background: var(--border); }
+  .progress-val { font-size: 12px; font-weight: 600; color: var(--muted); width: 32px; text-align: right; }
 
-/* ── VERDICT ── */
-.verdict-card{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:24px;margin-bottom:20px;transition:border-color 0.3s}
-.verdict-card.pass{border-color:var(--green)}
-.verdict-card.fail{border-color:var(--red)}
-.verdict-card.partial{border-color:var(--amber)}
+  /* FILTER RESULT */
+  .filter-result { padding: 12px 20px; background: var(--bg); display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); }
+  .result-text { font-size: 13px; color: var(--muted); }
+  .result-badge { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 8px; }
+  .badge-pass { background: var(--lgreen); color: #065F46; }
+  .badge-fail { background: var(--lred); color: #991B1B; }
+  .badge-weak { background: var(--lamber); color: #92400E; }
+  .badge-na { background: var(--light); color: var(--muted); }
 
-.verdict-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px}
-.verdict-headline{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--navy);line-height:1.2}
-.verdict-score-ring{width:64px;height:64px;flex-shrink:0;position:relative}
-.verdict-score-ring svg{transform:rotate(-90deg)}
-.verdict-score-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--navy)}
+  /* VERDICT */
+  .verdict { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 20px; transition: border-color 0.3s; }
+  .verdict.pass { border-left: 4px solid var(--green); }
+  .verdict.fail { border-left: 4px solid var(--red); }
+  .verdict.weak { border-left: 4px solid var(--amber); }
 
-.verdict-filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.vf-pill{font-size:12px;font-weight:600;padding:5px 12px;border-radius:10px;display:flex;align-items:center;gap:6px}
-.vf-pill.pass{background:var(--tgreen);color:var(--green)}
-.vf-pill.fail{background:var(--tred);color:var(--red)}
-.vf-pill.partial{background:var(--tamber);color:var(--amber)}
-.vf-pill.na{background:var(--bg);color:var(--muted)}
-.vf-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+  .verdict-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
+  .verdict-headline { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--navy); line-height: 1.2; }
+  .verdict-ring { width: 64px; height: 64px; flex-shrink: 0; position: relative; }
+  .verdict-ring svg { transform: rotate(-90deg); }
+  .verdict-num { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: var(--navy); }
 
-.verdict-desc{font-size:14px;color:var(--muted);line-height:1.7;padding-top:14px;border-top:1px solid var(--border)}
-.verdict-desc strong{color:var(--text)}
+  .verdict-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .vpill { font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 8px; display: flex; align-items: center; gap: 5px; }
+  .vpill-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .vpill.pass { background: var(--tgreen); color: var(--dgreen); }
+  .vpill.fail { background: var(--tred); color: var(--dred); }
+  .vpill.weak { background: var(--tamber); color: #92400E; }
+  .vpill.na { background: var(--light); color: var(--muted); }
 
-/* ── ACCOUNT NAME ── */
-.account-input-wrap{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:12px}
-.account-input-wrap label{font-size:13px;color:var(--muted);white-space:nowrap}
-.account-input-wrap input{flex:1;border:none;outline:none;font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--navy);background:transparent;min-width:0}
-.account-input-wrap input::placeholder{color:var(--border);font-weight:400;font-family:'DM Sans',sans-serif}
+  .verdict-desc { font-size: 14px; color: var(--muted); line-height: 1.7; padding-top: 14px; border-top: 1px solid var(--border); }
+  .verdict-desc strong { color: var(--text); }
 
-/* ── RESET + ACTIONS ── */
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
-.btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:12px;border-radius:12px;cursor:pointer;text-align:center;transition:all 0.2s;border:1.5px solid var(--border);background:transparent;color:var(--muted)}
-.btn:hover{background:var(--bg);color:var(--text)}
-.btn-primary{background:var(--navy);border-color:var(--navy);color:#fff}
-.btn-primary:hover{background:var(--navy2)}
+  /* ACTIONS */
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+  .btn { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 12px; border-radius: 10px; cursor: pointer; text-align: center; transition: all 0.2s; border: 1px solid var(--border); background: transparent; color: var(--muted); }
+  .btn:hover { background: var(--light); color: var(--text); }
+  .btn-primary { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .btn-primary:hover { background: var(--navy2); }
 
-/* ── CTA ── */
-.cta-card{background:var(--navy);border-radius:20px;padding:28px 24px;text-align:center;margin-bottom:40px}
-.cta-tag{font-size:10px;font-weight:700;letter-spacing:0.1em;color:var(--gold);margin-bottom:12px}
-.cta-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.3}
-.cta-desc{font-size:13px;color:#94A3B8;line-height:1.6;margin-bottom:20px}
-.cta-btn{display:inline-block;background:var(--gold);color:var(--navy);font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:12px 24px;border-radius:10px;text-decoration:none;transition:opacity 0.2s}
-.cta-btn:hover{opacity:0.9}
+  /* CTA */
+  .cta { background: var(--navy); border-radius: 16px; padding: 28px 24px; text-align: center; margin-bottom: 40px; }
+  .cta-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 12px; }
+  .cta-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: #fff; margin-bottom: 8px; line-height: 1.3; }
+  .cta-desc { font-size: 14px; color: #94A3B8; line-height: 1.6; margin-bottom: 20px; max-width: 440px; margin-left: auto; margin-right: auto; }
+  .cta-btn { display: inline-block; background: var(--gold); color: var(--navy); font-size: 14px; font-weight: 600; padding: 13px 26px; border-radius: 10px; text-decoration: none; transition: opacity 0.2s; }
+  .cta-btn:hover { opacity: 0.9; }
 
-/* ── FOOTER ── */
-.footer{background:var(--navy);text-align:center;padding:28px 24px}
-.footer-name{font-family:'Syne',sans-serif;font-size:13px;color:var(--gold);margin-bottom:4px}
-.footer-tag{font-size:12px;color:#475569}
-
-/* ── PROGRESS BAR ── */
-.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.prog-label{font-size:12px;color:var(--muted);width:70px;flex-shrink:0;text-align:right}
-.prog-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
-.prog-fill{height:5px;border-radius:3px;transition:width 0.4s ease,background 0.3s}
-.prog-val{font-size:12px;font-weight:600;width:32px;text-align:right;color:var(--text)}
+  /* FOOTER */
+  .footer { background: var(--navy); text-align: center; padding: 28px 24px; }
+  .footer-catchphrase { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--gold); margin-bottom: 6px; }
+  .footer-name { font-size: 13px; color: #475569; }
+  .footer-name strong { color: #94A3B8; }
 </style>
 </head>
 <body>
 
-<div class="hdr">
-  <div class="hdr-inner">
-    <div class="hdr-pill"><span></span> PILLAR 1 · SDR OPERATING SYSTEM</div>
-    <h1>Input Control<br><em>Filter Tool</em></h1>
-    <p class="hdr-sub">Check every account against both filters before it enters a sequence. If it fails either filter — it does not enter.</p>
-  </div>
+<div class="nav">
+  <span>SDR OS TOOLS:</span>
+  <a href="https://wiljay2209.github.io/sdr-tools/">Signal Dashboard</a>
+  <a href="https://wiljay2209.github.io/sdr-tools/input-control.html" class="active">Input Control</a>
+  <a href="https://wiljay2209.github.io/sdr-tools/execution-scorecard.html">Execution Scorecard</a>
+  <a href="https://wiljay2209.github.io/sdr-tools/rhythm-planner.html">Rhythm Planner</a>
+  <a href="https://wiljay2209.github.io/sdr-tools/audit.html">Full Audit</a>
 </div>
 
-<div class="wrap">
+<div class="header">
+  <div class="header-tag">PILLAR 1 · SDR OPERATING SYSTEM</div>
+  <h1>Input Control<br><span>Filter Tool</span></h1>
+  <p class="header-sub">Score every account against both filters before it enters a sequence. Fail either filter — the account does not enter.</p>
+  <p class="header-author">Built by <strong>Wilberforce Moyo</strong> · 18 Years SDR Operations</p>
+</div>
 
-  <div class="account-input-wrap">
+<div class="main">
+
+  <div class="account-bar">
     <label>Account name</label>
-    <input type="text" id="account-name" placeholder="e.g. Acme Corp" oninput="updateVerdict()">
+    <input type="text" id="acct" placeholder="e.g. Acme Corp" oninput="updateVerdict()">
   </div>
 
-  <!-- ── FILTER 1 ── -->
+  <!-- FILTER 1 -->
   <div class="sec-label">Filter 1 — Problem Likelihood</div>
-  <div class="filter-block" id="block-0">
-    <div class="filter-hdr">
-      <div class="filter-num">01</div>
-      <div class="filter-title-wrap">
+  <div class="filter-card" id="fc-0">
+    <div class="filter-header">
+      <div class="filter-num" id="fn-0">01</div>
+      <div>
         <div class="filter-name">Problem Likelihood</div>
         <div class="filter-desc">Verifiable evidence the problem is active right now</div>
       </div>
     </div>
     <div class="filter-body">
-      <div class="signal-group">
-        <div class="signal-group-title">Strong signals (check all that apply)</div>
-        <div class="signal-item">
-          <div class="signal-check" id="chk-0-0" onclick="toggle(0,0)"></div>
-          <div class="signal-label">
-            <div class="signal-text" id="lbl-0-0" onclick="toggle(0,0)">Active hiring for roles that signal the problem exists (e.g. SDR Manager, RevOps, Head of Sales)</div>
-          </div>
-          <span class="signal-weight">Strong</span>
-        </div>
-        <div class="signal-item">
-          <div class="signal-check" id="chk-0-1" onclick="toggle(0,1)"></div>
-          <div class="signal-label">
-            <div class="signal-text" id="lbl-0-1" onclick="toggle(0,1)">Recent leadership change in Sales, Revenue, or Marketing</div>
-          </div>
-          <span class="signal-weight">Strong</span>
-        </div>
-        <div class="signal-item">
-          <div class="signal-check" id="chk-0-2" onclick="toggle(0,2)"></div>
-          <div class="signal-label">
-            <div class="signal-text" id="lbl-0-2" onclick="toggle(0,2)">Company has publicly stated pipeline predictability or outbound as a growth initiative</div>
-          </div>
-          <span class="signal-weight">Strong</span>
-        </div>
-        <div class="signal-item">
-          <div class="signal-check" id="chk-0-3" onclick="toggle(0,3)"></div>
-          <div class="signal-label">
-            <div class="signal-text" id="lbl-0-3" onclick="toggle(0,3)">Funding event in last 12 months with stated GTM or revenue scale objective</div>
-          </div>
-          <span class="signal-weight">Strong</span>
-        </div>
-      </div>
-      <div class="signal-group">
-        <div class="signal-group-title">Supporting signals</div>
-        <div class="signal-item">
-          <div class="signal-check" id="chk-0-4" onclick="toggle(0,4)"></div>
-          <div class="signal-label">
-            <div class="signal-text" id="lbl-0-4" onclick="toggle(0,4)">Company is in a growth phase (headcount increasing, new markets, new product lines)</div>
-          </div>
-          <span class="signal-weight">Support</span>
-        </div>
-        <div class="signal-item">
-          <div class="signal-check" id="chk-0-5" onclick="toggle(0,5)"></div>
-          <div class="signal-label">
-            <div class="signal-text" id="lbl-0-5" onclick="toggle(0,5)">Decision-maker has posted or commented on pipeline, outbound, or SDR challenges</div>
-          </div>
-          <span class="signal-weight">Support</span>
-        </div>
-        <div class="signal-item">
-          <div class="signal-check" id="chk-0-6" onclick="toggle(0,6)"></div>
-          <div class="signal-label">
-            <div class="signal-text" id="lbl-0-6" onclick="toggle(0,6)">Similar company in same vertical recently worked with you or publicly solved this problem</div>
-          </div>
-          <span class="signal-weight">Support</span>
-        </div>
-      </div>
-      <div class="prog-row" style="margin-top:16px">
-        <span class="prog-label">Filter 1</span>
-        <div class="prog-bar"><div class="prog-fill" id="prog-0" style="width:0%;background:var(--border)"></div></div>
-        <span class="prog-val" id="prog-val-0">0/7</span>
+      <div class="group-title">Strong signals</div>
+      <div class="signal-row"><div class="sig-check" id="c0-0" onclick="toggle(0,0)"></div><div class="sig-text" id="t0-0" onclick="toggle(0,0)">Active hiring for roles that signal the problem exists (SDR Manager, RevOps, Head of Sales)</div><span class="sig-badge">Strong</span></div>
+      <div class="signal-row"><div class="sig-check" id="c0-1" onclick="toggle(0,1)"></div><div class="sig-text" id="t0-1" onclick="toggle(0,1)">Recent leadership change in Sales, Revenue, or Marketing</div><span class="sig-badge">Strong</span></div>
+      <div class="signal-row"><div class="sig-check" id="c0-2" onclick="toggle(0,2)"></div><div class="sig-text" id="t0-2" onclick="toggle(0,2)">Company has publicly stated pipeline predictability as a growth initiative</div><span class="sig-badge">Strong</span></div>
+      <div class="signal-row"><div class="sig-check" id="c0-3" onclick="toggle(0,3)"></div><div class="sig-text" id="t0-3" onclick="toggle(0,3)">Funding event in last 12 months with stated GTM or revenue scale objective</div><span class="sig-badge">Strong</span></div>
+      <div class="group-title">Supporting signals</div>
+      <div class="signal-row"><div class="sig-check" id="c0-4" onclick="toggle(0,4)"></div><div class="sig-text" id="t0-4" onclick="toggle(0,4)">Company is in a growth phase — headcount increasing, new markets or product lines</div><span class="sig-badge">Support</span></div>
+      <div class="signal-row"><div class="sig-check" id="c0-5" onclick="toggle(0,5)"></div><div class="sig-text" id="t0-5" onclick="toggle(0,5)">Decision-maker has posted or commented on pipeline, outbound, or SDR challenges</div><span class="sig-badge">Support</span></div>
+      <div class="signal-row"><div class="sig-check" id="c0-6" onclick="toggle(0,6)"></div><div class="sig-text" id="t0-6" onclick="toggle(0,6)">Similar company in same vertical recently solved this problem publicly</div><span class="sig-badge">Support</span></div>
+      <div class="progress-row">
+        <label>Filter 1 score</label>
+        <div class="progress-bar"><div class="progress-fill" id="pf-0"></div></div>
+        <span class="progress-val" id="pv-0">0/7</span>
       </div>
     </div>
     <div class="filter-result">
-      <span class="filter-score" id="fscore-0">0 of 7 signals</span>
-      <span class="filter-badge badge-na" id="fbadge-0">Not evaluated</span>
+      <span class="result-text" id="rt-0">0 of 7 signals checked</span>
+      <span class="result-badge badge-na" id="rb-0">Not evaluated</span>
     </div>
   </div>
 
-  <!-- ── FILTER 2 ── -->
+  <!-- FILTER 2 -->
   <div class="sec-label">Filter 2 — Role Accessibility</div>
-  <div class="filter-block" id="block-1">
-    <div class="filter-hdr">
-      <div class="filter-num">02</div>
-      <div class="filter-title-wrap">
+  <div class="filter-card" id="fc-1">
+    <div class="filter-header">
+      <div class="filter-num" id="fn-1">02</div>
+      <div>
         <div class="filter-name">Role Accessibility</div>
         <div class="filter-desc">The right person is genuinely reachable — not just findable</div>
       </div>
     </div>
     <div class="filter-body">
-      <div class="signal-group">
-        <div class="signal-group-title">Reachability signals</div>
-        <div class="signal-item">
-          <div class="signal-check" id="chk-1-0" onclick="toggle(1,0)"></div>
-          <div class="signal-label">
-            <div class="signal-text" id="lbl-1-0" onclick="toggle(1,0)">Decision-maker is identifiable by name and title (VP Sales, CRO, Head of SDR, SDR Manager)</div>
-          </div>
-          <span class="signal-weight">Required</span>
-        </div>
-        <div class="signal-item">
-          <div class="signal-check" id="chk-1-1" onclick="toggle(1,1)"></div>
-          <div class="signal-label">
-            <div class="signal-text" id="lbl-1-1" onclick="toggle(1,1)">Decision-maker is active on LinkedIn (posts, comments, or engaged in last 90 days)</div>
-          </div>
-          <span class="signal-weight">Strong</span>
-        </div>
-        <div class="signal-item">
-          <div class="signal-check" id="chk-1-2" onclick="toggle(1,2)"></div>
-          <div class="signal-label">
-            <div class="signal-text" id="lbl-1-2" onclick="toggle(1,2)">Verified email address or direct contact method available</div>
-          </div>
-          <span class="signal-weight">Strong</span>
-        </div>
-        <div class="signal-item">
-          <div class="signal-check" id="chk-1-3" onclick="toggle(1,3)"></div>
-          <div class="signal-label">
-            <div class="signal-text" id="lbl-1-3" onclick="toggle(1,3)">No DNC flag, previous bounce, or unsubscribe on record</div>
-          </div>
-          <span class="signal-weight">Required</span>
-        </div>
-      </div>
-      <div class="signal-group">
-        <div class="signal-group-title">Quality signals</div>
-        <div class="signal-item">
-          <div class="signal-check" id="chk-1-4" onclick="toggle(1,4)"></div>
-          <div class="signal-label">
-            <div class="signal-text" id="lbl-1-4" onclick="toggle(1,4)">Decision-maker has not been contacted in the last 60 days by your team</div>
-          </div>
-          <span class="signal-weight">Support</span>
-        </div>
-        <div class="signal-item">
-          <div class="signal-check" id="chk-1-5" onclick="toggle(1,5)"></div>
-          <div class="signal-label">
-            <div class="signal-text" id="lbl-1-5" onclick="toggle(1,5)">Personalisation hook is available — a specific reason to reach out tied to a recent event</div>
-          </div>
-          <span class="signal-weight">Support</span>
-        </div>
-      </div>
-      <div class="prog-row" style="margin-top:16px">
-        <span class="prog-label">Filter 2</span>
-        <div class="prog-bar"><div class="prog-fill" id="prog-1" style="width:0%;background:var(--border)"></div></div>
-        <span class="prog-val" id="prog-val-1">0/6</span>
+      <div class="group-title">Required signals</div>
+      <div class="signal-row"><div class="sig-check" id="c1-0" onclick="toggle(1,0)"></div><div class="sig-text" id="t1-0" onclick="toggle(1,0)">Decision-maker is identifiable by name and title (VP Sales, CRO, Head of SDR, SDR Manager)</div><span class="sig-badge">Required</span></div>
+      <div class="signal-row"><div class="sig-check" id="c1-1" onclick="toggle(1,1)"></div><div class="sig-text" id="t1-1" onclick="toggle(1,1)">No DNC flag, previous bounce, or unsubscribe on record</div><span class="sig-badge">Required</span></div>
+      <div class="group-title">Strong signals</div>
+      <div class="signal-row"><div class="sig-check" id="c1-2" onclick="toggle(1,2)"></div><div class="sig-text" id="t1-2" onclick="toggle(1,2)">Decision-maker is active on LinkedIn in the last 90 days</div><span class="sig-badge">Strong</span></div>
+      <div class="signal-row"><div class="sig-check" id="c1-3" onclick="toggle(1,3)"></div><div class="sig-text" id="t1-3" onclick="toggle(1,3)">Verified email address or direct contact method available</div><span class="sig-badge">Strong</span></div>
+      <div class="group-title">Supporting signals</div>
+      <div class="signal-row"><div class="sig-check" id="c1-4" onclick="toggle(1,4)"></div><div class="sig-text" id="t1-4" onclick="toggle(1,4)">Decision-maker has not been contacted by your team in the last 60 days</div><span class="sig-badge">Support</span></div>
+      <div class="signal-row"><div class="sig-check" id="c1-5" onclick="toggle(1,5)"></div><div class="sig-text" id="t1-5" onclick="toggle(1,5)">Personalisation hook available — a specific recent event to anchor outreach to</div><span class="sig-badge">Support</span></div>
+      <div class="progress-row">
+        <label>Filter 2 score</label>
+        <div class="progress-bar"><div class="progress-fill" id="pf-1"></div></div>
+        <span class="progress-val" id="pv-1">0/6</span>
       </div>
     </div>
     <div class="filter-result">
-      <span class="filter-score" id="fscore-1">0 of 6 signals</span>
-      <span class="filter-badge badge-na" id="fbadge-1">Not evaluated</span>
+      <span class="result-text" id="rt-1">0 of 6 signals checked</span>
+      <span class="result-badge badge-na" id="rb-1">Not evaluated</span>
     </div>
   </div>
 
-  <!-- ── VERDICT ── -->
+  <!-- VERDICT -->
   <div class="sec-label">Verdict</div>
-  <div class="verdict-card" id="verdict-card">
+  <div class="verdict" id="verdict">
     <div class="verdict-top">
-      <div>
-        <div class="verdict-headline" id="verdict-headline">Evaluate both filters</div>
-      </div>
-      <div class="verdict-score-ring">
+      <div class="verdict-headline" id="v-headline">Evaluate both filters</div>
+      <div class="verdict-ring">
         <svg width="64" height="64" viewBox="0 0 64 64">
           <circle cx="32" cy="32" r="26" fill="none" stroke="#E2E8F0" stroke-width="6"/>
-          <circle cx="32" cy="32" r="26" fill="none" stroke="#E2E8F0" stroke-width="6" stroke-dasharray="163" stroke-dashoffset="163" id="ring-fill" stroke-linecap="round" style="transition:stroke-dashoffset 0.5s ease,stroke 0.3s"/>
+          <circle cx="32" cy="32" r="26" fill="none" stroke="#E2E8F0" stroke-width="6" stroke-dasharray="163" stroke-dashoffset="163" id="ring" stroke-linecap="round" style="transition:stroke-dashoffset 0.5s,stroke 0.3s"/>
         </svg>
-        <div class="verdict-score-num" id="ring-num">—</div>
+        <div class="verdict-num" id="v-pct">—</div>
       </div>
     </div>
-    <div class="verdict-filters" id="verdict-filters">
-      <span class="vf-pill na"><span class="vf-dot"></span>Filter 1: pending</span>
-      <span class="vf-pill na"><span class="vf-dot"></span>Filter 2: pending</span>
+    <div class="verdict-pills" id="v-pills">
+      <span class="vpill na"><span class="vpill-dot"></span>Filter 1: pending</span>
+      <span class="vpill na"><span class="vpill-dot"></span>Filter 2: pending</span>
     </div>
-    <div class="verdict-desc" id="verdict-desc">Check all signals that apply for this account. Both filters must pass for the account to enter the workflow.</div>
+    <div class="verdict-desc" id="v-desc">Check all signals that apply. <strong>Both filters must pass</strong> for the account to enter the workflow.</div>
   </div>
 
-  <!-- ACTIONS -->
   <div class="actions">
     <button class="btn" onclick="resetAll()">Reset account</button>
-    <button class="btn btn-primary" onclick="window.open('https://wilberforcemoyo.tiiny.site/','_blank')">Run signal dashboard</button>
+    <button class="btn btn-primary" onclick="window.open('https://wiljay2209.github.io/sdr-tools/','_blank')">Signal dashboard</button>
   </div>
 
-  <!-- CTA -->
-  <div class="cta-card">
-    <div class="cta-tag">THE SDR OPERATING SYSTEM · PAID AUDIT</div>
-    <div class="cta-title">Is your Input Control filter holding across the whole team?</div>
-    <div class="cta-desc">The SDR Operations Audit diagnoses all four pillars — not just the account level, but the system level. Find out exactly which pillar is causing pipeline unpredictability.</div>
+  <div class="cta">
+    <div class="cta-tag">SDR OPERATIONS AUDIT · $4,500 – $12,000</div>
+    <div class="cta-title">Is Input Control holding across your whole team?</div>
+    <div class="cta-desc">The SDR Operations Audit diagnoses all four pillars at the system level — not just one account. Find out exactly which pillar is causing pipeline unpredictability.</div>
     <a href="https://linkedin.com/in/wilberforce-moyo-236543256" target="_blank" class="cta-btn">Work with Wilberforce →</a>
   </div>
 
 </div>
 
 <div class="footer">
-  <div class="footer-name">Wilberforce Moyo</div>
-  <div class="footer-tag">The SDR Operating System · Reducing Variance. Increasing Predictability.</div>
+  <div class="footer-catchphrase">Reducing Variance. Increasing Predictability.</div>
+  <div class="footer-name"><strong>Wilberforce Moyo</strong> · The SDR Operating System</div>
 </div>
 
 <script>
-const filters = [
-  { total:7, required:[0,3] },
-  { total:6, required:[0,3] }
-];
+const filters = [{total:7,req:[0,3]},{total:6,req:[0,1]}];
 const state = [[false,false,false,false,false,false,false],[false,false,false,false,false,false]];
 
 function toggle(f,s){
-  state[f][s] = !state[f][s];
-  const chk = document.getElementById('chk-'+f+'-'+s);
-  const lbl = document.getElementById('lbl-'+f+'-'+s);
-  chk.className = 'signal-check' + (state[f][s] ? ' checked' : '');
-  lbl.className = 'signal-text' + (state[f][s] ? ' checked-text' : '');
-  updateFilter(f);
-  updateVerdict();
+  state[f][s]=!state[f][s];
+  document.getElementById('c'+f+'-'+s).className='sig-check'+(state[f][s]?' on':'');
+  document.getElementById('t'+f+'-'+s).className='sig-text'+(state[f][s]?' done':'');
+  updateFilter(f); updateVerdict();
 }
 
 function updateFilter(f){
-  const checked = state[f].filter(Boolean).length;
-  const total = filters[f].total;
-  const pct = Math.round((checked/total)*100);
-  const reqsMet = filters[f].required.every(i => state[f][i]);
-
-  document.getElementById('prog-'+f).style.width = pct+'%';
-  document.getElementById('prog-val-'+f).textContent = checked+'/'+total;
-  document.getElementById('fscore-'+f).textContent = checked+' of '+total+' signals';
-
-  const prog = document.getElementById('prog-'+f);
-  const block = document.getElementById('block-'+f);
-  const badge = document.getElementById('fbadge-'+f);
-
-  if(checked === 0){
-    block.className='filter-block';
-    prog.style.background='var(--border)';
-    badge.className='filter-badge badge-na';
-    badge.textContent='Not evaluated';
-    return;
-  }
-
-  if(!reqsMet){
-    block.className='filter-block fail';
-    prog.style.background='var(--red)';
-    badge.className='filter-badge badge-fail';
-    badge.textContent='FAIL — Required signal missing';
-    return;
-  }
-
-  if(pct >= 60){
-    block.className='filter-block pass';
-    prog.style.background='var(--green)';
-    badge.className='filter-badge badge-pass';
-    badge.textContent='PASS';
-  } else {
-    block.className='filter-block partial';
-    prog.style.background='var(--amber)';
-    badge.className='filter-badge badge-partial';
-    badge.textContent='WEAK — Low signal confidence';
-  }
+  const n=state[f].filter(Boolean).length, tot=filters[f].total;
+  const pct=Math.round(n/tot*100);
+  const req=filters[f].req.every(i=>state[f][i]);
+  document.getElementById('pf-'+f).style.width=pct+'%';
+  document.getElementById('pv-'+f).textContent=n+'/'+tot;
+  document.getElementById('rt-'+f).textContent=n+' of '+tot+' signals checked';
+  const fc=document.getElementById('fc-'+f), rb=document.getElementById('rb-'+f);
+  if(n===0){fc.className='filter-card';document.getElementById('pf-'+f).style.background='var(--border)';rb.className='result-badge badge-na';rb.textContent='Not evaluated';return;}
+  if(!req){fc.className='filter-card fail';document.getElementById('pf-'+f).style.background='var(--red)';rb.className='result-badge badge-fail';rb.textContent='FAIL — Required signal missing';return;}
+  if(pct>=60){fc.className='filter-card pass';document.getElementById('pf-'+f).style.background='var(--green)';rb.className='result-badge badge-pass';rb.textContent='PASS';}
+  else{fc.className='filter-card weak';document.getElementById('pf-'+f).style.background='var(--amber)';rb.className='result-badge badge-weak';rb.textContent='WEAK — Low confidence';}
 }
 
-function getFilterStatus(f){
-  const checked = state[f].filter(Boolean).length;
-  if(checked === 0) return 'na';
-  const reqsMet = filters[f].required.every(i => state[f][i]);
-  if(!reqsMet) return 'fail';
-  const pct = (checked/filters[f].total)*100;
-  return pct >= 60 ? 'pass' : 'partial';
+function getStatus(f){
+  const n=state[f].filter(Boolean).length;
+  if(n===0)return'na';
+  if(!filters[f].req.every(i=>state[f][i]))return'fail';
+  return(n/filters[f].total)>=0.6?'pass':'weak';
 }
 
 function updateVerdict(){
-  const acct = document.getElementById('account-name').value.trim();
-  const s0 = getFilterStatus(0);
-  const s1 = getFilterStatus(1);
-  const card = document.getElementById('verdict-card');
-  const headline = document.getElementById('verdict-headline');
-  const desc = document.getElementById('verdict-desc');
-  const filters_row = document.getElementById('verdict-filters');
-  const ring = document.getElementById('ring-fill');
-  const ringNum = document.getElementById('ring-num');
-
-  const label = acct || 'This account';
-
-  const f0labels = {pass:'Filter 1: Pass',fail:'Filter 1: Fail',partial:'Filter 1: Weak',na:'Filter 1: Pending'};
-  const f1labels = {pass:'Filter 2: Pass',fail:'Filter 2: Fail',partial:'Filter 2: Weak',na:'Filter 2: Pending'};
-
-  filters_row.innerHTML = `
-    <span class="vf-pill ${s0}"><span class="vf-dot"></span>${f0labels[s0]}</span>
-    <span class="vf-pill ${s1}"><span class="vf-dot"></span>${f1labels[s1]}</span>
-  `;
-
-  const totalChecked = state[0].filter(Boolean).length + state[1].filter(Boolean).length;
-  const totalSignals = 13;
-  const pct = Math.round((totalChecked/totalSignals)*100);
-  const offset = 163 - (163 * pct / 100);
-
-  ring.style.strokeDashoffset = offset;
-  ringNum.textContent = pct+'%';
-
-  if(s0 === 'na' && s1 === 'na'){
-    card.className='verdict-card';
-    ring.style.stroke='#E2E8F0';
-    headline.textContent='Evaluate both filters';
-    desc.innerHTML='Check all signals that apply for this account. <strong>Both filters must pass</strong> for the account to enter the workflow.';
-    return;
-  }
-
-  if(s0 === 'fail' || s1 === 'fail'){
-    card.className='verdict-card fail';
-    ring.style.stroke='var(--red)';
-    headline.textContent = label+' — Do not enter sequence';
-    if(s0==='fail' && s1!=='fail') desc.innerHTML='<strong>Filter 1 failed.</strong> There is insufficient evidence that the problem is active for this account right now. Sequencing without this will waste rep time and pollute the pipeline.';
-    else if(s1==='fail' && s0!=='fail') desc.innerHTML='<strong>Filter 2 failed.</strong> A required reachability condition is not met. The account cannot be sequenced until a valid contact path exists or the DNC status is resolved.';
-    else desc.innerHTML='<strong>Both filters failed.</strong> This account should not enter the workflow. Remove it and do not re-enter until conditions change.';
-    return;
-  }
-
-  if(s0 === 'pass' && s1 === 'pass'){
-    card.className='verdict-card pass';
-    ring.style.stroke='var(--green)';
-    headline.textContent = label+' — Cleared to enter sequence';
-    desc.innerHTML='Both filters passed with strong signal confidence. This account meets the Input Control standard and can enter the workflow. <strong>Ensure the sequence step is mapped to the reachability signal identified in Filter 2.</strong>';
-    return;
-  }
-
-  if(s0 === 'partial' || s1 === 'partial'){
-    card.className='verdict-card partial';
-    ring.style.stroke='var(--amber)';
-    headline.textContent = label+' — Weak signal confidence';
-    desc.innerHTML='Filters are technically passing but signal confidence is low. Entering this account carries risk. <strong>Hold unless you can verify at least one more strong signal before sequencing.</strong>';
-    return;
-  }
-
-  card.className='verdict-card';
-  ring.style.stroke='#E2E8F0';
-  headline.textContent='Evaluation incomplete';
-  desc.innerHTML='Complete both filters to get a verdict.';
+  const s0=getStatus(0),s1=getStatus(1);
+  const acct=document.getElementById('acct').value.trim()||'This account';
+  const total=state[0].filter(Boolean).length+state[1].filter(Boolean).length;
+  const pct=Math.round(total/13*100);
+  const ring=document.getElementById('ring');
+  ring.style.strokeDashoffset=163-(163*pct/100);
+  document.getElementById('v-pct').textContent=total>0?pct+'%':'—';
+  const labels={pass:'Pass',fail:'Fail',weak:'Weak',na:'Pending'};
+  document.getElementById('v-pills').innerHTML=
+    `<span class="vpill ${s0}"><span class="vpill-dot"></span>Filter 1: ${labels[s0]}</span>`+
+    `<span class="vpill ${s1}"><span class="vpill-dot"></span>Filter 2: ${labels[s1]}</span>`;
+  const v=document.getElementById('verdict');
+  const h=document.getElementById('v-headline');
+  const d=document.getElementById('v-desc');
+  if(s0==='na'&&s1==='na'){v.className='verdict';ring.style.stroke='#E2E8F0';h.textContent='Evaluate both filters';d.innerHTML='Check all signals that apply. <strong>Both filters must pass</strong> for the account to enter the workflow.';return;}
+  if(s0==='fail'||s1==='fail'){v.className='verdict fail';ring.style.stroke='var(--red)';h.textContent=acct+' — Do not enter sequence';d.innerHTML=s0==='fail'&&s1!=='fail'?'<strong>Filter 1 failed.</strong> No verified evidence the problem is active now. Sequencing this account wastes rep time and pollutes the pipeline.':s1==='fail'&&s0!=='fail'?'<strong>Filter 2 failed.</strong> A required reachability condition is not met. The account cannot be sequenced until a valid contact path exists.':'<strong>Both filters failed.</strong> Remove this account. Do not re-enter until conditions change.';return;}
+  if(s0==='pass'&&s1==='pass'){v.className='verdict pass';ring.style.stroke='var(--green)';h.textContent=acct+' — Cleared to enter sequence';d.innerHTML='Both filters passed. This account meets the Input Control standard. <strong>Map the sequence step to the reachability signal identified in Filter 2.</strong>';return;}
+  v.className='verdict weak';ring.style.stroke='var(--amber)';h.textContent=acct+' — Weak signal confidence';d.innerHTML='Filters are technically passing but signal confidence is low. <strong>Hold until you can verify at least one more strong signal.</strong>';
 }
 
 function resetAll(){
-  document.getElementById('account-name').value='';
-  for(let f=0;f<2;f++){
-    for(let s=0;s<state[f].length;s++){
-      if(state[f][s]){ state[f][s]=false; toggle(f,s); state[f][s]=false; }
-      const chk=document.getElementById('chk-'+f+'-'+s);
-      const lbl=document.getElementById('lbl-'+f+'-'+s);
-      if(chk){chk.className='signal-check';} if(lbl){lbl.className='signal-text';}
-    }
-    updateFilter(f);
-  }
+  document.getElementById('acct').value='';
+  for(let f=0;f<2;f++)for(let s=0;s<state[f].length;s++){state[f][s]=false;document.getElementById('c'+f+'-'+s).className='sig-check';document.getElementById('t'+f+'-'+s).className='sig-text';}
+  for(let f=0;f<2;f++)updateFilter(f);
   updateVerdict();
 }
 </script>

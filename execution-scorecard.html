@@ -4,577 +4,408 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Execution Standard Scorecard — SDR Operating System</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#F4F6F9;
-  --card:#FFFFFF;
-  --navy:#0E1E35;
-  --navy2:#1B2A4A;
-  --green:#059669;
-  --lgreen:#D1FAE5;
-  --tgreen:#ECFDF5;
-  --red:#DC2626;
-  --lred:#FEE2E2;
-  --tred:#FFF5F5;
-  --amber:#D97706;
-  --lamber:#FEF3C7;
-  --tamber:#FFFBEB;
-  --blue:#1D4ED8;
-  --lblue:#DBEAFE;
-  --tblue:#EFF6FF;
-  --gold:#C9A84C;
-  --slate:#64748B;
-  --border:#E2E8F0;
-  --text:#0F172A;
-  --muted:#64748B;
-}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:#0E1E35; --navy2:#1B2A4A; --green:#10B981; --dgreen:#059669; --lgreen:#D1FAE5; --tgreen:#ECFDF5;
+    --red:#EF4444; --dred:#DC2626; --lred:#FEE2E2; --tred:#FFF5F5;
+    --amber:#F59E0B; --lamber:#FEF3C7; --tamber:#FFFBEB;
+    --blue:#3B82F6; --lblue:#DBEAFE; --tblue:#EFF6FF;
+    --gold:#C9A84C; --slate:#64748B; --light:#F1F5F9; --border:#E2E8F0;
+    --white:#FFFFFF; --text:#0F172A; --muted:#64748B; --card:#FFFFFF; --bg:#F8FAFC;
+  }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
 
-/* HEADER */
-.hdr{background:var(--navy);padding:52px 24px 44px;position:relative;overflow:hidden}
-.hdr-stripe{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#1D4ED8,var(--gold),transparent)}
-.hdr-circle{position:absolute;right:-80px;bottom:-80px;width:300px;height:300px;border:50px solid rgba(255,255,255,0.02);border-radius:50%}
-.hdr-inner{max-width:700px;margin:0 auto;position:relative}
-.hdr-pill{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:0.1em;color:#60A5FA;background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.2);padding:5px 12px;border-radius:20px;margin-bottom:20px}
-.hdr-pill span{width:6px;height:6px;background:#60A5FA;border-radius:50%}
-h1{font-family:'Syne',sans-serif;font-size:clamp(26px,4.5vw,40px);font-weight:800;color:#fff;line-height:1.1;margin-bottom:10px}
-h1 em{color:#60A5FA;font-style:normal}
-.hdr-sub{font-size:15px;color:#94A3B8;line-height:1.6;max-width:480px}
+  .nav { background:#060F1C; padding:10px 16px; text-align:center; font-size:12px; display:flex; flex-wrap:wrap; justify-content:center; gap:6px 14px; }
+  .nav span { color:#475569; font-weight:600; letter-spacing:0.06em; }
+  .nav a { color:#94A3B8; text-decoration:none; }
+  .nav a:hover, .nav a.active { color:var(--gold); }
 
-/* WRAP */
-.wrap{max-width:700px;margin:0 auto;padding:32px 16px 80px}
+  .header { background:var(--navy); padding:48px 24px 40px; text-align:center; position:relative; overflow:hidden; }
+  .header::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--blue); }
+  .header-tag { display:inline-block; font-size:11px; font-weight:600; letter-spacing:0.1em; color:#93C5FD; background:rgba(147,197,253,0.12); padding:6px 14px; border-radius:20px; margin-bottom:20px; }
+  .header h1 { font-family:'DM Serif Display',serif; font-size:clamp(28px,5vw,44px); color:#fff; line-height:1.15; margin-bottom:12px; }
+  .header h1 span { color:#93C5FD; }
+  .header-sub { font-size:16px; color:#94A3B8; max-width:480px; margin:0 auto 24px; line-height:1.6; }
+  .header-author { font-size:13px; color:#64748B; }
+  .header-author strong { color:var(--gold); }
 
-/* SEC LABEL */
-.sec-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;color:var(--muted);margin-bottom:14px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
-.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
+  .main { max-width:760px; margin:0 auto; padding:32px 16px 64px; }
 
-/* REP SELECTOR */
-.rep-bar{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.rep-bar label{font-size:13px;color:var(--muted);flex-shrink:0}
-.rep-tabs{display:flex;gap:6px;flex-wrap:wrap;flex:1}
-.rep-tab{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;padding:6px 14px;border-radius:8px;border:1.5px solid var(--border);background:transparent;cursor:pointer;color:var(--muted);transition:all 0.2s}
-.rep-tab.active{background:var(--navy);border-color:var(--navy);color:#fff}
-.rep-add{font-size:12px;color:var(--blue);cursor:pointer;padding:6px 10px;border-radius:8px;border:1.5px dashed var(--border);background:transparent;transition:all 0.2s}
-.rep-add:hover{border-color:var(--blue);background:var(--tblue)}
+  /* REP TABS */
+  .rep-wrap { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 20px; margin-bottom:28px; }
+  .rep-wrap-top { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .rep-wrap label { font-size:13px; color:var(--muted); flex-shrink:0; }
+  .rep-tabs { display:flex; gap:6px; flex-wrap:wrap; flex:1; }
+  .rep-tab { font-size:12px; font-weight:500; padding:6px 14px; border-radius:8px; border:1px solid var(--border); background:transparent; cursor:pointer; color:var(--muted); transition:all 0.2s; }
+  .rep-tab.on { background:var(--navy); border-color:var(--navy); color:#fff; }
+  .rep-add { font-size:12px; color:var(--blue); cursor:pointer; padding:6px 12px; border-radius:8px; border:1px dashed var(--border); background:transparent; transition:all 0.2s; }
+  .rep-add:hover { border-color:var(--blue); background:var(--tblue); }
 
-/* CATEGORY CARDS */
-.cat-card{background:var(--card);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:16px;transition:border-color 0.3s}
-.cat-card.perfect{border-color:var(--green)}
-.cat-card.good{border-color:#10B981}
-.cat-card.weak{border-color:var(--amber)}
-.cat-card.broken{border-color:var(--red)}
+  .sec-label { font-size:11px; font-weight:600; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .sec-label::after { content:''; flex:1; height:1px; background:var(--border); }
+  .rating-hint { font-size:13px; color:var(--muted); margin-bottom:20px; line-height:1.6; }
 
-.cat-hdr{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;transition:background 0.2s}
-.cat-hdr:hover{background:var(--bg)}
-.cat-hdr-left{display:flex;align-items:center;gap:12px}
-.cat-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;flex-shrink:0}
-.cat-icon.blue{background:var(--tblue);color:var(--blue)}
-.cat-icon.green{background:var(--tgreen);color:var(--green)}
-.cat-icon.amber{background:var(--tamber);color:var(--amber)}
-.cat-icon.red{background:var(--tred);color:var(--red)}
-.cat-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--navy)}
-.cat-sub{font-size:11px;color:var(--muted);margin-top:1px}
-.cat-hdr-right{display:flex;align-items:center;gap:10px}
-.cat-score-pill{font-size:12px;font-weight:600;padding:4px 10px;border-radius:8px;background:var(--bg);color:var(--muted);transition:all 0.3s}
-.cat-chevron{font-size:12px;color:var(--muted);transition:transform 0.3s}
-.cat-chevron.open{transform:rotate(180deg)}
+  /* CATEGORY CARDS */
+  .cat-card { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:14px; transition:border-color 0.3s; }
+  .cat-card.strong { border-left:4px solid var(--green); }
+  .cat-card.ok { border-left:4px solid #10B981; }
+  .cat-card.weak { border-left:4px solid var(--amber); }
+  .cat-card.broken { border-left:4px solid var(--red); }
 
-.cat-body{padding:0 20px 20px;display:none}
-.cat-body.open{display:block}
+  .cat-head { padding:16px 20px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; transition:background 0.2s; }
+  .cat-head:hover { background:var(--bg); }
+  .cat-head-left { display:flex; align-items:center; gap:12px; }
+  .cat-icon { width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; flex-shrink:0; }
+  .cat-icon.blue { background:var(--tblue); color:var(--blue); }
+  .cat-icon.green { background:var(--tgreen); color:var(--dgreen); }
+  .cat-icon.amber { background:var(--tamber); color:#92400E; }
+  .cat-icon.red { background:var(--tred); color:var(--dred); }
+  .cat-name { font-size:14px; font-weight:600; color:var(--navy); margin-bottom:1px; }
+  .cat-sub { font-size:12px; color:var(--muted); }
+  .cat-head-right { display:flex; align-items:center; gap:10px; }
+  .cat-pill { font-size:12px; font-weight:600; padding:4px 10px; border-radius:8px; background:var(--light); color:var(--muted); transition:all 0.3s; }
+  .cat-chev { font-size:11px; color:var(--muted); transition:transform 0.3s; }
+  .cat-chev.open { transform:rotate(180deg); }
 
-/* CRITERIA ROWS */
-.crit-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
-.crit-item:last-child{border-bottom:none}
+  .cat-body { padding:0 20px 18px; display:none; }
+  .cat-body.open { display:block; }
 
-.rating-btns{display:flex;gap:4px;flex-shrink:0;margin-top:1px}
-.rb{width:28px;height:28px;border-radius:7px;border:1.5px solid var(--border);background:transparent;cursor:pointer;font-size:11px;font-weight:700;color:var(--muted);transition:all 0.15s;font-family:'Syne',sans-serif;display:flex;align-items:center;justify-content:center}
-.rb:hover{border-color:var(--navy);color:var(--navy)}
-.rb.sel-0{background:var(--tred);border-color:var(--red);color:var(--red)}
-.rb.sel-1{background:var(--tamber);border-color:var(--amber);color:var(--amber)}
-.rb.sel-2{background:var(--tgreen);border-color:var(--green);color:var(--green)}
+  /* CRITERIA */
+  .crit-row { display:flex; align-items:flex-start; gap:12px; padding:11px 0; border-bottom:1px solid var(--border); }
+  .crit-row:last-of-type { border-bottom:none; }
+  .rate-btns { display:flex; gap:4px; flex-shrink:0; margin-top:1px; }
+  .rb { width:28px; height:26px; border-radius:6px; border:1px solid var(--border); background:transparent; cursor:pointer; font-size:11px; font-weight:600; color:var(--muted); transition:all 0.15s; }
+  .rb:hover { border-color:var(--navy); color:var(--navy); }
+  .rb.r0 { background:var(--tred); border-color:var(--red); color:var(--dred); }
+  .rb.r1 { background:var(--tamber); border-color:var(--amber); color:#92400E; }
+  .rb.r2 { background:var(--tgreen); border-color:var(--green); color:var(--dgreen); }
+  .crit-info { flex:1; }
+  .crit-text { font-size:13px; color:var(--text); line-height:1.4; margin-bottom:3px; }
+  .crit-hint { font-size:11px; color:var(--muted); line-height:1.4; }
+  .crit-badge { font-size:10px; font-weight:600; padding:2px 7px; border-radius:5px; background:var(--light); color:var(--muted); flex-shrink:0; margin-top:2px; white-space:nowrap; }
 
-.crit-info{flex:1}
-.crit-text{font-size:13px;color:var(--text);line-height:1.4}
-.crit-hint{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
-.crit-weight{font-size:10px;font-weight:700;padding:2px 6px;border-radius:5px;background:var(--bg);color:var(--muted);letter-spacing:0.05em;flex-shrink:0;margin-top:2px}
+  .cat-score-bar { display:flex; align-items:center; gap:10px; margin-top:14px; padding-top:14px; border-top:1px solid var(--border); }
+  .cat-score-bar label { font-size:11px; color:var(--muted); width:90px; flex-shrink:0; }
+  .csb-track { flex:1; height:5px; background:var(--light); border-radius:3px; overflow:hidden; }
+  .csb-fill { height:5px; border-radius:3px; transition:width 0.4s, background 0.3s; }
+  .csb-val { font-size:12px; font-weight:600; width:36px; text-align:right; }
 
-/* MINI SCORE BAR */
-.mini-bar-row{display:flex;align-items:center;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-.mini-bar-label{font-size:11px;color:var(--muted);width:90px;flex-shrink:0}
-.mini-bar-track{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
-.mini-bar-fill{height:5px;border-radius:3px;transition:width 0.4s,background 0.3s}
-.mini-bar-val{font-size:11px;font-weight:700;width:36px;text-align:right}
+  /* SCORE CARD */
+  .score-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:20px; transition:border-color 0.3s; }
+  .score-card.strong { border-left:4px solid var(--green); }
+  .score-card.ok { border-left:4px solid #10B981; }
+  .score-card.weak { border-left:4px solid var(--amber); }
+  .score-card.broken { border-left:4px solid var(--red); }
 
-/* OVERALL SCORE */
-.score-card{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:24px;margin-bottom:20px;transition:border-color 0.3s}
-.score-card.perfect{border-color:var(--green)}
-.score-card.good{border-color:#10B981}
-.score-card.weak{border-color:var(--amber)}
-.score-card.broken{border-color:var(--red)}
+  .score-top { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px; flex-wrap:wrap; }
+  .score-rep { font-size:11px; font-weight:600; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:5px; }
+  .score-headline { font-family:'DM Serif Display',serif; font-size:22px; color:var(--navy); line-height:1.2; }
+  .score-big { text-align:right; flex-shrink:0; }
+  .score-num { font-family:'DM Serif Display',serif; font-size:52px; line-height:1; transition:color 0.3s; }
+  .score-denom { font-size:13px; color:var(--muted); }
 
-.score-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
-.score-left{}
-.score-rep-name{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px}
-.score-headline{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--navy);line-height:1.2}
-.score-big{text-align:center;flex-shrink:0}
-.score-num{font-family:'Syne',sans-serif;font-size:52px;font-weight:800;line-height:1;transition:color 0.3s}
-.score-denom{font-size:14px;color:var(--muted)}
+  .score-breakdown { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:16px; }
+  @media(max-width:480px){.score-breakdown{grid-template-columns:1fr}}
+  .sb-item { background:var(--bg); border-radius:10px; padding:10px 12px; }
+  .sb-name { font-size:11px; color:var(--muted); margin-bottom:6px; }
+  .sb-bar-row { display:flex; align-items:center; gap:8px; }
+  .sb-bar { flex:1; height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
+  .sb-fill { height:5px; border-radius:3px; transition:width 0.4s, background 0.3s; }
+  .sb-val { font-size:12px; font-weight:600; width:32px; text-align:right; }
 
-.cat-breakdown{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-@media(max-width:480px){.cat-breakdown{grid-template-columns:1fr}}
-.cb-item{background:var(--bg);border-radius:10px;padding:10px 12px}
-.cb-item-name{font-size:11px;color:var(--muted);margin-bottom:6px}
-.cb-bar-row{display:flex;align-items:center;gap:8px}
-.cb-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
-.cb-fill{height:5px;border-radius:3px;transition:width 0.4s,background 0.3s}
-.cb-val{font-size:12px;font-weight:700;color:var(--text);width:32px;text-align:right}
+  .score-desc { font-size:14px; color:var(--muted); line-height:1.7; padding-top:14px; border-top:1px solid var(--border); }
+  .score-desc strong { color:var(--text); }
 
-.score-desc{font-size:14px;color:var(--muted);line-height:1.7;padding-top:14px;border-top:1px solid var(--border)}
-.score-desc strong{color:var(--text)}
+  /* COMPARISON */
+  .compare-card { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:20px; }
+  .compare-head { display:grid; grid-template-columns:1fr 60px 1fr 80px; padding:10px 20px; background:var(--navy); }
+  .compare-head span { font-size:11px; font-weight:600; letter-spacing:0.06em; color:var(--gold); }
+  .compare-row { display:grid; grid-template-columns:1fr 60px 1fr 80px; padding:11px 20px; border-bottom:1px solid var(--border); align-items:center; cursor:pointer; transition:background 0.2s; }
+  .compare-row:last-child { border-bottom:none; }
+  .compare-row:hover { background:var(--bg); }
+  .cr-name { font-size:13px; font-weight:600; color:var(--navy); }
+  .cr-score { font-family:'DM Serif Display',serif; font-size:16px; }
+  .cr-bar { height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
+  .cr-fill { height:5px; border-radius:3px; transition:width 0.4s, background 0.3s; }
+  .cr-badge { font-size:10px; font-weight:600; padding:3px 8px; border-radius:6px; text-align:center; }
 
-/* REP COMPARISON TABLE */
-.compare-table{background:var(--card);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:20px}
-.ct-head{display:grid;padding:12px 20px;background:var(--navy);font-size:11px;font-weight:700;letter-spacing:0.08em;color:var(--gold)}
-.ct-row{display:grid;padding:12px 20px;border-bottom:1px solid var(--border);align-items:center}
-.ct-row:last-child{border-bottom:none}
-.ct-row:hover{background:var(--bg)}
-.ct-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy)}
-.ct-score{font-family:'Syne',sans-serif;font-size:16px;font-weight:800}
-.ct-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
-.ct-fill{height:6px;border-radius:3px;transition:width 0.4s,background 0.3s}
-.ct-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;text-align:center}
+  .actions { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:28px; }
+  .btn { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; padding:12px; border-radius:10px; cursor:pointer; text-align:center; transition:all 0.2s; border:1px solid var(--border); background:transparent; color:var(--muted); }
+  .btn:hover { background:var(--light); color:var(--text); }
+  .btn-primary { background:var(--navy); border-color:var(--navy); color:#fff; }
+  .btn-primary:hover { background:var(--navy2); }
 
-/* ACTIONS */
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
-.btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:12px;border-radius:12px;cursor:pointer;text-align:center;transition:all 0.2s;border:1.5px solid var(--border);background:transparent;color:var(--muted)}
-.btn:hover{background:var(--bg);color:var(--text)}
-.btn-primary{background:var(--navy);border-color:var(--navy);color:#fff}
-.btn-primary:hover{background:var(--navy2)}
-.btn-add-rep{background:var(--tblue);border-color:var(--lblue);color:var(--blue);grid-column:span 2}
+  .cta { background:var(--navy); border-radius:16px; padding:28px 24px; text-align:center; margin-bottom:40px; }
+  .cta-tag { font-size:11px; font-weight:600; letter-spacing:0.1em; color:var(--gold); margin-bottom:12px; }
+  .cta-title { font-family:'DM Serif Display',serif; font-size:22px; color:#fff; margin-bottom:8px; line-height:1.3; }
+  .cta-desc { font-size:14px; color:#94A3B8; line-height:1.6; margin-bottom:20px; max-width:440px; margin-left:auto; margin-right:auto; }
+  .cta-btn { display:inline-block; background:var(--gold); color:var(--navy); font-size:14px; font-weight:600; padding:13px 26px; border-radius:10px; text-decoration:none; transition:opacity 0.2s; }
+  .cta-btn:hover { opacity:0.9; }
 
-/* CTA */
-.cta-card{background:var(--navy);border-radius:20px;padding:28px 24px;text-align:center;margin-bottom:40px}
-.cta-tag{font-size:10px;font-weight:700;letter-spacing:0.1em;color:var(--gold);margin-bottom:12px}
-.cta-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.3}
-.cta-desc{font-size:13px;color:#94A3B8;line-height:1.6;margin-bottom:20px}
-.cta-btn{display:inline-block;background:var(--gold);color:var(--navy);font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:12px 24px;border-radius:10px;text-decoration:none;transition:opacity 0.2s}
-.cta-btn:hover{opacity:0.9}
-
-/* FOOTER */
-.footer{background:var(--navy);text-align:center;padding:28px 24px}
-.footer-name{font-family:'Syne',sans-serif;font-size:13px;color:var(--gold);margin-bottom:4px}
-.footer-tag{font-size:12px;color:#475569}
+  .footer { background:var(--navy); text-align:center; padding:28px 24px; }
+  .footer-catchphrase { font-family:'DM Serif Display',serif; font-size:18px; color:var(--gold); margin-bottom:6px; }
+  .footer-name { font-size:13px; color:#475569; }
+  .footer-name strong { color:#94A3B8; }
 </style>
 </head>
 <body>
 
-<div class="hdr">
-  <div class="hdr-stripe"></div>
-  <div class="hdr-circle"></div>
-  <div class="hdr-inner">
-    <div class="hdr-pill"><span></span> PILLAR 2 · SDR OPERATING SYSTEM</div>
-    <h1>Execution Standard<br><em>Scorecard</em></h1>
-    <p class="hdr-sub">Score each rep against the execution standard. Identify where the standard is breaking down — and fix the system, not the person.</p>
-  </div>
+<div class="nav">
+  <span>SDR OS TOOLS:</span>
+  <a href="https://wiljay2209.github.io/sdr-tools/">Signal Dashboard</a>
+  <a href="https://wiljay2209.github.io/sdr-tools/input-control.html">Input Control</a>
+  <a href="https://wiljay2209.github.io/sdr-tools/execution-scorecard.html" class="active">Execution Scorecard</a>
+  <a href="https://wiljay2209.github.io/sdr-tools/rhythm-planner.html">Rhythm Planner</a>
+  <a href="https://wiljay2209.github.io/sdr-tools/audit.html">Full Audit</a>
 </div>
 
-<div class="wrap">
+<div class="header">
+  <div class="header-tag">PILLAR 2 · SDR OPERATING SYSTEM</div>
+  <h1>Execution Standard<br><span>Scorecard</span></h1>
+  <p class="header-sub">Score each rep against the execution standard. Identify where the standard is breaking down — and fix the system, not the person.</p>
+  <p class="header-author">Built by <strong>Wilberforce Moyo</strong> · 18 Years SDR Operations</p>
+</div>
 
-  <!-- REP SELECTOR -->
-  <div class="sec-label">Select rep to score</div>
-  <div class="rep-bar">
-    <label>Rep:</label>
-    <div class="rep-tabs" id="rep-tabs"></div>
-    <button class="rep-add" onclick="addRep()">+ Add rep</button>
+<div class="main">
+
+  <div class="rep-wrap">
+    <div class="rep-wrap-top">
+      <label>Scoring rep:</label>
+      <div class="rep-tabs" id="rep-tabs"></div>
+      <button class="rep-add" onclick="addRep()">+ Add rep</button>
+    </div>
   </div>
 
-  <!-- CATEGORY 1: SEQUENCE ADHERENCE -->
   <div class="sec-label">Scoring criteria</div>
+  <div class="rating-hint">Rate each criterion: <strong style="color:var(--text)">0 = Not doing it</strong> · <strong style="color:var(--text)">1 = Inconsistent</strong> · <strong style="color:var(--text)">2 = Consistent</strong></div>
 
-  <div class="cat-card" id="cat-0">
-    <div class="cat-hdr" onclick="toggleCat(0)">
-      <div class="cat-hdr-left">
+  <div id="cat-0" class="cat-card">
+    <div class="cat-head" onclick="toggleCat(0)">
+      <div class="cat-head-left">
         <div class="cat-icon blue">01</div>
-        <div>
-          <div class="cat-title">Sequence Adherence</div>
-          <div class="cat-sub">Are all steps being completed as designed?</div>
-        </div>
+        <div><div class="cat-name">Sequence Adherence</div><div class="cat-sub">Are all steps completed as designed?</div></div>
       </div>
-      <div class="cat-hdr-right">
-        <span class="cat-score-pill" id="cat-score-0">Not started</span>
-        <span class="cat-chevron open" id="cat-chev-0">▼</span>
-      </div>
+      <div class="cat-head-right"><span class="cat-pill" id="cpill-0">Not started</span><span class="cat-chev open" id="cchev-0">▼</span></div>
     </div>
-    <div class="cat-body open" id="cat-body-0">
-      <div id="crits-0"></div>
-      <div class="mini-bar-row">
-        <span class="mini-bar-label">Category score</span>
-        <div class="mini-bar-track"><div class="mini-bar-fill" id="cbar-0" style="width:0%;background:var(--border)"></div></div>
-        <span class="mini-bar-val" id="cval-0" style="color:var(--muted)">—</span>
-      </div>
-    </div>
+    <div class="cat-body open" id="cbody-0"><div id="cq-0"></div><div class="cat-score-bar"><label>Category score</label><div class="csb-track"><div class="csb-fill" id="csf-0" style="width:0%;background:var(--border)"></div></div><span class="csb-val" id="csv-0" style="color:var(--muted)">—</span></div></div>
   </div>
 
-  <div class="cat-card" id="cat-1">
-    <div class="cat-hdr" onclick="toggleCat(1)">
-      <div class="cat-hdr-left">
+  <div id="cat-1" class="cat-card">
+    <div class="cat-head" onclick="toggleCat(1)">
+      <div class="cat-head-left">
         <div class="cat-icon green">02</div>
-        <div>
-          <div class="cat-title">Qualification Consistency</div>
-          <div class="cat-sub">Is the same qualification criteria applied at every booking?</div>
-        </div>
+        <div><div class="cat-name">Qualification Consistency</div><div class="cat-sub">Same criteria applied at every booking?</div></div>
       </div>
-      <div class="cat-hdr-right">
-        <span class="cat-score-pill" id="cat-score-1">Not started</span>
-        <span class="cat-chevron" id="cat-chev-1">▼</span>
-      </div>
+      <div class="cat-head-right"><span class="cat-pill" id="cpill-1">Not started</span><span class="cat-chev" id="cchev-1">▼</span></div>
     </div>
-    <div class="cat-body" id="cat-body-1">
-      <div id="crits-1"></div>
-      <div class="mini-bar-row">
-        <span class="mini-bar-label">Category score</span>
-        <div class="mini-bar-track"><div class="mini-bar-fill" id="cbar-1" style="width:0%;background:var(--border)"></div></div>
-        <span class="mini-bar-val" id="cval-1" style="color:var(--muted)">—</span>
-      </div>
-    </div>
+    <div class="cat-body" id="cbody-1"><div id="cq-1"></div><div class="cat-score-bar"><label>Category score</label><div class="csb-track"><div class="csb-fill" id="csf-1" style="width:0%;background:var(--border)"></div></div><span class="csb-val" id="csv-1" style="color:var(--muted)">—</span></div></div>
   </div>
 
-  <div class="cat-card" id="cat-2">
-    <div class="cat-hdr" onclick="toggleCat(2)">
-      <div class="cat-hdr-left">
+  <div id="cat-2" class="cat-card">
+    <div class="cat-head" onclick="toggleCat(2)">
+      <div class="cat-head-left">
         <div class="cat-icon amber">03</div>
-        <div>
-          <div class="cat-title">CRM & Data Discipline</div>
-          <div class="cat-sub">Is the system being kept clean and current?</div>
-        </div>
+        <div><div class="cat-name">CRM & Data Discipline</div><div class="cat-sub">Is the system kept clean and current?</div></div>
       </div>
-      <div class="cat-hdr-right">
-        <span class="cat-score-pill" id="cat-score-2">Not started</span>
-        <span class="cat-chevron" id="cat-chev-2">▼</span>
-      </div>
+      <div class="cat-head-right"><span class="cat-pill" id="cpill-2">Not started</span><span class="cat-chev" id="cchev-2">▼</span></div>
     </div>
-    <div class="cat-body" id="cat-body-2">
-      <div id="crits-2"></div>
-      <div class="mini-bar-row">
-        <span class="mini-bar-label">Category score</span>
-        <div class="mini-bar-track"><div class="mini-bar-fill" id="cbar-2" style="width:0%;background:var(--border)"></div></div>
-        <span class="mini-bar-val" id="cval-2" style="color:var(--muted)">—</span>
-      </div>
-    </div>
+    <div class="cat-body" id="cbody-2"><div id="cq-2"></div><div class="cat-score-bar"><label>Category score</label><div class="csb-track"><div class="csb-fill" id="csf-2" style="width:0%;background:var(--border)"></div></div><span class="csb-val" id="csv-2" style="color:var(--muted)">—</span></div></div>
   </div>
 
-  <div class="cat-card" id="cat-3">
-    <div class="cat-hdr" onclick="toggleCat(3)">
-      <div class="cat-hdr-left">
+  <div id="cat-3" class="cat-card">
+    <div class="cat-head" onclick="toggleCat(3)">
+      <div class="cat-head-left">
         <div class="cat-icon red">04</div>
-        <div>
-          <div class="cat-title">Ad-Hoc Decision Making</div>
-          <div class="cat-sub">Is the rep deviating from the standard?</div>
-        </div>
+        <div><div class="cat-name">Ad-Hoc Decision Making</div><div class="cat-sub">Is the rep deviating from the standard?</div></div>
       </div>
-      <div class="cat-hdr-right">
-        <span class="cat-score-pill" id="cat-score-3">Not started</span>
-        <span class="cat-chevron" id="cat-chev-3">▼</span>
-      </div>
+      <div class="cat-head-right"><span class="cat-pill" id="cpill-3">Not started</span><span class="cat-chev" id="cchev-3">▼</span></div>
     </div>
-    <div class="cat-body" id="cat-body-3">
-      <div id="crits-3"></div>
-      <div class="mini-bar-row">
-        <span class="mini-bar-label">Category score</span>
-        <div class="mini-bar-track"><div class="mini-bar-fill" id="cbar-3" style="width:0%;background:var(--border)"></div></div>
-        <span class="mini-bar-val" id="cval-3" style="color:var(--muted)">—</span>
-      </div>
-    </div>
+    <div class="cat-body" id="cbody-3"><div id="cq-3"></div><div class="cat-score-bar"><label>Category score</label><div class="csb-track"><div class="csb-fill" id="csf-3" style="width:0%;background:var(--border)"></div></div><span class="csb-val" id="csv-3" style="color:var(--muted)">—</span></div></div>
   </div>
 
-  <!-- OVERALL SCORE -->
   <div class="sec-label">Overall score</div>
   <div class="score-card" id="score-card">
     <div class="score-top">
-      <div class="score-left">
-        <div class="score-rep-name" id="score-rep-name">Rep</div>
-        <div class="score-headline" id="score-headline">Complete all four categories</div>
-      </div>
-      <div class="score-big">
-        <div class="score-num" id="score-num" style="color:var(--border)">—</div>
-        <div class="score-denom">/ 100</div>
-      </div>
+      <div><div class="score-rep" id="score-rep">REP</div><div class="score-headline" id="score-headline">Complete all four categories</div></div>
+      <div class="score-big"><div class="score-num" id="score-num" style="color:var(--border)">—</div><div class="score-denom">/ 100</div></div>
     </div>
-    <div class="cat-breakdown" id="cat-breakdown"></div>
-    <div class="score-desc" id="score-desc">Rate each criterion above using: <strong>0 = Not doing it</strong> · <strong>1 = Inconsistent</strong> · <strong>2 = Consistent</strong></div>
+    <div class="score-breakdown" id="score-breakdown"></div>
+    <div class="score-desc" id="score-desc">Rate each criterion above to generate the scorecard.</div>
   </div>
 
-  <!-- REP COMPARISON -->
   <div id="compare-section" style="display:none">
     <div class="sec-label">Team comparison</div>
-    <div class="compare-table">
-      <div class="ct-head" style="grid-template-columns:1fr 60px 120px 80px">
-        <span>Rep</span><span>Score</span><span>Standard</span><span>Status</span>
-      </div>
+    <div class="compare-card">
+      <div class="compare-head"><span>Rep</span><span>Score</span><span>Standard</span><span>Status</span></div>
       <div id="compare-rows"></div>
     </div>
   </div>
 
-  <!-- ACTIONS -->
   <div class="actions">
     <button class="btn" onclick="resetRep()">Reset this rep</button>
-    <button class="btn btn-primary" onclick="window.open('https://wilberforcemoyo.tiiny.site/','_blank')">View signal dashboard</button>
+    <button class="btn btn-primary" onclick="window.open('https://wiljay2209.github.io/sdr-tools/','_blank')">Signal dashboard</button>
   </div>
 
-  <!-- CTA -->
-  <div class="cta-card">
-    <div class="cta-tag">THE SDR OPERATING SYSTEM · PAID AUDIT</div>
+  <div class="cta">
+    <div class="cta-tag">SDR OPERATIONS AUDIT · $4,500 – $12,000</div>
     <div class="cta-title">Is the execution standard holding across your whole team?</div>
     <div class="cta-desc">A low scorecard score means the problem is the standard — not the rep. The SDR Operations Audit identifies exactly where the standard is breaking down and how to fix it at the system level.</div>
     <a href="https://linkedin.com/in/wilberforce-moyo-236543256" target="_blank" class="cta-btn">Work with Wilberforce →</a>
   </div>
-
 </div>
 
 <div class="footer">
-  <div class="footer-name">Wilberforce Moyo</div>
-  <div class="footer-tag">The SDR Operating System · Reducing Variance. Increasing Predictability.</div>
+  <div class="footer-catchphrase">Reducing Variance. Increasing Predictability.</div>
+  <div class="footer-name"><strong>Wilberforce Moyo</strong> · The SDR Operating System</div>
 </div>
 
 <script>
-const CATS = [
-  {
-    name:'Sequence Adherence',
-    crits:[
-      {text:'Completes all sequence steps without skipping',hint:'Check last 10 sequences — how many reached the final step?',w:'Critical'},
-      {text:'Sends messages on the scheduled day — no delays or skips',hint:'Late or skipped steps break the sequence rhythm',w:'Critical'},
-      {text:'Uses the approved messaging templates without significant deviation',hint:'Minor personalisation is fine. Wholesale rewrites are not.',w:'Standard'},
-      {text:'Does not manually pause or end sequences without manager approval',hint:'Ad-hoc pauses are a variance signal',w:'Standard'},
-    ]
-  },
-  {
-    name:'Qualification Consistency',
-    crits:[
-      {text:'Applies both input filters before booking a meeting',hint:'Problem Likelihood and Role Accessibility — both must be verified',w:'Critical'},
-      {text:'Records qualification data in CRM at point of booking',hint:'Not after the fact — at the moment the meeting is confirmed',w:'Critical'},
-      {text:'Correctly identifies the decision-maker vs. influencer at booking',hint:'Meeting with the wrong person is not a qualified opportunity',w:'Standard'},
-      {text:'Does not book meetings to hit activity numbers — books only qualified accounts',hint:'Volume-chasing is the most common qualification failure',w:'Standard'},
-    ]
-  },
-  {
-    name:'CRM & Data Discipline',
-    crits:[
-      {text:'Logs all contact attempts — calls, emails, LinkedIn — same day',hint:'Next-day logging causes data gaps and signal delays',w:'Standard'},
-      {text:'Updates account status accurately after each sequence step',hint:'Stale statuses break the pipeline composition score',w:'Standard'},
-      {text:'Marks disqualified accounts with the correct removal reason',hint:'Without removal reasons, re-entry cannot be tracked',w:'Critical'},
-      {text:'No ghost accounts — all active sequences have been touched in the last 7 days',hint:'Ghost accounts inflate pipeline and hide composition decay',w:'Standard'},
-    ]
-  },
-  {
-    name:'Ad-Hoc Decision Making',
-    crits:[
-      {text:'Does not re-enter removed accounts without manager review',hint:'Re-entry without review is the most common Input Control failure',w:'Critical'},
-      {text:'Does not modify sequence steps without standard authorisation',hint:'Self-editing the sequence destroys execution consistency',w:'Critical'},
-      {text:'Escalates qualification uncertainty rather than making independent calls',hint:'When in doubt about an account, the rep should ask — not decide',w:'Standard'},
-      {text:'Does not cherry-pick accounts from the workflow based on personal preference',hint:'Preference-based sequencing bypasses Input Control entirely',w:'Standard'},
-    ]
-  }
+const CATS=[
+  {name:'Sequence Adherence',crits:[
+    {t:'Completes all sequence steps without skipping',h:'Check last 10 sequences — how many reached the final step?',w:'Critical'},
+    {t:'Sends messages on the scheduled day — no delays or skips',h:'Late or skipped steps break the sequence rhythm',w:'Critical'},
+    {t:'Uses approved messaging templates without significant deviation',h:'Minor personalisation is fine. Wholesale rewrites are not.',w:'Standard'},
+    {t:'Does not manually pause or end sequences without manager approval',h:'Ad-hoc pauses are a variance signal',w:'Standard'},
+  ]},
+  {name:'Qualification Consistency',crits:[
+    {t:'Applies both input filters before booking a meeting',h:'Problem Likelihood and Role Accessibility — both must be verified',w:'Critical'},
+    {t:'Records qualification data in CRM at point of booking',h:'Not after the fact — at the moment the meeting is confirmed',w:'Critical'},
+    {t:'Correctly identifies the decision-maker vs. influencer at booking',h:'Meeting with the wrong person is not a qualified opportunity',w:'Standard'},
+    {t:'Does not book meetings to hit activity numbers',h:'Volume-chasing is the most common qualification failure',w:'Standard'},
+  ]},
+  {name:'CRM & Data Discipline',crits:[
+    {t:'Logs all contact attempts same day — calls, emails, LinkedIn',h:'Next-day logging causes data gaps and signal delays',w:'Standard'},
+    {t:'Updates account status accurately after each sequence step',h:'Stale statuses break the pipeline composition score',w:'Standard'},
+    {t:'Marks disqualified accounts with the correct removal reason',h:'Without removal reasons, re-entry cannot be tracked',w:'Critical'},
+    {t:'No ghost accounts — all active sequences touched in last 7 days',h:'Ghost accounts inflate pipeline and hide composition decay',w:'Standard'},
+  ]},
+  {name:'Ad-Hoc Decision Making',crits:[
+    {t:'Does not re-enter removed accounts without manager review',h:'Re-entry without review is the most common Input Control failure',w:'Critical'},
+    {t:'Does not modify sequence steps without standard authorisation',h:'Self-editing the sequence destroys execution consistency',w:'Critical'},
+    {t:'Escalates qualification uncertainty rather than making independent calls',h:'When in doubt about an account, the rep should ask — not decide',w:'Standard'},
+    {t:'Does not cherry-pick accounts from the workflow based on personal preference',h:'Preference-based sequencing bypasses Input Control entirely',w:'Standard'},
+  ]}
 ];
 
-let reps = [{name:'Rep 1',scores:CATS.map(c=>c.crits.map(()=>null))}];
-let currentRep = 0;
+let reps=[{name:'Rep 1',scores:CATS.map(c=>c.crits.map(()=>null))}];
+let cur=0;
+
+function scCol(s){if(s===null)return'var(--border)';if(s>=85)return'var(--green)';if(s>=65)return'#10B981';if(s>=45)return'var(--amber)';return'var(--red)';}
+function scCls(s){if(s===null)return'';if(s>=85)return'strong';if(s>=65)return'ok';if(s>=45)return'weak';return'broken';}
+function scLbl(s){if(s===null)return'Not scored';if(s>=85)return'Consistent';if(s>=65)return'Mostly consistent';if(s>=45)return'Inconsistent';return'Standard broken';}
 
 function init(){
   CATS.forEach((cat,ci)=>{
-    const el = document.getElementById('crits-'+ci);
-    el.innerHTML = '';
-    cat.crits.forEach((crit,si)=>{
-      el.innerHTML += `
-        <div class="crit-item">
-          <div class="rating-btns">
-            <button class="rb" id="rb-${ci}-${si}-0" onclick="rate(${ci},${si},0)" title="Not doing it">0</button>
-            <button class="rb" id="rb-${ci}-${si}-1" onclick="rate(${ci},${si},1)" title="Inconsistent">1</button>
-            <button class="rb" id="rb-${ci}-${si}-2" onclick="rate(${ci},${si},2)" title="Consistent">2</button>
-          </div>
-          <div class="crit-info">
-            <div class="crit-text">${crit.text}</div>
-            <div class="crit-hint">${crit.hint}</div>
-          </div>
-          <span class="crit-weight">${crit.w}</span>
-        </div>`;
-    });
+    document.getElementById('cq-'+ci).innerHTML=cat.crits.map((c,si)=>`
+      <div class="crit-row">
+        <div class="rate-btns">
+          <button class="rb" id="rb-${ci}-${si}-0" onclick="rate(${ci},${si},0)">0</button>
+          <button class="rb" id="rb-${ci}-${si}-1" onclick="rate(${ci},${si},1)">1</button>
+          <button class="rb" id="rb-${ci}-${si}-2" onclick="rate(${ci},${si},2)">2</button>
+        </div>
+        <div class="crit-info">
+          <div class="crit-text">${c.t}</div>
+          <div class="crit-hint">${c.h}</div>
+        </div>
+        <span class="crit-badge">${c.w}</span>
+      </div>`).join('');
   });
-  renderRepTabs();
-  renderScores();
+  renderTabs(); renderAll();
 }
 
-function renderRepTabs(){
-  const tabs = document.getElementById('rep-tabs');
-  tabs.innerHTML = reps.map((r,i)=>`
-    <button class="rep-tab ${i===currentRep?'active':''}" onclick="switchRep(${i})">${r.name}</button>
-  `).join('');
+function renderTabs(){
+  document.getElementById('rep-tabs').innerHTML=reps.map((r,i)=>`<button class="rep-tab ${i===cur?'on':''}" onclick="switchRep(${i})">${r.name}</button>`).join('');
 }
 
 function switchRep(i){
-  currentRep = i;
-  renderRepTabs();
-  CATS.forEach((_,ci)=>{
-    CATS[ci].crits.forEach((_,si)=>{
-      const v = reps[currentRep].scores[ci][si];
-      [0,1,2].forEach(rv=>{
-        const btn = document.getElementById('rb-'+ci+'-'+si+'-'+rv);
-        if(btn) btn.className = 'rb' + (v===rv?' sel-'+rv:'');
-      });
-    });
-  });
-  renderScores();
+  cur=i; renderTabs();
+  CATS.forEach((_,ci)=>CATS[ci].crits.forEach((_,si)=>{
+    const v=reps[cur].scores[ci][si];
+    [0,1,2].forEach(rv=>{const b=document.getElementById('rb-'+ci+'-'+si+'-'+rv);if(b)b.className='rb'+(v===rv?' r'+rv:'');});
+  }));
+  renderAll();
 }
 
 function addRep(){
-  const name = prompt('Rep name:','Rep '+(reps.length+1));
-  if(!name) return;
-  reps.push({name,scores:CATS.map(c=>c.crits.map(()=>null))});
-  currentRep = reps.length-1;
-  switchRep(currentRep);
+  const n=prompt('Rep name:','Rep '+(reps.length+1));
+  if(!n)return;
+  reps.push({name:n,scores:CATS.map(c=>c.crits.map(()=>null))});
+  cur=reps.length-1; switchRep(cur);
 }
 
 function rate(ci,si,val){
-  const cur = reps[currentRep].scores[ci][si];
-  reps[currentRep].scores[ci][si] = cur===val ? null : val;
-  [0,1,2].forEach(rv=>{
-    const btn = document.getElementById('rb-'+ci+'-'+si+'-'+rv);
-    if(btn) btn.className = 'rb' + (reps[currentRep].scores[ci][si]===rv?' sel-'+rv:'');
-  });
-  renderScores();
+  const v=reps[cur].scores[ci][si];
+  reps[cur].scores[ci][si]=v===val?null:val;
+  [0,1,2].forEach(rv=>{const b=document.getElementById('rb-'+ci+'-'+si+'-'+rv);if(b)b.className='rb'+(reps[cur].scores[ci][si]===rv?' r'+rv:'');});
+  renderAll();
 }
 
-function getCatScore(repIdx,ci){
-  const s = reps[repIdx].scores[ci];
-  const rated = s.filter(v=>v!==null);
-  if(rated.length===0) return null;
-  const sum = rated.reduce((a,b)=>a+b,0);
-  return Math.round((sum/(rated.length*2))*100);
+function getCatScore(ri,ci){
+  const s=reps[ri].scores[ci].filter(v=>v!==null);
+  if(!s.length)return null;
+  return Math.round(s.reduce((a,b)=>a+b,0)/(s.length*2)*100);
 }
 
-function getOverallScore(repIdx){
-  const cats = CATS.map((_,ci)=>getCatScore(repIdx,ci)).filter(v=>v!==null);
-  if(cats.length===0) return null;
+function getOverall(ri){
+  const cats=CATS.map((_,ci)=>getCatScore(ri,ci)).filter(v=>v!==null);
+  if(!cats.length)return null;
   return Math.round(cats.reduce((a,b)=>a+b,0)/cats.length);
 }
 
-function scoreColor(s){
-  if(s===null) return 'var(--border)';
-  if(s>=85) return 'var(--green)';
-  if(s>=65) return '#10B981';
-  if(s>=45) return 'var(--amber)';
-  return 'var(--red)';
-}
-
-function scoreClass(s){
-  if(s===null) return '';
-  if(s>=85) return 'perfect';
-  if(s>=65) return 'good';
-  if(s>=45) return 'weak';
-  return 'broken';
-}
-
-function scoreLabel(s){
-  if(s===null) return 'Not scored';
-  if(s>=85) return 'Consistent';
-  if(s>=65) return 'Mostly consistent';
-  if(s>=45) return 'Inconsistent';
-  return 'Standard broken';
-}
-
-function renderScores(){
-  // Category scores
+function renderAll(){
   CATS.forEach((_,ci)=>{
-    const s = getCatScore(currentRep,ci);
-    const card = document.getElementById('cat-'+ci);
-    const pill = document.getElementById('cat-score-'+ci);
-    const bar = document.getElementById('cbar-'+ci);
-    const val = document.getElementById('cval-'+ci);
-    card.className = 'cat-card '+scoreClass(s);
-    pill.textContent = s===null ? 'Not started' : s+'%';
-    pill.style.background = s===null?'var(--bg)': scoreColor(s)+'22';
-    pill.style.color = s===null?'var(--muted)':scoreColor(s);
-    bar.style.width = (s||0)+'%';
-    bar.style.background = scoreColor(s);
-    val.textContent = s===null?'—':s+'%';
-    val.style.color = scoreColor(s);
+    const s=getCatScore(cur,ci);
+    document.getElementById('cat-'+ci).className='cat-card '+scCls(s);
+    const pill=document.getElementById('cpill-'+ci);
+    pill.textContent=s===null?'Not started':s+'%';
+    pill.style.background=s===null?'var(--light)':scCol(s)+'22';
+    pill.style.color=s===null?'var(--muted)':scCol(s);
+    document.getElementById('csf-'+ci).style.width=(s||0)+'%';
+    document.getElementById('csf-'+ci).style.background=scCol(s);
+    document.getElementById('csv-'+ci).textContent=s===null?'—':s+'%';
+    document.getElementById('csv-'+ci).style.color=scCol(s);
   });
-
-  // Overall
-  const overall = getOverallScore(currentRep);
-  const sc = document.getElementById('score-card');
-  const sn = document.getElementById('score-num');
-  const sh = document.getElementById('score-headline');
-  const sd = document.getElementById('score-desc');
-  const srn = document.getElementById('score-rep-name');
-
-  srn.textContent = reps[currentRep].name.toUpperCase();
-  sc.className = 'score-card '+scoreClass(overall);
-  sn.style.color = scoreColor(overall);
-  sn.textContent = overall===null?'—':overall;
-
-  if(overall===null){
-    sh.textContent='Complete all four categories';
-    sd.innerHTML='Rate each criterion: <strong>0 = Not doing it</strong> · <strong>1 = Inconsistent</strong> · <strong>2 = Consistent</strong>';
-  } else if(overall>=85){
-    sh.textContent='Execution standard held — consistent performer';
-    sd.innerHTML='This rep is running the system as designed. <strong>Their results are replicable.</strong> Use their pattern to reinforce the standard with the rest of the team.';
-  } else if(overall>=65){
-    sh.textContent='Mostly consistent — minor gaps to address';
-    sd.innerHTML='Performance is generally solid but some criteria are inconsistent. <strong>Identify the specific failing criteria and address at the standard level</strong> — not through individual coaching.';
-  } else if(overall>=45){
-    sh.textContent='Inconsistent — standard is breaking down';
-    sd.innerHTML='Significant variance in execution. <strong>The standard is either unclear, too complex, or not enforced.</strong> Do not coach the rep — audit the standard first.';
-  } else {
-    sh.textContent='Standard broken — system intervention required';
-    sd.innerHTML='<strong>The execution standard has failed for this rep.</strong> This is a system problem. Review whether the standard is actually executable. Fix the process before re-scoring.';
-  }
-
-  // Breakdown grid
-  const bd = document.getElementById('cat-breakdown');
-  bd.innerHTML = CATS.map((cat,ci)=>{
-    const s = getCatScore(currentRep,ci);
-    return `<div class="cb-item">
-      <div class="cb-item-name">${cat.name}</div>
-      <div class="cb-bar-row">
-        <div class="cb-bar"><div class="cb-fill" style="width:${s||0}%;background:${scoreColor(s)}"></div></div>
-        <span class="cb-val" style="color:${scoreColor(s)}">${s===null?'—':s+'%'}</span>
-      </div>
-    </div>`;
+  const ov=getOverall(cur);
+  const sc=document.getElementById('score-card');
+  sc.className='score-card '+scCls(ov);
+  document.getElementById('score-rep').textContent=reps[cur].name.toUpperCase();
+  document.getElementById('score-num').textContent=ov===null?'—':ov;
+  document.getElementById('score-num').style.color=scCol(ov);
+  const h=document.getElementById('score-headline'), d=document.getElementById('score-desc');
+  if(ov===null){h.textContent='Complete all four categories';d.innerHTML='Rate each criterion using 0, 1, or 2 to generate the scorecard.';}
+  else if(ov>=85){h.textContent='Consistent performer — standard held';d.innerHTML='This rep is running the system as designed. <strong>Their results are replicable.</strong> Use their pattern to reinforce the standard with the rest of the team.';}
+  else if(ov>=65){h.textContent='Mostly consistent — minor gaps to address';d.innerHTML='Generally solid but some criteria are inconsistent. <strong>Address the failing criteria at the standard level</strong> — not through individual coaching.';}
+  else if(ov>=45){h.textContent='Inconsistent — standard breaking down';d.innerHTML='Significant variance in execution. <strong>The standard is either unclear, too complex, or not enforced.</strong> Audit the standard before re-scoring.';}
+  else{h.textContent='Standard broken — system intervention required';d.innerHTML='<strong>The execution standard has failed for this rep.</strong> Review whether the standard is actually executable. Fix the process before re-scoring.';}
+  document.getElementById('score-breakdown').innerHTML=CATS.map((cat,ci)=>{
+    const s=getCatScore(cur,ci);
+    return`<div class="sb-item"><div class="sb-name">${cat.name}</div><div class="sb-bar-row"><div class="sb-bar"><div class="sb-fill" style="width:${s||0}%;background:${scCol(s)}"></div></div><span class="sb-val" style="color:${scCol(s)}">${s===null?'—':s+'%'}</span></div></div>`;
   }).join('');
-
-  // Team comparison
-  const cs = document.getElementById('compare-section');
+  const cs=document.getElementById('compare-section');
   if(reps.length>1){
     cs.style.display='block';
-    const rows = document.getElementById('compare-rows');
-    const sorted = reps.map((r,i)=>({...r,idx:i,score:getOverallScore(i)}))
-      .sort((a,b)=>(b.score||0)-(a.score||0));
-    rows.innerHTML = sorted.map(r=>`
-      <div class="ct-row" style="grid-template-columns:1fr 60px 120px 80px;cursor:pointer" onclick="switchRep(${r.idx})">
-        <span class="ct-name">${r.name}${r.idx===currentRep?' ←':''}</span>
-        <span class="ct-score" style="color:${scoreColor(r.score)}">${r.score===null?'—':r.score}</span>
-        <div class="ct-bar"><div class="ct-fill" style="width:${r.score||0}%;background:${scoreColor(r.score)}"></div></div>
-        <span class="ct-badge" style="background:${scoreColor(r.score)}22;color:${scoreColor(r.score)}">${scoreLabel(r.score)}</span>
+    const sorted=[...reps.map((r,i)=>({...r,i,s:getOverall(i)}))].sort((a,b)=>(b.s||0)-(a.s||0));
+    document.getElementById('compare-rows').innerHTML=sorted.map(r=>`
+      <div class="compare-row" onclick="switchRep(${r.i})">
+        <span class="cr-name">${r.name}${r.i===cur?' ←':''}</span>
+        <span class="cr-score" style="color:${scCol(r.s)}">${r.s===null?'—':r.s}</span>
+        <div class="cr-bar"><div class="cr-fill" style="width:${r.s||0}%;background:${scCol(r.s)}"></div></div>
+        <span class="cr-badge" style="background:${scCol(r.s)}22;color:${scCol(r.s)}">${scLbl(r.s)}</span>
       </div>`).join('');
-  } else {
-    cs.style.display='none';
-  }
+  } else cs.style.display='none';
 }
 
 function toggleCat(ci){
-  const body = document.getElementById('cat-body-'+ci);
-  const chev = document.getElementById('cat-chev-'+ci);
-  const isOpen = body.classList.contains('open');
-  body.style.display = isOpen?'none':'block';
-  body.classList.toggle('open',!isOpen);
-  chev.classList.toggle('open',!isOpen);
+  const b=document.getElementById('cbody-'+ci),ch=document.getElementById('cchev-'+ci);
+  const open=b.classList.contains('open');
+  b.style.display=open?'none':'block'; b.classList.toggle('open',!open); ch.classList.toggle('open',!open);
 }
 
 function resetRep(){
-  reps[currentRep].scores = CATS.map(c=>c.crits.map(()=>null));
-  switchRep(currentRep);
+  reps[cur].scores=CATS.map(c=>c.crits.map(()=>null));
+  switchRep(cur);
 }
 
 init();
