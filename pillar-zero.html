@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pillar 1 — Foundation | SDR Operating System</title>
-<meta property="og:title" content="Pillar 1 Foundation — SDR Operating System">
+<title>The Targeting Engine — Foundation | SDR Operating System</title>
+<meta property="og:title" content="The Targeting Engine Foundation — SDR Operating System">
 <meta property="og:description" content="Build the foundation before the four pillars run. ICP Definition, Account Sourcing, Tech Stack Readiness, Rep Onboarding Standard.">
 <meta property="og:image" content="https://wilberforcemoyo.github.io/sdr-tools/og_preview.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
@@ -172,16 +172,16 @@ border-radius:10px;padding:14px 16px;margin-bottom:16px;border-left:4px solid va
 
 <div class="nav">
   <span>SDR OS TOOLS:</span>
-  <a href="https://wilberforcemoyo.github.io/sdr-tools/">Signal Dashboard</a>
-  <a href="https://wilberforcemoyo.github.io/sdr-tools/input-control.html">Input Control</a>
-  <a href="https://wilberforcemoyo.github.io/sdr-tools/execution-scorecard.html">Execution Scorecard</a>
-  <a href="https://wilberforcemoyo.github.io/sdr-tools/rhythm-planner.html">Rhythm Planner</a>
+  <a href="https://wilberforcemoyo.github.io/sdr-tools/">The Signal Tower</a>
+  <a href="https://wilberforcemoyo.github.io/sdr-tools/input-control.html">The Gatekeeper</a>
+  <a href="https://wilberforcemoyo.github.io/sdr-tools/execution-scorecard.html">The Consistency Layer</a>
+  <a href="https://wilberforcemoyo.github.io/sdr-tools/rhythm-planner.html">The Diagnostic Cadence</a>
   <a href="https://wilberforcemoyo.github.io/sdr-tools/audit.html">Full Audit</a>
 </div>
 
 <div class="header">
-  <div class="header-tag">PILLAR 1 · SDR OPERATING SYSTEM</div>
-  <h1>Foundation<br><span>Builder</span></h1>
+  <div class="header-tag">SDR OPERATING SYSTEM</div>
+  <h1>The Targeting Engine<br><span>Builder</span></h1>
   <p class="header-sub">Build the infrastructure before the four pillars run. ICP, account sourcing, tech stack, and rep onboarding — all in one place.</p>
   <p class="header-author">Built by <strong>Wilberforce Moyo</strong> · 18 Years SDR Operations</p>
 </div>
@@ -308,7 +308,7 @@ border-radius:10px;padding:14px 16px;margin-bottom:16px;border-left:4px solid va
 
   <div class="callout amber">
     <div class="callout-label">HOW TO USE</div>
-    <div class="callout-text">Check each item that is in place. Skip items that do not apply to your current setup. The score tells you whether your sourcing infrastructure is ready to run Input Control.</div>
+    <div class="callout-text">Check each item that is in place. Skip items that do not apply to your current setup. The score tells you whether your sourcing infrastructure is ready to run The Gatekeeper.</div>
   </div>
 
   <div class="sec-label">Data sources</div>
@@ -687,14 +687,14 @@ const ONBOARDING={
   week1:[
     {t:'First 10 accounts sourced, both filters verified, and added to CRM',h:'Their first accounts must go through the filter process — no shortcuts',w:'Critical'},
     {t:'First sequence enrolled — minimum 3 accounts in active sequence by end of week',h:'Learning by doing — supervised, with manager review after first send',w:'Critical'},
-    {t:'First Execution Scorecard completed by manager',h:'Sets the baseline before habits form',w:'Critical'},
+    {t:'First The Consistency Layer completed by manager',h:'Sets the baseline before habits form',w:'Critical'},
     {t:'Attended one Monday pipeline composition review',h:'They must see the diagnostic cadence in action before running it themselves',w:'Standard'},
     {t:'Shadow call completed — listened to or participated in one live outbound call',h:'',w:'Standard'},
   ],
   day30:[
     {t:'Running their own accounts through both input filters independently',h:'No manager intervention needed for standard account qualification',w:'Critical'},
     {t:'Sequence abandonment rate below 20% — completing sequences to step 4',h:'',w:'Critical'},
-    {t:'Week 4 Execution Scorecard score at or above 65%',h:'Below 65% at week 4 means the standard needs adjustment, not just more coaching',w:'Critical'},
+    {t:'Week 4 The Consistency Layer score at or above 65%',h:'Below 65% at week 4 means the standard needs adjustment, not just more coaching',w:'Critical'},
     {t:'Attending and contributing to the Monday diagnostic review',h:'',w:'Standard'},
     {t:'First meeting booked — and qualification recorded in CRM at point of booking',h:'The qualification record at booking is the proof the process was followed',w:'Standard'},
   ]
@@ -778,9 +778,9 @@ function updateSourcingStatus(){
   const h=document.getElementById('sourcing-headline');
   const d=document.getElementById('sourcing-desc');
   const hasIntent=selectedIntentTool&&selectedIntentTool!=='Manual signals only';
-  if(overall>=80){sc.className='status-card ready';h.textContent='Account sourcing infrastructure is ready'+(hasIntent?' — ABM layer active':'');d.innerHTML='Data sources, signal monitoring, '+(hasIntent?'intent data, ':'')+'and list management are all in place. <strong>Input Control can run reliably on this foundation.</strong>';}
-  else if(overall>=60){sc.className='status-card partial';h.textContent='Partial readiness — gaps in sourcing infrastructure';d.innerHTML='Some sourcing components are missing. <strong>Address the Critical items before running Input Control at scale.</strong>'+(hasIntent?' Intent data is configured — complete the ABM checklist to maximise its value.':'');}
-  else{sc.className='status-card notready';h.textContent='Not ready — sourcing infrastructure needs work';d.innerHTML='<strong>Significant gaps in data sources or signal monitoring.</strong> Input Control will produce inconsistent results without fixing these first.';}
+  if(overall>=80){sc.className='status-card ready';h.textContent='Account sourcing infrastructure is ready'+(hasIntent?' — ABM layer active':'');d.innerHTML='Data sources, signal monitoring, '+(hasIntent?'intent data, ':'')+'and list management are all in place. <strong>The Gatekeeper can run reliably on this foundation.</strong>';}
+  else if(overall>=60){sc.className='status-card partial';h.textContent='Partial readiness — gaps in sourcing infrastructure';d.innerHTML='Some sourcing components are missing. <strong>Address the Critical items before running The Gatekeeper at scale.</strong>'+(hasIntent?' Intent data is configured — complete the ABM checklist to maximise its value.':'');}
+  else{sc.className='status-card notready';h.textContent='Not ready — sourcing infrastructure needs work';d.innerHTML='<strong>Significant gaps in data sources or signal monitoring.</strong> The Gatekeeper will produce inconsistent results without fixing these first.';}
 }
 
 function toggleTech(group,i,action){
@@ -833,7 +833,7 @@ function updateTechStatus(){
   }).join('');
   const sc=document.getElementById('tech-status'), h=document.getElementById('tech-headline'), d=document.getElementById('tech-desc');
   if(overall>=80){sc.className='status-card ready';h.textContent='Tech stack is ready — system can run';d.innerHTML='Core tools in place and configured. <strong>The four pillars can run on this stack.</strong>';}
-  else if(overall>=60){sc.className='status-card partial';h.textContent='Partial readiness — configuration gaps';d.innerHTML='Stack is partially ready. <strong>Complete the Critical configuration items before running Pillar 4 signal workflows.</strong>';}
+  else if(overall>=60){sc.className='status-card partial';h.textContent='Partial readiness — configuration gaps';d.innerHTML='Stack is partially ready. <strong>Complete the Critical configuration items before running The Diagnostic Cadence signal workflows.</strong>';}
   else{sc.className='status-card notready';h.textContent='Not ready — significant stack gaps';d.innerHTML='<strong>Core tools or critical configuration are missing.</strong> The signals cannot run reliably without fixing these first. See the HubSpot Integration Guide.';}
 }
 

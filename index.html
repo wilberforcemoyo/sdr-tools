@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta property="og:title" content="The SDR Operating System — Free Tool Suite">
-<meta property="og:description" content="5 free tools built around the 4-pillar framework. Signal Dashboard, Input Control, Execution Scorecard, Rhythm Planner, and Full Audit.">
+<meta property="og:description" content="5 free tools built around the 4-pillar framework. The Signal Tower, The Gatekeeper, The Consistency Layer, The Diagnostic Cadence, and Full Audit.">
 <meta property="og:image" content="https://wilberforcemoyo.github.io/sdr-tools/og_preview.png">
 <meta property="og:url" content="https://wilberforcemoyo.github.io/sdr-tools/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The 4-Signal Dashboard — SDR Operating System</title>
+<title>The 4-The Signal Tower — SDR Operating System</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -414,11 +414,11 @@
 </style>
 </head>
 <body>
-<div style="background:#060F1C;padding:10px 16px;text-align:center;font-family:DM Sans,sans-serif;font-size:12px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px"><span style="color:#475569;font-weight:600;letter-spacing:0.06em">SDR OS TOOLS:</span><a href="https://wilberforcemoyo.github.io/sdr-tools/pillar-zero.html" style="color:#94A3B8;text-decoration:none">Foundation</a><a href="https://wilberforcemoyo.github.io/sdr-tools/" style="color:#C9A84C;text-decoration:none">Signal Dashboard</a><a href="https://wilberforcemoyo.github.io/sdr-tools/input-control.html" style="color:#94A3B8;text-decoration:none">Input Control</a><a href="https://wilberforcemoyo.github.io/sdr-tools/execution-scorecard.html" style="color:#94A3B8;text-decoration:none">Execution Scorecard</a><a href="https://wilberforcemoyo.github.io/sdr-tools/rhythm-planner.html" style="color:#94A3B8;text-decoration:none">Rhythm Planner</a><a href="https://wilberforcemoyo.github.io/sdr-tools/audit.html" style="color:#94A3B8;text-decoration:none">Full Audit</a></div>
+<div style="background:#060F1C;padding:10px 16px;text-align:center;font-family:DM Sans,sans-serif;font-size:12px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px"><span style="color:#475569;font-weight:600;letter-spacing:0.06em">SDR OS TOOLS:</span><a href="https://wilberforcemoyo.github.io/sdr-tools/pillar-zero.html" style="color:#94A3B8;text-decoration:none">The Targeting Engine</a><a href="https://wilberforcemoyo.github.io/sdr-tools/" style="color:#C9A84C;text-decoration:none">The Signal Tower</a><a href="https://wilberforcemoyo.github.io/sdr-tools/input-control.html" style="color:#94A3B8;text-decoration:none">The Gatekeeper</a><a href="https://wilberforcemoyo.github.io/sdr-tools/execution-scorecard.html" style="color:#94A3B8;text-decoration:none">The Consistency Layer</a><a href="https://wilberforcemoyo.github.io/sdr-tools/rhythm-planner.html" style="color:#94A3B8;text-decoration:none">The Diagnostic Cadence</a><a href="https://wilberforcemoyo.github.io/sdr-tools/audit.html" style="color:#94A3B8;text-decoration:none">Full Audit</a></div>
 
 <!-- HEADER -->
 <div class="header">
-  <div class="header-tag">THE SDR OPERATING SYSTEM · PILLAR 5</div>
+  <div class="header-tag">THE SDR OPERATING SYSTEM · THE SIGNAL TOWER</div>
   <h1>The 4-Signal<br><span>Early Warning</span> Dashboard</h1>
   <p class="header-sub">Enter your numbers. Find out which pillar is failing before it hits the forecast.</p>
   <p class="header-author">Built by <strong>Wilberforce Moyo</strong> · 18 Years SDR Operations</p>
@@ -564,8 +564,8 @@ const cfg = [
   {
     threshold: 15, direction: 'above',
     name: 'Account Re-Entry Rate',
-    pillar: 'Input Control',
-    alertMsg: 'FIRED — Input Control failing',
+    pillar: 'The Gatekeeper',
+    alertMsg: 'FIRED — The Gatekeeper failing',
     safeMsg: 'Holding — filters are working',
     action: '<strong>Stop sequences immediately.</strong> Audit your filter criteria. Identify which accounts are re-entering and who is adding them.',
     barColor: '#EF4444',
@@ -597,7 +597,7 @@ const cfg = [
     pillar: 'Quality',
     alertMsg: 'FIRED — Volume hiding a quality gap',
     safeMsg: 'Healthy — conversion above threshold',
-    action: '<strong>Do not chase more meetings.</strong> Trace back to Input Control — the problem started before the meeting was booked.',
+    action: '<strong>Do not chase more meetings.</strong> Trace back to The Gatekeeper — the problem started before the meeting was booked.',
     barColor: '#EF4444',
     safeColor: '#10B981'
   }
@@ -684,7 +684,7 @@ function renderVerdict() {
     desc.innerHTML = 'Two signals fired. The system is under stress. The first failure is almost certainly feeding the second. Start at the upstream signal.';
   } else {
     vEl.className = 'verdict danger';
-    desc.innerHTML = '<strong>Three or more signals fired.</strong> This is a structural problem. Start at Input Control — every other pillar runs on the quality of what enters the workflow.';
+    desc.innerHTML = '<strong>Three or more signals fired.</strong> This is a structural problem. Start at The Gatekeeper — every other pillar runs on the quality of what enters the workflow.';
   }
 
   const pBox = document.getElementById('priority-box');

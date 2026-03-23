@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta property="og:title" content="Input Control Filter — SDR Operating System">
+<meta property="og:title" content="The Gatekeeper — SDR Operating System">
 <meta property="og:description" content="Check every account against both filters before it enters a sequence. Free tool by Wilberforce Moyo.">
 <meta property="og:image" content="https://wilberforcemoyo.github.io/sdr-tools/og_preview.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://wilberforcemoyo.github.io/sdr-tools/input-control.html">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Input Control Filter — SDR Operating System</title>
+<title>The Gatekeeper — SDR Operating System</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -160,17 +160,17 @@
 
 <div class="nav">
   <span>SDR OS TOOLS:</span>
-  <a href="https://wilberforcemoyo.github.io/sdr-tools/pillar-zero.html">Foundation</a>
-  <a href="https://wilberforcemoyo.github.io/sdr-tools/">Signal Dashboard</a>
-  <a href="https://wilberforcemoyo.github.io/sdr-tools/input-control.html" class="active">Input Control</a>
-  <a href="https://wilberforcemoyo.github.io/sdr-tools/execution-scorecard.html">Execution Scorecard</a>
-  <a href="https://wilberforcemoyo.github.io/sdr-tools/rhythm-planner.html">Rhythm Planner</a>
+  <a href="https://wilberforcemoyo.github.io/sdr-tools/pillar-zero.html">The Targeting Engine</a>
+  <a href="https://wilberforcemoyo.github.io/sdr-tools/">The Signal Tower</a>
+  <a href="https://wilberforcemoyo.github.io/sdr-tools/input-control.html" class="active">The Gatekeeper</a>
+  <a href="https://wilberforcemoyo.github.io/sdr-tools/execution-scorecard.html">The Consistency Layer</a>
+  <a href="https://wilberforcemoyo.github.io/sdr-tools/rhythm-planner.html">The Diagnostic Cadence</a>
   <a href="https://wilberforcemoyo.github.io/sdr-tools/audit.html">Full Audit</a>
 </div>
 
 <div class="header">
-  <div class="header-tag">PILLAR 2 · SDR OPERATING SYSTEM</div>
-  <h1>Input Control<br><span>Filter Tool</span></h1>
+  <div class="header-tag">SDR OPERATING SYSTEM</div>
+  <h1>The Gatekeeper<br><span>Filter Tool</span></h1>
   <p class="header-sub">Score every account against both filters before it enters a sequence. Fail either filter — the account does not enter.</p>
   <p class="header-author">Built by <strong>Wilberforce Moyo</strong> · 18 Years SDR Operations</p>
 </div>
@@ -273,7 +273,7 @@
 
   <div class="cta">
     <div class="cta-tag">SDR OPERATIONS AUDIT · $4,500 – $12,000</div>
-    <div class="cta-title">Is Input Control holding across your whole team?</div>
+    <div class="cta-title">Is The Gatekeeper holding across your whole team?</div>
     <div class="cta-desc">The SDR Operations Audit diagnoses all four pillars at the system level — not just one account. Find out exactly which pillar is causing pipeline unpredictability.</div>
     <a href="https://linkedin.com/in/wilberforce-moyo-236543256" target="_blank" class="cta-btn">Work with Wilberforce →</a>
   </div>
@@ -334,7 +334,7 @@ function updateVerdict(){
   const d=document.getElementById('v-desc');
   if(s0==='na'&&s1==='na'){v.className='verdict';ring.style.stroke='#E2E8F0';h.textContent='Evaluate both filters';d.innerHTML='Check all signals that apply. <strong>Both filters must pass</strong> for the account to enter the workflow.';return;}
   if(s0==='fail'||s1==='fail'){v.className='verdict fail';ring.style.stroke='var(--red)';h.textContent=acct+' — Do not enter sequence';d.innerHTML=s0==='fail'&&s1!=='fail'?'<strong>Filter 1 failed.</strong> No verified evidence the problem is active now. Sequencing this account wastes rep time and pollutes the pipeline.':s1==='fail'&&s0!=='fail'?'<strong>Filter 2 failed.</strong> A required reachability condition is not met. The account cannot be sequenced until a valid contact path exists.':'<strong>Both filters failed.</strong> Remove this account. Do not re-enter until conditions change.';return;}
-  if(s0==='pass'&&s1==='pass'){v.className='verdict pass';ring.style.stroke='var(--green)';h.textContent=acct+' — Cleared to enter sequence';d.innerHTML='Both filters passed. This account meets the Input Control standard. <strong>Map the sequence step to the reachability signal identified in Filter 2.</strong>';return;}
+  if(s0==='pass'&&s1==='pass'){v.className='verdict pass';ring.style.stroke='var(--green)';h.textContent=acct+' — Cleared to enter sequence';d.innerHTML='Both filters passed. This account meets the The Gatekeeper standard. <strong>Map the sequence step to the reachability signal identified in Filter 2.</strong>';return;}
   v.className='verdict weak';ring.style.stroke='var(--amber)';h.textContent=acct+' — Weak signal confidence';d.innerHTML='Filters are technically passing but signal confidence is low. <strong>Hold until you can verify at least one more strong signal.</strong>';
 }
 
