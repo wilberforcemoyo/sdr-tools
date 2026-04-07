@@ -241,6 +241,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .print-header{display:none;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid #0E1E35}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 <div style="background:#F8FAFC;padding:12px 24px;border-bottom:1px solid #E2E8F0;font-size:12px;color:#64748B;font-family:DM Sans,sans-serif">
@@ -361,7 +362,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="actions">
     <button class="btn" onclick="resetAll()">Reset audit</button>
     <button class="btn btn-primary" onclick="window.open('https://wilberforcemoyo.github.io/sdr-tools/','_blank')">Signal dashboard</button>
-    <button class="btn btn-report show" id="report-btn" onclick="printReport()" style="display:none">Generate detailed report for leadership →</button>
+    <button class="btn btn-report show" id="report-btn" onclick="printReport()" title="Download PDF diagnostic report" style="display:none">Generate detailed report for leadership →</button>
   </div>
 
   <div class="cta-card">
@@ -736,14 +737,217 @@ function togglePillar(pi){
 }
 
 function printReport(){
-  PILLARS.forEach((_,pi)=>{const b=document.getElementById(`pb-${pi}`);if(b){b.style.display='block';b.classList.add('open');}});
-  const co=document.getElementById('co').value.trim()||'SDR Team';
-  const scores=PILLARS.map((_,pi)=>getPillarScore(pi));
-  const rated=scores.filter(s=>s!==null);
-  const overall=rated.length?Math.round(rated.reduce((a,b)=>a+b,0)/rated.length):'—';
-  document.getElementById('print-meta').textContent=co+' · Overall Score: '+overall+'% · Generated '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})+' · Wilberforce Moyo — The SDR Operating System';
-  window.print();
+  // Expand all pillar sections first
+  PILLARS.forEach((_,pi)=>{const b=document.getElementById('pb-'+pi);if(b){b.style.display='block';b.classList.add('open');}});
+  
+  const co = document.getElementById('co').value.trim() || 'SDR Team';
+  const teamSize = document.getElementById('team-size')?.value || '';
+  const scores = PILLARS.map((_,pi) => getPillarScore(pi));
+  const rated = scores.filter(s => s !== null);
+  const overall = rated.length ? Math.round(rated.reduce((a,b)=>a+b,0)/rated.length) : null;
+  const today = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  
+  // Update print meta
+  const meta = document.getElementById('print-meta');
+  if(meta) meta.textContent = co + ' · Overall Score: ' + (overall||'—') + '% · Generated ' + today + ' · Wilberforce Moyo · The SDR Operating System';
+  
+  // Try jsPDF first, fallback to window.print
+  if(typeof window.jspdf !== 'undefined' || typeof jspdf !== 'undefined') {
+    generatePDF(co, scores, overall, today, teamSize);
+  } else {
+    window.print();
+  }
 }
+
+function generatePDF(co, scores, overall, today, teamSize){
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
+    const W = 210, M = 20;
+    let y = M;
+    
+    // Header band
+    doc.setFillColor(14,30,53);
+    doc.rect(0,0,W,28,'F');
+    doc.setFillColor(201,168,76);
+    doc.rect(0,0,W,2,'F');
+    
+    doc.setTextColor(240,246,252);
+    doc.setFontSize(16);
+    doc.setFont('helvetica','bold');
+    doc.text('THE SDR OPERATING SYSTEM', M, 12);
+    doc.setFontSize(10);
+    doc.setFont('helvetica','normal');
+    doc.setTextColor(201,168,76);
+    doc.text('Full Diagnostic Report', M, 20);
+    
+    // Date right aligned
+    doc.setTextColor(148,163,184);
+    doc.setFontSize(9);
+    doc.text(today, W-M, 20, {align:'right'});
+    
+    y = 38;
+    
+    // Company + score
+    doc.setTextColor(15,23,42);
+    doc.setFontSize(22);
+    doc.setFont('helvetica','bold');
+    doc.text(co, M, y);
+    y += 10;
+    
+    if(teamSize){
+      doc.setFontSize(11);
+      doc.setFont('helvetica','normal');
+      doc.setTextColor(100,116,139);
+      doc.text('Team size: ' + teamSize + ' SDRs', M, y);
+      y += 8;
+    }
+    
+    // Overall score box
+    const scoreCol = overall >= 70 ? [16,185,129] : overall >= 50 ? [217,119,6] : [220,38,38];
+    doc.setFillColor(...scoreCol);
+    doc.roundedRect(M, y, 50, 22, 3, 3, 'F');
+    doc.setTextColor(255,255,255);
+    doc.setFontSize(18);
+    doc.setFont('helvetica','bold');
+    doc.text((overall||'—')+'%', M+25, y+10, {align:'center'});
+    doc.setFontSize(8);
+    doc.setFont('helvetica','normal');
+    doc.text('OVERALL SCORE', M+25, y+17, {align:'center'});
+    
+    // Score label
+    const label = overall >= 70 ? 'OPERATING — SYSTEM HEALTHY' : overall >= 50 ? 'AT RISK — NEEDS ATTENTION' : 'BROKEN — IMMEDIATE ACTION REQUIRED';
+    doc.setTextColor(...scoreCol);
+    doc.setFontSize(11);
+    doc.setFont('helvetica','bold');
+    doc.text(label, M+56, y+13);
+    
+    y += 32;
+    
+    // Divider
+    doc.setDrawColor(226,232,240);
+    doc.line(M, y, W-M, y);
+    y += 8;
+    
+    // Pillar scores
+    doc.setFontSize(13);
+    doc.setFont('helvetica','bold');
+    doc.setTextColor(14,30,53);
+    doc.text('Five-Pillar Diagnostic', M, y);
+    y += 8;
+    
+    const pillarNames = ['The Gatekeeper','The Consistency Layer','The Diagnostic Cadence','The Signal Tower','The Targeting Engine'];
+    
+    scores.forEach((score, i) => {
+      if(y > 250) { doc.addPage(); y = M; }
+      
+      const pName = PILLARS[i]?.name || pillarNames[i] || 'Pillar '+(i+1);
+      const pScore = score !== null ? score : null;
+      const pCol = pScore === null ? [148,163,184] : pScore >= 70 ? [16,185,129] : pScore >= 50 ? [217,119,6] : [220,38,38];
+      const pStatus = pScore === null ? 'NOT SCORED' : pScore >= 70 ? 'HEALTHY' : pScore >= 50 ? 'AT RISK' : 'BROKEN';
+      
+      // Card background
+      doc.setFillColor(248,250,252);
+      doc.roundedRect(M, y, W-2*M, 22, 2, 2, 'F');
+      doc.setDrawColor(...pCol);
+      doc.roundedRect(M, y, W-2*M, 22, 2, 2, 'S');
+      
+      // Left accent
+      doc.setFillColor(...pCol);
+      doc.rect(M, y, 3, 22, 'F');
+      
+      // Pillar name
+      doc.setTextColor(15,23,42);
+      doc.setFontSize(11);
+      doc.setFont('helvetica','bold');
+      doc.text(pName, M+8, y+9);
+      
+      // Score
+      if(pScore !== null){
+        doc.setFillColor(...pCol);
+        doc.roundedRect(W-M-28, y+4, 28, 14, 2, 2, 'F');
+        doc.setTextColor(255,255,255);
+        doc.setFontSize(12);
+        doc.setFont('helvetica','bold');
+        doc.text(pScore+'%', W-M-14, y+13, {align:'center'});
+      }
+      
+      // Status
+      doc.setTextColor(...pCol);
+      doc.setFontSize(8);
+      doc.setFont('helvetica','normal');
+      doc.text(pStatus, M+8, y+17);
+      
+      // Fix action if broken
+      if(pScore !== null && pScore < 50 && PILLARS[i]?.fix){
+        y += 24;
+        if(y > 255) { doc.addPage(); y = M; }
+        doc.setFillColor(255,245,245);
+        doc.roundedRect(M, y, W-2*M, 14, 2, 2, 'F');
+        doc.setTextColor(185,28,28);
+        doc.setFontSize(8);
+        doc.setFont('helvetica','normal');
+        const fixText = doc.splitTextToSize('Fix: ' + PILLARS[i].fix.substring(0,120) + '...', W-2*M-10);
+        doc.text(fixText[0], M+5, y+6);
+        doc.text(fixText[1]||'', M+5, y+11);
+      }
+      
+      y += 28;
+    });
+    
+    // Financial cost section
+    const meetings = parseInt(document.getElementById('meetings')?.value || 0);
+    const dealVal = parseInt(document.getElementById('deal-value')?.value || 0);
+    if(meetings > 0 && dealVal > 0 && overall !== null){
+      if(y > 230) { doc.addPage(); y = M; }
+      doc.setDrawColor(226,232,240);
+      doc.line(M, y, W-M, y);
+      y += 8;
+      
+      doc.setFontSize(13);
+      doc.setFont('helvetica','bold');
+      doc.setTextColor(14,30,53);
+      doc.text('Financial Impact of Variance', M, y);
+      y += 10;
+      
+      const wastedMeetings = Math.round(meetings * (1 - overall/100) * 0.4);
+      const costOfVariance = wastedMeetings * dealVal;
+      
+      doc.setFillColor(255,245,245);
+      doc.roundedRect(M, y, W-2*M, 20, 3, 3, 'F');
+      doc.setDrawColor(220,38,38);
+      doc.roundedRect(M, y, W-2*M, 20, 3, 3, 'S');
+      doc.setTextColor(185,28,28);
+      doc.setFontSize(14);
+      doc.setFont('helvetica','bold');
+      doc.text('$' + costOfVariance.toLocaleString() + '/month estimated pipeline loss', M+8, y+9);
+      doc.setFontSize(9);
+      doc.setFont('helvetica','normal');
+      doc.text('Based on ' + wastedMeetings + ' wasted meetings × $' + dealVal.toLocaleString() + ' ACV', M+8, y+16);
+      y += 28;
+    }
+    
+    // Footer
+    doc.setFillColor(14,30,53);
+    doc.rect(0,282,W,15,'F');
+    doc.setFillColor(201,168,76);
+    doc.rect(0,282,W,1.5,'F');
+    doc.setTextColor(148,163,184);
+    doc.setFontSize(8);
+    doc.setFont('helvetica','normal');
+    doc.text('Wilberforce Moyo · Outbound Systems Engineer · The SDR Operating System', M, 290);
+    doc.setTextColor(201,168,76);
+    doc.text('sdroperatingsystem.netlify.app', W-M, 290, {align:'right'});
+    
+    doc.save('SDR-OS-Audit-' + co.replace(/\s+/g,'-') + '-' + today.replace(/\s+/g,'-') + '.pdf');
+    
+  } catch(err) {
+    console.error('PDF generation failed:', err);
+    window.print();
+  }
+}
+
+
 
 function resetAll(){
   if(!confirm('Reset all audit scores?'))return;

@@ -415,6 +415,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+<div id="restore-banner" style="display:none;background:#ECFDF5;border-bottom:2px solid #10B981;padding:10px 24px;font-family:DM Sans,sans-serif;font-size:13px;color:#065F46;align-items:center;gap:12px">
+  <span>&#8635; Previous session restored.</span>
+  <button onclick="document.getElementById('restore-banner').style.display='none'" style="background:none;border:none;cursor:pointer;color:#065F46;font-size:16px;line-height:1">&#x2715;</button>
+</div>
 <div style="background:#F8FAFC;padding:12px 24px;border-bottom:1px solid #E2E8F0;font-size:12px;color:#64748B;font-family:DM Sans,sans-serif">
   ← <a href="https://sdroperatingsystem.netlify.app" style="color:#0E1E35;text-decoration:none;font-weight:600">sdroperatingsystem.netlify.app</a>
   <span style="margin:0 8px;color:#CBD5E1">·</span>
@@ -446,7 +450,19 @@
   <div class="signal-grid" id="signal-grid">
 
     <!-- SIGNAL 01 -->
-    <div class="signal-card" id="card-0">
+    
+<div style="text-align:center;margin:0 0 20px 0">
+  <button id="benchmark-btn" onclick="toggleBenchmark()" style="
+    font-family:DM Sans,sans-serif;font-size:13px;font-weight:600;
+    padding:10px 22px;border-radius:8px;cursor:pointer;
+    background:#F8FAFC;color:#0E1E35;border:2px solid #E2E8F0;
+    transition:all 0.2s;letter-spacing:0.02em;
+  ">Compare with Industry Average</button>
+  <div style="font-size:11px;color:#94A3B8;margin-top:6px;font-family:DM Sans,sans-serif">
+    Shows B2B SaaS benchmark for each signal (gold marker)
+  </div>
+</div>
+<div class="signal-card" id="card-0">
       <div class="sig-tag">
         <span>SIGNAL 01 · INPUT CONTROL</span>
         <span class="fires-badge">Mon AM</span>
@@ -620,9 +636,10 @@ function update(i) {
   vals[i] = raw === '' ? null : Math.min(100, Math.max(0, parseInt(raw, 10)));
   render(i);
   renderVerdict();
+  saveState();
 }
 
-function render(i) {
+function render(i) { setTimeout(()=>{ if(typeof renderBenchmark!=="undefined" && benchmarkVisible) renderBenchmark(i); },10);
   const v = vals[i];
   const s = cfg[i];
   const card = document.getElementById('card-' + i);
@@ -655,6 +672,7 @@ function render(i) {
   }
 }
 
+function _renderBenchmarkAll(){ if(benchmarkVisible) for(let i=0;i<4;i++) renderBenchmark(i); }
 function renderVerdict() {
   const entered = vals.filter(v => v !== null && !isNaN(v));
   if (entered.length === 0) {
@@ -724,6 +742,103 @@ function resetAll() {
   }
   renderVerdict();
 }
+</script>
+<script>loadState();
+// ── BENCHMARK TOGGLE ──
+const industryBenchmarks = [
+  { label: 'Industry avg', value: 19, desc: 'Most teams: 18–22%' },
+  { label: 'Industry avg', value: 31, desc: 'Most teams: 28–35%' },
+  { label: 'Industry avg', value: 55, desc: 'Most teams: 52–58%' },
+  { label: 'Industry avg', value: 31, desc: 'Most teams: 28–35%' },
+];
+
+let benchmarkVisible = false;
+
+function toggleBenchmark(){
+  benchmarkVisible = !benchmarkVisible;
+  const btn = document.getElementById('benchmark-btn');
+  if(btn){
+    btn.textContent = benchmarkVisible ? 'Hide Industry Average' : 'Compare with Industry Average';
+    btn.style.background = benchmarkVisible ? '#0E1E35' : '';
+    btn.style.color = benchmarkVisible ? '#C9A84C' : '';
+    btn.style.borderColor = benchmarkVisible ? '#C9A84C' : '';
+  }
+  for(let i=0; i<4; i++) renderBenchmark(i);
+}
+
+function renderBenchmark(i){
+  const bm = industryBenchmarks[i];
+  let marker = document.getElementById('bm-marker-' + i);
+  let bmLabel = document.getElementById('bm-label-' + i);
+
+  if(!marker){
+    const barWrap = document.querySelector('#card-' + i + ' .bar-wrap');
+    if(!barWrap) return;
+    marker = document.createElement('div');
+    marker.id = 'bm-marker-' + i;
+    marker.style.cssText = 'position:absolute;top:0;bottom:0;width:3px;background:#C9A84C;opacity:0;transition:opacity 0.3s;z-index:4;';
+    barWrap.style.position = 'relative';
+    barWrap.appendChild(marker);
+
+    bmLabel = document.createElement('div');
+    bmLabel.id = 'bm-label-' + i;
+    bmLabel.style.cssText = 'position:absolute;top:-22px;transform:translateX(-50%);font-size:10px;font-weight:700;color:#C9A84C;opacity:0;transition:opacity 0.3s;white-space:nowrap;font-family:DM Sans,sans-serif;background:#fff;padding:2px 4px;border-radius:4px;border:1px solid #C9A84C;';
+    bmLabel.textContent = bm.label + ': ' + bm.value + '%';
+    barWrap.appendChild(bmLabel);
+  }
+
+  const pct = Math.min(100, bm.value);
+  marker.style.left = pct + '%';
+  bmLabel.style.left = pct + '%';
+  marker.style.opacity = benchmarkVisible ? '1' : '0';
+  bmLabel.style.opacity = benchmarkVisible ? '1' : '0';
+
+  // Show comparison text
+  let compEl = document.getElementById('bm-compare-' + i);
+  if(!compEl){
+    const card = document.getElementById('card-' + i);
+    if(!card) return;
+    compEl = document.createElement('div');
+    compEl.id = 'bm-compare-' + i;
+    compEl.style.cssText = 'font-size:12px;margin-top:6px;padding:6px 10px;border-radius:6px;font-family:DM Sans,sans-serif;display:none;';
+    const statusEl = card.querySelector('.sig-result');
+    if(statusEl) statusEl.after(compEl);
+  }
+
+  if(benchmarkVisible && vals[i] !== null){
+    const v = vals[i];
+    const bv = bm.value;
+    const diff = v - bv;
+    const absDiff = Math.abs(diff);
+    const isAbove = cfg[i].direction === 'above';
+
+    let comparison, bgCol, textCol;
+    if(isAbove){
+      // Lower is better (Re-Entry, Abandonment)
+      if(diff < -5){ comparison = '▼ ' + absDiff + '% below industry average — better than most teams'; bgCol='#D1FAE5'; textCol='#065F46'; }
+      else if(diff > 5){ comparison = '▲ ' + absDiff + '% above industry average — worse than most teams'; bgCol='#FEE2E2'; textCol='#991B1B'; }
+      else { comparison = '≈ In line with industry average (' + bm.desc + ')'; bgCol='#FEF3C7'; textCol='#92400E'; }
+    } else {
+      // Higher is better (Composition, Meeting-to-Opp)
+      if(diff > 5){ comparison = '▲ ' + absDiff + '% above industry average — better than most teams'; bgCol='#D1FAE5'; textCol='#065F46'; }
+      else if(diff < -5){ comparison = '▼ ' + absDiff + '% below industry average — worse than most teams'; bgCol='#FEE2E2'; textCol='#991B1B'; }
+      else { comparison = '≈ In line with industry average (' + bm.desc + ')'; bgCol='#FEF3C7'; textCol='#92400E'; }
+    }
+
+    compEl.style.display = 'block';
+    compEl.style.background = bgCol;
+    compEl.style.color = textCol;
+    compEl.textContent = comparison;
+  } else {
+    compEl.style.display = 'none';
+  }
+}
+
+// Hook into existing update() to refresh benchmark display
+const _origUpdate = update;
+// Patch: after render, refresh benchmarks
+const _origRenderVerdict = renderVerdict;
+
 </script>
 </body>
 </html>

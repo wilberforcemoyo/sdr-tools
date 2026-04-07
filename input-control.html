@@ -154,6 +154,34 @@
   .footer-catchphrase { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--gold); margin-bottom: 6px; }
   .footer-name { font-size: 13px; color: #475569; }
   .footer-name strong { color: #94A3B8; }
+
+/* ── LLM SCORER ── */
+.llm-panel{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;padding:24px;margin-bottom:20px}
+.llm-panel-title{font-size:14px;font-weight:700;color:#0E1E35;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.llm-badge{font-size:10px;font-weight:700;background:#C9A84C;color:#0E1E35;padding:2px 8px;border-radius:20px;letter-spacing:0.06em}
+.llm-panel-sub{font-size:12px;color:#64748B;margin-bottom:14px}
+.llm-textarea{width:100%;min-height:80px;border:1px solid #E2E8F0;border-radius:8px;padding:10px 12px;font-family:DM Sans,sans-serif;font-size:13px;color:#0E1E35;resize:vertical;outline:none;transition:border-color 0.2s;background:#fff;box-sizing:border-box}
+.llm-textarea:focus{border-color:#C9A84C}
+.llm-textarea::placeholder{color:#94A3B8}
+.llm-row{display:flex;gap:10px;margin-top:10px;align-items:flex-start}
+.llm-api-input{flex:1;border:1px solid #E2E8F0;border-radius:8px;padding:9px 12px;font-family:DM Sans,sans-serif;font-size:12px;color:#0E1E35;outline:none;background:#fff;transition:border-color 0.2s}
+.llm-api-input:focus{border-color:#C9A84C}
+.llm-api-input::placeholder{color:#94A3B8}
+.llm-btn{background:#0E1E35;color:#F0F6FC;border:none;border-radius:8px;padding:9px 18px;font-family:DM Sans,sans-serif;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity 0.2s}
+.llm-btn:hover{opacity:0.85}
+.llm-btn:disabled{opacity:0.5;cursor:not-allowed}
+.llm-result{margin-top:14px;border-radius:10px;overflow:hidden;display:none}
+.llm-result-header{padding:12px 16px;display:flex;align-items:center;gap:12px}
+.llm-score-badge{font-size:22px;font-weight:700;min-width:40px;text-align:center}
+.llm-score-label{font-size:13px;font-weight:600}
+.llm-score-sub{font-size:12px;opacity:0.8;margin-top:2px}
+.llm-reasoning{padding:12px 16px;font-size:13px;line-height:1.65;border-top:1px solid rgba(255,255,255,0.15)}
+.llm-apply-btn{display:block;width:100%;margin-top:10px;background:#0E1E35;color:#C9A84C;border:none;border-radius:8px;padding:9px;font-family:DM Sans,sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:opacity 0.2s;text-align:center}
+.llm-apply-btn:hover{opacity:0.85}
+.llm-error{background:#FEE2E2;color:#991B1B;border-radius:8px;padding:10px 14px;font-size:13px;margin-top:10px;display:none}
+.llm-loading{text-align:center;padding:16px;color:#64748B;font-size:13px;display:none}
+.llm-key-note{font-size:11px;color:#94A3B8;margin-top:6px}
+
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&display=swap" rel="stylesheet">
 </head>
@@ -190,6 +218,38 @@
   <div class="account-bar">
     <label>Account name</label>
     <input type="text" id="acct" placeholder="e.g. Acme Corp" oninput="updateVerdict()">
+  </div>
+
+
+  <!-- LLM PROBLEM LIKELIHOOD SCORER -->
+  <div class="llm-panel" id="llm-panel">
+    <div class="llm-panel-title">
+      AI Problem Likelihood Scorer
+      <span class="llm-badge">BETA</span>
+    </div>
+    <div class="llm-panel-sub">Paste a LinkedIn post, company update, or description. Claude scores Problem Likelihood 1–5 with reasoning — before you open the account.</div>
+
+    <textarea class="llm-textarea" id="llm-input" placeholder="Paste a LinkedIn post, hiring description, or company update about this account...&#10;&#10;Example: 'We just hired our 5th SDR and pipeline is still inconsistent. Looking for RevOps help...'"></textarea>
+
+    <div class="llm-row">
+      <input class="llm-api-input" type="password" id="llm-api-key" placeholder="Anthropic API key (sk-ant-...)" autocomplete="off">
+      <button class="llm-btn" id="llm-btn" onclick="scoreProblemLikelihood()">Score with AI</button>
+    </div>
+    <div class="llm-key-note">Your API key is used only in your browser — never stored or sent to any server other than Anthropic. <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:#C9A84C">Get a key →</a></div>
+
+    <div class="llm-loading" id="llm-loading">Analysing signal strength...</div>
+    <div class="llm-error" id="llm-error"></div>
+    <div class="llm-result" id="llm-result">
+      <div class="llm-result-header" id="llm-result-header">
+        <div class="llm-score-badge" id="llm-score-badge"></div>
+        <div>
+          <div class="llm-score-label" id="llm-score-label"></div>
+          <div class="llm-score-sub" id="llm-score-sub"></div>
+        </div>
+      </div>
+      <div class="llm-reasoning" id="llm-reasoning"></div>
+    </div>
+    <button class="llm-apply-btn" id="llm-apply-btn" style="display:none" onclick="applyLLMScore()">Apply this score to Filter 2 →</button>
   </div>
 
   <!-- FILTER 1 -->
@@ -360,6 +420,179 @@ function resetAll(){
   for(let f=0;f<2;f++)updateFilter(f);
   updateVerdict();
 }
+</script>
+<script>
+
+// ── LLM PROBLEM LIKELIHOOD SCORER ──
+let llmLastScore = null;
+
+// Save/restore API key in sessionStorage (not localStorage — more secure)
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = sessionStorage.getItem('sdros_api_key');
+  if(saved) document.getElementById('llm-api-key').value = saved;
+});
+
+async function scoreProblemLikelihood(){
+  const input = document.getElementById('llm-input').value.trim();
+  const apiKey = document.getElementById('llm-api-key').value.trim();
+  const acct = document.getElementById('acct').value.trim() || 'this account';
+
+  if(!input){ showLLMError('Please paste some text about the account first.'); return; }
+  if(!apiKey){ showLLMError('Please enter your Anthropic API key.'); return; }
+  if(!apiKey.startsWith('sk-')){ showLLMError('API key should start with sk-ant-... or sk-'); return; }
+
+  // Save key for session
+  try{ sessionStorage.setItem('sdros_api_key', apiKey); }catch(e){}
+
+  const btn = document.getElementById('llm-btn');
+  const loading = document.getElementById('llm-loading');
+  const errorEl = document.getElementById('llm-error');
+  const resultEl = document.getElementById('llm-result');
+  const applyBtn = document.getElementById('llm-apply-btn');
+
+  btn.disabled = true;
+  loading.style.display = 'block';
+  errorEl.style.display = 'none';
+  resultEl.style.display = 'none';
+  applyBtn.style.display = 'none';
+
+  const prompt = `You are an SDR Operations expert analysing whether a B2B SaaS account has an active problem that makes them worth outbounding right now.
+
+Account: ${acct}
+
+Text to analyse:
+${input}
+
+Score the Problem Likelihood on a scale of 1 to 5:
+1 = No signal. ICP fit only. No evidence of an active problem.
+2 = Weak signal. Possible fit but no urgency indicators.
+3 = Moderate signal. Some evidence of relevant pain but not verified.
+4 = Strong signal. Clear evidence of active problem in buying window.
+5 = Very strong signal. Explicit pain, urgency, and timing match.
+
+Respond ONLY with valid JSON in this exact format:
+{
+  "score": <number 1-5>,
+  "label": "<one short label e.g. Strong Signal>",
+  "summary": "<one sentence: what the signal is>",
+  "reasoning": "<2-3 sentences: what evidence you found and why this score>",
+  "recommendation": "<Pass / Weak / Fail — should this account enter a sequence now?>"
+}`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 400,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if(!response.ok){
+      const err = await response.json().catch(()=>({}));
+      throw new Error(err.error?.message || 'API request failed (status ' + response.status + ')');
+    }
+
+    const data = await response.json();
+    const text = data.content?.[0]?.text || '';
+
+    // Parse JSON from response
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if(!jsonMatch) throw new Error('Could not parse AI response. Please try again.');
+    const result = JSON.parse(jsonMatch[0]);
+
+    llmLastScore = result;
+    displayLLMResult(result);
+
+  } catch(err) {
+    showLLMError(err.message || 'Something went wrong. Check your API key and try again.');
+  } finally {
+    btn.disabled = false;
+    loading.style.display = 'none';
+  }
+}
+
+function displayLLMResult(result){
+  const score = result.score;
+  const colors = {
+    1: { bg:'#FEE2E2', text:'#991B1B', border:'#EF4444' },
+    2: { bg:'#FEF3C7', text:'#92400E', border:'#F59E0B' },
+    3: { bg:'#FEF3C7', text:'#92400E', border:'#F59E0B' },
+    4: { bg:'#D1FAE5', text:'#065F46', border:'#10B981' },
+    5: { bg:'#D1FAE5', text:'#065F46', border:'#10B981' },
+  };
+  const c = colors[score] || colors[3];
+
+  const resultEl = document.getElementById('llm-result');
+  const header = document.getElementById('llm-result-header');
+  resultEl.style.display = 'block';
+  resultEl.style.border = '2px solid ' + c.border;
+  resultEl.style.borderRadius = '10px';
+  header.style.background = c.bg;
+
+  document.getElementById('llm-score-badge').textContent = score + '/5';
+  document.getElementById('llm-score-badge').style.color = c.text;
+  document.getElementById('llm-score-label').textContent = result.label || '';
+  document.getElementById('llm-score-label').style.color = c.text;
+  document.getElementById('llm-score-sub').textContent = result.summary || '';
+  document.getElementById('llm-score-sub').style.color = c.text;
+
+  const reasoning = document.getElementById('llm-reasoning');
+  reasoning.style.background = c.bg;
+  reasoning.style.color = c.text;
+  reasoning.innerHTML = '<strong>Reasoning:</strong> ' + (result.reasoning || '') +
+    '<br><br><strong>Recommendation:</strong> ' + (result.recommendation || '');
+
+  const applyBtn = document.getElementById('llm-apply-btn');
+  applyBtn.style.display = 'block';
+  applyBtn.textContent = 'Apply ' + score + '/5 score to Filter 2 → ' + (result.recommendation || '');
+}
+
+function showLLMError(msg){
+  const errorEl = document.getElementById('llm-error');
+  errorEl.textContent = msg;
+  errorEl.style.display = 'block';
+  document.getElementById('llm-loading').style.display = 'none';
+}
+
+function applyLLMScore(){
+  if(!llmLastScore) return;
+  const score = llmLastScore.score;
+  // Map score 1-5 to filter checkboxes
+  // Score 4-5 → check all Filter 2 signals (strong signal)
+  // Score 3 → check partial
+  // Score 1-2 → leave unchecked, show warning
+  const msg = score >= 4
+    ? 'Strong AI signal (' + score + '/5) noted. Review Filter 2 checks above and confirm manually.'
+    : score === 3
+    ? 'Moderate signal (' + score + '/5). Check Filter 2 carefully — timing may not be right.'
+    : 'Weak signal (' + score + '/5). Account likely fails Filter 2. Consider skipping.';
+
+  // Show note near verdict
+  let noteEl = document.getElementById('llm-applied-note');
+  if(!noteEl){
+    noteEl = document.createElement('div');
+    noteEl.id = 'llm-applied-note';
+    noteEl.style.cssText = 'margin:10px 0;padding:10px 14px;border-radius:8px;font-size:13px;font-family:DM Sans,sans-serif;';
+    const verdict = document.getElementById('verdict-box') || document.querySelector('.verdict');
+    if(verdict) verdict.before(noteEl);
+    else document.getElementById('llm-panel').after(noteEl);
+  }
+  const bgCol = score >= 4 ? '#D1FAE5' : score === 3 ? '#FEF3C7' : '#FEE2E2';
+  const textCol = score >= 4 ? '#065F46' : score === 3 ? '#92400E' : '#991B1B';
+  noteEl.style.background = bgCol;
+  noteEl.style.color = textCol;
+  noteEl.textContent = 'AI Score Applied: ' + msg;
+  noteEl.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
 </script>
 </body>
 </html>
