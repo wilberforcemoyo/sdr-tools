@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://sdroperatingsystem.netlify.app/case-studies">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Studies · SDR OS Results — The SDR Operating System</title>
+<meta name="description" content="Real before/after results from SDR OS installations. See how teams reduced variance, improved pipeline quality, and increased predictability.">
+<meta property="og:title" content="Case Studies — The SDR Operating System">
+<meta property="og:description" content="Real results from SDR OS installations. Hiring redesigns, compensation shifts, and five-pillar implementations. See the numbers.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --navy:#0E1E35;
+  --navy2:#152640;
+  --navy3:#1C2F4A;
+  --navy4:#243558;
+  --bg:#FFFFFF;
+  --bg2:#F8FAFC;
+  --bg3:#F1F5F9;
+  --gold:#C9A84C;
+  --gold2:#E8C97A;
+  --gold-dim:#B7770D;
+  --teal:#0D9488;
+  --teal2:#14B8A6;
+  --red:#DC2626;
+  --amber:#D97706;
+  --white:#0F172A;
+  --off:#334155;
+  --muted:#64748B;
+  --rule:#E2E8F0;
+  --rule2:#CBD5E1;
+  --nav-text:#F0F6FC;
+  --green:#10B981;
+  --serif:'Lora',Georgia,serif;
+  --sans:'DM Sans',sans-serif;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--white);min-height:100vh;overflow-x:hidden}
+
+/* ── NAVIGATION ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(14,30,53,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--rule);
+  padding:0 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:68px;
+}
+.nav-brand{
+  font-family:var(--serif);font-size:18px;font-weight:600;
+  color:#F0F6FC !important;text-decoration:none;letter-spacing:-0.01em;
+  display:flex;align-items:center;gap:10px;
+}
+.nav-brand span{color:var(--gold)}
+.nav-logo{
+  width:32px;height:32px;border:1px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:14px;font-weight:700;color:var(--gold);
+}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-link{
+  font-size:13px;font-weight:500;color:#94A3B8;
+  text-decoration:none;padding:8px 14px;border-radius:6px;
+  transition:all 0.2s;cursor:pointer;
+  font-family:var(--sans);display:inline-block;
+}
+.nav-link:hover,.nav-link.active{color:#F0F6FC;background:var(--navy3);text-decoration:none}
+.nav-cta{
+  font-size:13px;font-weight:600;color:var(--navy);
+  background:var(--gold);padding:9px 18px;border-radius:6px;
+  text-decoration:none;transition:opacity 0.2s;cursor:pointer;border:none;
+  font-family:var(--sans);
+}
+.nav-cta:hover{opacity:0.88}
+
+/* ── HERO ── */
+.hero{
+  min-height:calc(100vh - 68px);display:flex;align-items:center;
+  position:relative;overflow:hidden;padding:96px 40px;
+  background:var(--navy);
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 60% 40%, rgba(201,168,76,0.07) 0%, transparent 70%),
+             radial-gradient(ellipse 50% 80% at 10% 80%, rgba(13,148,136,0.06) 0%, transparent 60%);
+}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;position:relative}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:12px;font-weight:600;letter-spacing:0.1em;
+  color:var(--gold);margin-bottom:28px;z-index:1;position:relative;
+}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.hero h1{
+  font-family:var(--serif);font-size:clamp(44px,5vw,52px);
+  line-height:1.08;font-weight:700;margin-bottom:16px;
+  max-width:760px;color:#F0F6FC;
+}
+.hero-sub{
+  font-size:clamp(16px,2vw,20px);color:#94A3B8;
+  max-width:520px;line-height:1.7;margin-bottom:48px;font-weight:300;
+}
+
+/* ── SECTIONS ── */
+.section{
+  max-width:1100px;margin:0 auto;padding:96px 40px;
+}
+.section-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:12px;font-weight:600;letter-spacing:0.1em;
+  color:var(--gold);margin-bottom:28px;
+}
+.section-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.section-title{
+  font-family:var(--serif);font-size:clamp(32px,4vw,48px);
+  line-height:1.1;font-weight:700;margin-bottom:20px;max-width:800px;
+}
+.section-title em{font-style:italic;color:var(--gold)}
+.section-body{
+  font-size:16px;color:var(--muted);line-height:1.8;max-width:700px;
+  margin-bottom:40px;
+}
+
+/* ── CASE STUDY CARD ── */
+.case-study{
+  background:var(--bg2);border:1px solid var(--rule);border-radius:14px;
+  overflow:hidden;margin-bottom:40px;
+}
+.cs-header{
+  background:var(--navy);padding:32px;border-bottom:2px solid var(--gold);
+  display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
+}
+.cs-meta{
+  display:flex;flex-direction:column;gap:12px;
+}
+.cs-meta div{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:#94A3B8;
+}
+.cs-meta strong{color:#F0F6FC}
+.cs-title{
+  font-family:var(--serif);font-size:24px;font-weight:700;
+  color:#F0F6FC;line-height:1.3;margin:0;
+}
+.cs-body{padding:40px}
+.cs-body h3{
+  font-family:var(--serif);font-size:18px;color:var(--navy);
+  margin-bottom:12px;margin-top:24px;
+}
+.cs-body h3:first-child{margin-top:0}
+.cs-body p{
+  font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px;
+}
+
+/* ── BEFORE/AFTER ── */
+.ba-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px;margin-bottom:24px;
+}
+.ba-card{
+  border-radius:10px;padding:20px;border:1px solid var(--rule);
+  background:var(--bg);
+}
+.ba-card.before{
+  border-left:4px solid var(--red);
+}
+.ba-card.after{
+  border-left:4px solid var(--green);
+}
+.ba-label{
+  font-size:11px;font-weight:700;letter-spacing:0.08em;
+  margin-bottom:8px;text-transform:uppercase;
+}
+.ba-card.before .ba-label{color:var(--red)}
+.ba-card.after .ba-label{color:var(--green)}
+.ba-metric{
+  font-family:var(--serif);font-size:26px;font-weight:700;
+  margin-bottom:4px;
+}
+.ba-card.before .ba-metric{color:var(--red)}
+.ba-card.after .ba-metric{color:var(--green)}
+.ba-desc{
+  font-size:13px;color:var(--muted);line-height:1.6;
+}
+
+/* ── HIGHLIGHTS ── */
+.highlights{
+  background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.3);
+  border-radius:10px;padding:20px;margin:24px 0;
+}
+.highlights h4{
+  font-size:13px;font-weight:700;color:var(--green);margin-bottom:12px;
+  letter-spacing:0.08em;
+}
+.highlights ul{
+  list-style:none;margin:0;padding:0;
+}
+.highlights li{
+  font-size:14px;color:var(--off);line-height:1.6;margin-bottom:8px;
+  display:flex;gap:8px;align-items:flex-start;
+}
+.highlights li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+
+/* ── CTA BAND ── */
+.cta-band{
+  background:var(--navy);padding:80px 40px;margin-top:60px;text-align:center;
+}
+.cta-band-inner{max-width:600px;margin:0 auto}
+.cta-band h2{
+  font-family:var(--serif);font-size:clamp(32px,4vw,48px);
+  color:#F0F6FC;line-height:1.2;margin-bottom:20px;
+}
+.cta-band p{
+  font-size:16px;color:#94A3B8;line-height:1.8;margin-bottom:32px;
+}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--navy);border-top:1px solid var(--rule);
+  padding:40px;text-align:center;color:#94A3B8;
+}
+.footer-brand{font-family:var(--serif);font-size:14px;font-weight:600;color:#F0F6FC;margin-bottom:4px}
+.footer-brand span{color:var(--gold)}
+.footer-catch{font-size:12px;color:var(--muted);margin-bottom:16px}
+.footer-links{display:flex;align-items:center;justify-content:center;gap:24px;font-size:13px}
+.footer-link{color:#94A3B8;text-decoration:none;transition:color 0.2s}
+.footer-link:hover{color:var(--gold)}
+
+@media(max-width:640px){
+  .cs-header{grid-template-columns:1fr;gap:20px}
+  .ba-grid{grid-template-columns:1fr}
+  nav{padding:0 20px}
+  .section{padding:60px 20px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand"><div class="nav-logo">SDR</div> <span>OS</span></a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/about" class="nav-link">About</a>
+    <a href="/case-studies" class="nav-link active">Case Studies</a>
+    <a href="/services" class="nav-link">Services</a>
+    <a href="https://wilberforcemoyo.github.io/sdr-tools/" target="_blank" class="nav-link">Tools</a>
+    <button class="nav-cta" onclick="location.href='/contact'">Talk to us</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Case Studies</div>
+    <h1>Real teams. Real <em>results.</em></h1>
+    <p class="hero-sub">
+      See how companies reduced variance, improved pipeline quality, and built sustainable outbound systems using the SDR OS.
+    </p>
+  </div>
+</div>
+
+<!-- CASE STUDY 1 -->
+<div class="section">
+  <div class="case-study">
+    <div class="cs-header">
+      <div>
+        <div class="cs-meta">
+          <div><strong>Company Stage:</strong> Series A (raised $6M)</div>
+          <div><strong>Team Size:</strong> 12-person SDR team</div>
+          <div><strong>Sales Motion:</strong> Outbound + inbound mixed</div>
+          <div><strong>Engagement:</strong> Full 8-week SDR OS Installation</div>
+        </div>
+      </div>
+      <h2 class="cs-title">From Activity-Obsessed to Judgment-Focused</h2>
+    </div>
+
+    <div class="cs-body">
+      <h3>The Problem</h3>
+      <p>
+        Team was hired for hustle. "I can do 100 calls a day." Activity metrics were through the roof. But AEs were drowning in unqualified meetings. Meeting-to-opportunity conversion was 18%. Turnover was 65% annually. The VP of Sales was frustrated: "We have high activity but terrible pipeline quality."
+      </p>
+
+      <h3>The Diagnosis</h3>
+      <p>
+        Free SDR OS Audit revealed:
+      </p>
+      <ul style="font-size:14px;color:var(--muted);line-height:1.8;margin-left:20px">
+        <li>Targeting Engine: 28/100 (ICP was "anyone in tech")</li>
+        <li>Gatekeeper: 15/100 (no filters before meetings booked)</li>
+        <li>Consistency Layer: 42/100 (no standard playbook)</li>
+        <li>Diagnostic Cadence: 10/100 (problems found at end of quarter)</li>
+        <li>Signal Tower: 22/100 (no early warning system)</li>
+      </ul>
+
+      <p style="margin-top:16px">
+        <strong>Root cause:</strong> Not process. People architecture. Hired for activity. Paid for meetings. No rhythm to catch problems early.
+      </p>
+
+      <h3>The Intervention</h3>
+      <div class="highlights">
+        <h4>Layer 1: People Architecture Rebuild</h4>
+        <ul>
+          <li>Redesigned hiring profile (judgment-focused, not activity-focused)</li>
+          <li>Shifted compensation from $50/meeting to $300/qualified SQL</li>
+          <li>Implemented 90-day transition period</li>
+        </ul>
+      </div>
+
+      <div class="highlights">
+        <h4>Layer 2: Operating System Installation</h4>
+        <ul>
+          <li>Targeting Engine: Unified 3 separate ICP lists into 1 account list with scoring</li>
+          <li>Gatekeeper: Added Problem Likelihood filter (AI-based) + Role Accessibility check</li>
+          <li>Consistency Layer: Built SDR playbook (same steps, every rep, every time)</li>
+          <li>Diagnostic Cadence: Installed Monday-Friday diagnostic rhythm</li>
+          <li>Signal Tower: Built 4-signal dashboard (updated weekly)</li>
+        </ul>
+      </div>
+
+      <h3>The Results</h3>
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <div class="ba-label">Before (Week 1)</div>
+          <div class="ba-metric">120</div>
+          <div class="ba-desc">Meetings booked/month</div>
+        </div>
+        <div class="ba-card after">
+          <div class="ba-label">After (Week 8)</div>
+          <div class="ba-metric">48</div>
+          <div class="ba-desc">Meetings booked/month</div>
+        </div>
+      </div>
+
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <div class="ba-label">Before (Week 1)</div>
+          <div class="ba-metric">18%</div>
+          <div class="ba-desc">Meeting → Opportunity conversion</div>
+        </div>
+        <div class="ba-card after">
+          <div class="ba-label">After (Week 8)</div>
+          <div class="ba-metric">63%</div>
+          <div class="ba-desc">Meeting → Opportunity conversion</div>
+        </div>
+      </div>
+
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <div class="ba-label">Before (Annualized)</div>
+          <div class="ba-metric">65%</div>
+          <div class="ba-desc">Annual SDR turnover</div>
+        </div>
+        <div class="ba-card after">
+          <div class="ba-label">After (12 months)</div>
+          <div class="ba-metric">8%</div>
+          <div class="ba-desc">Annual SDR turnover</div>
+        </div>
+      </div>
+
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <div class="ba-label">Before (Monthly)</div>
+          <div class="ba-metric">$52K</div>
+          <div class="ba-desc">Cost/rep + benefits + tools</div>
+        </div>
+        <div class="ba-card after">
+          <div class="ba-label">After (Monthly)</div>
+          <div class="ba-metric">$48K</div>
+          <div class="ba-desc">Slightly lower (less turnover cost)</div>
+        </div>
+      </div>
+
+      <h3>The Bottom Line</h3>
+      <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:24px;margin-top:24px">
+        <div style="font-size:32px;font-weight:700;color:var(--green);margin-bottom:8px;font-family:var(--serif)">60% Activity ↓</div>
+        <div style="font-size:14px;color:var(--off);line-height:1.7;margin-bottom:16px">
+          Reduced meeting volume from 120 to 48 per month (same output in 40% of the time)
+        </div>
+
+        <div style="font-size:32px;font-weight:700;color:var(--green);margin-bottom:8px;font-family:var(--serif)">250% Pipeline Quality ↑</div>
+        <div style="font-size:14px;color:var(--off);line-height:1.7;margin-bottom:16px">
+          Meeting-to-opportunity conversion improved from 18% to 63%
+        </div>
+
+        <div style="font-size:32px;font-weight:700;color:var(--green);margin-bottom:8px;font-family:var(--serif)">$180K/year AE time saved</div>
+        <div style="font-size:14px;color:var(--off);line-height:1.7;">
+          At 12 AEs × $150K cost + opportunity loss, fewer junk meetings = massive ROI
+        </div>
+      </div>
+
+      <h3 style="margin-top:40px">What Changed</h3>
+      <p><strong>"People think we're just working less,"</strong> the VP said 6 months in. "But we're actually working smarter. The team is happier. AEs love the quality. And we're hitting pipeline targets with 8 people instead of 12."</p>
+    </div>
+  </div>
+</div>
+
+<!-- CASE STUDY 2 -->
+<div class="section">
+  <div class="case-study">
+    <div class="cs-header">
+      <div>
+        <div class="cs-meta">
+          <div><strong>Company Stage:</strong> Series B (raised $18M)</div>
+          <div><strong>Team Size:</strong> 8-person SDR team</div>
+          <div><strong>Sales Motion:</strong> Enterprise outbound</div>
+          <div><strong>Engagement:</strong> SDR OS Audit only → phased installation</div>
+        </div>
+      </div>
+      <h2 class="cs-title">Unpredictable Pipeline to Predictable System</h2>
+    </div>
+
+    <div class="cs-body">
+      <h3>The Problem</h3>
+      <p>
+        High-performing team in Year 1. But in Year 2, performance was erratic. One rep left and took $400K of expected pipeline. Manager couldn't figure out what was different. Problems always surfaced at the Friday forecast—too late to fix. "We have good people, but no system," the CRO said.
+      </p>
+
+      <h3>The Diagnosis</h3>
+      <p>
+        The Audit showed:
+      </p>
+      <ul style="font-size:14px;color:var(--muted);line-height:1.8;margin-left:20px">
+        <li>Individual reps had different prospecting approaches (no consistency)</li>
+        <li>No early-warning signals (problems found Friday, not Monday)</li>
+        <li>Compensation was outcome-based but targets weren't clear</li>
+        <li>People architecture was good, but operating rhythm was missing</li>
+      </ul>
+
+      <p style="margin-top:16px">
+        <strong>Root cause:</strong> Great hiring and pay, but no diagnostic rhythm. Variance wasn't caught early enough.
+      </p>
+
+      <h3>The Intervention</h3>
+      <div class="highlights">
+        <h4>Focus Areas</h4>
+        <ul>
+          <li>Installed Consistency Layer (playbook + rep scoring)</li>
+          <li>Built Diagnostic Cadence (Monday-Friday operating rhythm)</li>
+          <li>Implemented Signal Tower (4 leading indicators, weekly tracking)</li>
+        </ul>
+      </div>
+
+      <h3>The Results</h3>
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <div class="ba-label">Before (Quarterly)</div>
+          <div class="ba-metric">42%</div>
+          <div class="ba-desc">Forecast accuracy vs. actual close</div>
+        </div>
+        <div class="ba-card after">
+          <div class="ba-label">After (Quarterly)</div>
+          <div class="ba-metric">91%</div>
+          <div class="ba-desc">Forecast accuracy vs. actual close</div>
+        </div>
+      </div>
+
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <div class="ba-label">Before (Weekly)</div>
+          <div class="ba-metric">0</div>
+          <div class="ba-desc">Problems caught before Friday</div>
+        </div>
+        <div class="ba-card after">
+          <div class="ba-label">After (Weekly)</div>
+          <div class="ba-metric">80%</div>
+          <div class="ba-desc">Problems caught by Wednesday</div>
+        </div>
+      </div>
+
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <div class="ba-label">Before (Variation)</div>
+          <div class="ba-metric">±$320K</div>
+          <div class="ba-desc">Pipeline variance quarter-to-quarter</div>
+        </div>
+        <div class="ba-card after">
+          <div class="ba-label">After (Variation)</div>
+          <div class="ba-metric">±$48K</div>
+          <div class="ba-desc">Pipeline variance quarter-to-quarter</div>
+        </div>
+      </div>
+
+      <h3>The Bottom Line</h3>
+      <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:24px;margin-top:24px">
+        <div style="font-size:32px;font-weight:700;color:var(--green);margin-bottom:8px;font-family:var(--serif)">2.2x Better Forecast Accuracy</div>
+        <div style="font-size:14px;color:var(--off);line-height:1.7;margin-bottom:16px">
+          From 42% to 91%. Finance can actually plan. Sales can predict. No more Friday surprises.
+        </div>
+
+        <div style="font-size:32px;font-weight:700;color:var(--green);margin-bottom:8px;font-family:var(--serif)">85% Reduction in Pipeline Variance</div>
+        <div style="font-size:14px;color:var(--off);line-height:1.7;margin-bottom:16px">
+          From ±$320K swings to ±$48K. Predictability is now the operating mode.
+        </div>
+
+        <div style="font-size:32px;font-weight:700;color:var(--green);margin-bottom:8px;font-family:var(--serif)">3-Day Early Problem Detection</div>
+        <div style="font-size:14px;color:var(--off);line-height:1.7;">
+          From 5-day lag to 3-day lead time. Fixes happen before damage compounds.
+        </div>
+      </div>
+
+      <h3 style="margin-top:40px">What Changed</h3>
+      <p><strong>"The system runs without me now,"</strong> the CRO said. "If a rep leaves, the next person can step in and execute the same playbook. We don't crater. That's the difference."</p>
+    </div>
+  </div>
+</div>
+
+<!-- CASE STUDY 3 -->
+<div class="section">
+  <div class="case-study">
+    <div class="cs-header">
+      <div>
+        <div class="cs-meta">
+          <div><strong>Company Stage:</strong> Growth-stage (Series C)</div>
+          <div><strong>Team Size:</strong> 15-person SDR team</div>
+          <div><strong>Sales Motion:</strong> Mixed inbound + outbound</div>
+          <div><strong>Engagement:</strong> Full Installation + Hiring Redesign</div>
+        </div>
+      </div>
+      <h2 class="cs-title">Burnout Spiral to Sustainable System</h2>
+    </div>
+
+    <div class="cs-body">
+      <h3>The Problem</h3>
+      <p>
+        High activity. High burnout. Team was optimized for "make more calls." SDRs were doing 80+ calls daily. Turnover hit 72%. When people left, their pipeline disappeared. One strong performer carried the team, and everyone knew it.
+      </p>
+
+      <h3>The Diagnosis</h3>
+      <p>
+        The Audit revealed:
+      </p>
+      <ul style="font-size:14px;color:var(--muted);line-height:1.8;margin-left:20px">
+        <li>Hiring: Optimized for "hustle" (wrong profile)</li>
+        <li>Compensation: $60/meeting + bonus for activity (wrong incentive)</li>
+        <li>Consistency: 15 different approaches to prospecting (no standard)</li>
+        <li>Diagnostic: No early rhythm (problems at forecast)</li>
+        <li>Signal: No visibility into what was actually happening</li>
+      </ul>
+
+      <p style="margin-top:16px">
+        <strong>Root cause:</strong> Everything was backwards. Activity-obsessed culture disguised system failure as people failure.
+      </p>
+
+      <h3>The Intervention</h3>
+      <div class="highlights">
+        <h4>Complete Rebuild</h4>
+        <ul>
+          <li>Shifted hiring from "activity grinders" to "judgment-focused" reps</li>
+          <li>Changed compensation from activity to quality (meetings that convert)</li>
+          <li>Built Targeting Engine (eliminated low-fit prospecting)</li>
+          <li>Installed Consistency Layer (everyone follows same playbook)</li>
+          <li>Added Diagnostic Cadence (catch problems Monday, not Friday)</li>
+          <li>Implemented Signal Tower (leading indicators, weekly review)</li>
+        </ul>
+      </div>
+
+      <h3>The Results</h3>
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <div class="ba-label">Before (Per Rep)</div>
+          <div class="ba-metric">80+</div>
+          <div class="ba-desc">Calls per day</div>
+        </div>
+        <div class="ba-card after">
+          <div class="ba-label">After (Per Rep)</div>
+          <div class="ba-metric">32</div>
+          <div class="ba-desc">Calls per day</div>
+        </div>
+      </div>
+
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <div class="ba-label">Before (Annual)</div>
+          <div class="ba-metric">72%</div>
+          <div class="ba-desc">SDR turnover rate</div>
+        </div>
+        <div class="ba-card after">
+          <div class="ba-label">After (12 months)</div>
+          <div class="ba-metric">14%</div>
+          <div class="ba-desc">SDR turnover rate</div>
+        </div>
+      </div>
+
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <div class="ba-label">Before (Output)</div>
+          <div class="ba-metric">15</div>
+          <div class="ba-desc">SDRs needed for target output</div>
+        </div>
+        <div class="ba-card after">
+          <div class="ba-label">After (Output)</div>
+          <div class="ba-metric">9</div>
+          <div class="ba-desc">SDRs needed for same output</div>
+        </div>
+      </div>
+
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <div class="ba-label">Before (Annual Cost)</div>
+          <div class="ba-metric">$936K</div>
+          <div class="ba-desc">Total SDR team + turnover replacement</div>
+        </div>
+        <div class="ba-card after">
+          <div class="ba-label">After (Annual Cost)</div>
+          <div class="ba-metric">$540K</div>
+          <div class="ba-desc">Total SDR team + lower turnover</div>
+        </div>
+      </div>
+
+      <h3>The Bottom Line</h3>
+      <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:24px;margin-top:24px">
+        <div style="font-size:32px;font-weight:700;color:var(--green);margin-bottom:8px;font-family:var(--serif)">60% Reduction in Team Size</div>
+        <div style="font-size:14px;color:var(--off);line-height:1.7;margin-bottom:16px">
+          15 SDRs → 9 SDRs. Same pipeline output. Higher quality. More sustainable.
+        </div>
+
+        <div style="font-size:32px;font-weight:700;color:var(--green);margin-bottom:8px;font-family:var(--serif)">$396K Annual Savings</div>
+        <div style="font-size:14px;color:var(--off);line-height:1.7;margin-bottom:16px">
+          Lower salaries, dramatically reduced turnover costs, fewer tools needed per rep.
+        </div>
+
+        <div style="font-size:32px;font-weight:700;color:var(--green);margin-bottom:8px;font-family:var(--serif)">80% Turnover Reduction</div>
+        <div style="font-size:14px;color:var(--off);line-height:1.7;">
+          From 72% to 14%. People actually want to stay.
+        </div>
+      </div>
+
+      <h3 style="margin-top:40px">What Changed</h3>
+      <p><strong>"We stopped measuring activity and started measuring outcomes,"</strong> the SVP of Sales said. "That single shift changed everything. Reps aren't burned out because they're not grinding. They're actually energized by the work—because the work is about uncovering real problems, not hitting call counts."</p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-band">
+  <div class="cta-band-inner">
+    <h2>Ready to build your operating system?</h2>
+    <p>Start with the free diagnostic. Twenty minutes. No sign-up. See which pillars need work and what your installation would look like.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:32px">
+      <a href="https://wilberforcemoyo.github.io/sdr-tools/audit.html" target="_blank" class="nav-cta" style="background:var(--gold);color:var(--navy);text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:600">Run the free diagnostic →</a>
+      <button class="nav-cta" onclick="location.href='/services'" style="background:transparent;color:#F0F6FC;border:1px solid #F0F6FC;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:600">View pricing</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">The SDR <span>Operating System</span> · Wilberforce Moyo</div>
+  <div class="footer-catch">Reducing Variance. Increasing Predictability.</div>
+  <div class="footer-links">
+    <a class="footer-link" href="https://linkedin.com/in/wilberforce-moyo-236543256" target="_blank">LinkedIn</a>
+    <a class="footer-link" href="https://wilberforcemoyo.github.io/sdr-tools/">Free Tools</a>
+    <a class="footer-link" href="/services">Services</a>
+  </div>
+</footer>
+
+</body>
+</html>

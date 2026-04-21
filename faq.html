@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://sdroperatingsystem.netlify.app/faq">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ · The SDR Operating System</title>
+<meta name="description" content="Frequently asked questions about the SDR OS, installation process, and implementation.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --navy:#0E1E35;
+  --navy2:#152640;
+  --navy3:#1C2F4A;
+  --navy4:#243558;
+  --bg:#FFFFFF;
+  --bg2:#F8FAFC;
+  --bg3:#F1F5F9;
+  --gold:#C9A84C;
+  --teal:#0D9488;
+  --teal2:#14B8A6;
+  --white:#0F172A;
+  --muted:#64748B;
+  --rule:#E2E8F0;
+  --rule2:#CBD5E1;
+  --serif:'Lora',Georgia,serif;
+  --sans:'DM Sans',sans-serif;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--white);min-height:100vh;overflow-x:hidden}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(14,30,53,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--rule);
+  padding:0 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:68px;
+}
+.nav-brand{
+  font-family:var(--serif);font-size:18px;font-weight:600;
+  color:#F0F6FC !important;text-decoration:none;letter-spacing:-0.01em;
+  display:flex;align-items:center;gap:10px;
+}
+.nav-brand span{color:var(--gold)}
+.nav-logo{
+  width:32px;height:32px;border:1px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:14px;font-weight:700;color:var(--gold);
+}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-link{
+  font-size:13px;font-weight:500;color:#94A3B8;
+  text-decoration:none;padding:8px 14px;border-radius:6px;
+  transition:all 0.2s;cursor:pointer;
+  font-family:var(--sans);display:inline-block;
+}
+.nav-link:hover,.nav-link.active{color:#F0F6FC;background:var(--navy3);text-decoration:none}
+.nav-cta{
+  font-size:13px;font-weight:600;color:var(--navy);
+  background:var(--gold);padding:9px 18px;border-radius:6px;
+  text-decoration:none;transition:opacity 0.2s;cursor:pointer;border:none;
+  font-family:var(--sans);
+}
+.nav-cta:hover{opacity:0.88}
+
+.hero{
+  min-height:calc(100vh - 68px);display:flex;align-items:center;
+  position:relative;overflow:hidden;padding:96px 40px;
+  background:var(--navy);
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 60% 40%, rgba(201,168,76,0.07) 0%, transparent 70%),
+             radial-gradient(ellipse 50% 80% at 10% 80%, rgba(13,148,136,0.06) 0%, transparent 60%);
+}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;position:relative}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:12px;font-weight:600;letter-spacing:0.1em;
+  color:var(--gold);margin-bottom:28px;z-index:1;position:relative;
+}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.hero h1{
+  font-family:var(--serif);font-size:clamp(44px,5vw,52px);
+  line-height:1.08;font-weight:700;margin-bottom:16px;
+  max-width:760px;color:#F0F6FC;
+}
+.hero-sub{
+  font-size:clamp(16px,2vw,20px);color:#94A3B8;
+  max-width:520px;line-height:1.7;margin-bottom:48px;font-weight:300;
+}
+
+.section{
+  max-width:800px;margin:0 auto;padding:96px 40px;
+}
+
+.faq-item{
+  margin-bottom:32px;
+  border-bottom:1px solid var(--rule);
+  padding-bottom:32px;
+}
+.faq-item:last-child{border-bottom:none}
+.faq-q{
+  font-size:18px;font-weight:700;color:var(--navy);
+  cursor:pointer;user-select:none;
+  display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;
+}
+.faq-q::before{
+  content:'+';font-size:24px;color:var(--gold);
+  font-weight:700;flex-shrink:0;width:24px;height:24px;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform 0.2s;
+}
+.faq-item.active .faq-q::before{transform:rotate(45deg)}
+.faq-a{
+  font-size:15px;color:var(--muted);line-height:1.8;
+  display:none;max-width:700px;
+}
+.faq-item.active .faq-a{display:block}
+
+.cta-band{
+  background:var(--navy);padding:80px 40px;margin-top:60px;text-align:center;
+}
+.cta-band-inner{max-width:600px;margin:0 auto}
+.cta-band h2{
+  font-family:var(--serif);font-size:clamp(32px,4vw,48px);
+  color:#F0F6FC;line-height:1.2;margin-bottom:20px;
+}
+.cta-band p{
+  font-size:16px;color:#94A3B8;line-height:1.8;margin-bottom:32px;
+}
+
+footer{
+  background:var(--navy);border-top:1px solid var(--rule);
+  padding:40px;text-align:center;color:#94A3B8;
+}
+.footer-brand{font-family:var(--serif);font-size:14px;font-weight:600;color:#F0F6FC;margin-bottom:4px}
+.footer-brand span{color:var(--gold)}
+.footer-catch{font-size:12px;color:var(--muted);margin-bottom:16px}
+.footer-links{display:flex;align-items:center;justify-content:center;gap:24px;font-size:13px}
+.footer-link{color:#94A3B8;text-decoration:none;transition:color 0.2s}
+.footer-link:hover{color:var(--gold)}
+
+@media(max-width:640px){
+  nav{padding:0 20px}
+  .section{padding:60px 20px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand"><div class="nav-logo">SDR</div> <span>OS</span></a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/about" class="nav-link">About</a>
+    <a href="/case-studies" class="nav-link">Case Studies</a>
+    <a href="/services" class="nav-link">Services</a>
+    <a href="https://wilberforcemoyo.github.io/sdr-tools/" target="_blank" class="nav-link">Tools</a>
+    <button class="nav-cta" onclick="location.href='/contact'">Talk to us</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">FAQ</div>
+    <h1>Questions about <em>the SDR OS?</em></h1>
+    <p class="hero-sub">
+      Most common questions from prospects thinking about whether an SDR OS audit or installation is right for their team.
+    </p>
+  </div>
+</div>
+
+<div class="section">
+  <!-- ABOUT THE SYSTEM -->
+  <div style="margin-bottom:60px">
+    <div style="font-size:14px;font-weight:700;letter-spacing:0.1em;color:var(--gold);margin-bottom:32px">ABOUT THE SYSTEM</div>
+
+    <div class="faq-item">
+      <div class="faq-q">What exactly is the SDR OS?</div>
+      <div class="faq-a">
+        The SDR Operating System is a diagnostic framework based on five pillars: Targeting Engine, Gatekeeper, Consistency Layer, Diagnostic Cadence, and Signal Tower. But it also includes two foundation layers: how you hire SDRs and how you pay them. It's designed to work whether you're in the room or not. Most teams treat SDR management as hiring good people and hoping. The OS is the system those people run on.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is this a playbook or a software tool?</div>
+      <div class="faq-a">
+        Neither. It's a system architecture. You own it completely. We help you design it, install it in your tools (HubSpot, Salesforce, etc.), and train your team to operate it. After the installation, it's yours to maintain and evolve.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Why is it focused on hiring and compensation?</div>
+      <div class="faq-a">
+        Because most SDR systems fail at the people layer. You can't install a quality-focused system on people hired for activity. You can't maintain a sustainable rhythm with people who are burning out. Fixing the pillars without fixing hiring and compensation is like building a house on sand. We've learned this the hard way across three eras of SDR management.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What's the difference between the five pillars and the hiring/compensation layers?</div>
+      <div class="faq-a">
+        Hiring and compensation are the *foundation*. If those are broken, the pillars fail. The five pillars are the *operating model*. Together, they create a complete system. We always address the foundation first, then build the pillars.
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT THE AUDIT -->
+  <div style="margin-bottom:60px">
+    <div style="font-size:14px;font-weight:700;letter-spacing:0.1em;color:var(--gold);margin-bottom:32px">ABOUT THE AUDIT</div>
+
+    <div class="faq-item">
+      <div class="faq-q">What's the difference between the free diagnostic and the paid audit?</div>
+      <div class="faq-a">
+        The free diagnostic is a self-guided tool: 20 minutes, you answer 20 questions, you get scores on all five pillars. The paid audit ($4.5K-$12K) is us running the diagnostic *with* you, then providing a detailed 8-10 page report that includes: a priority sequence for which pillars to fix first, estimated financial impact of each fix, and a conversation to clarify next steps.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How long does the paid audit take?</div>
+      <div class="faq-a">
+        Start to finish: about 5 business days. We collect information (1-2 days), score all five pillars (1 day), write the report (1-2 days), deliver it to your inbox. You typically have a 20-minute call after to walk through findings.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Does the audit tell us if we should do a full installation?</div>
+      <div class="faq-a">
+        Yes. The audit scores each pillar and identifies which ones are broken. Some teams need a full installation. Some teams just need 1-2 pillars fixed. The audit report tells you which is which — and what the cost/benefit is for each approach.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Who needs to be involved in the audit?</div>
+      <div class="faq-a">
+        Ideally: VP of Sales, RevOps (if you have one), and one manager/team lead. We'll interview them separately. The more perspective we have, the better the diagnosis.
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT INSTALLATION -->
+  <div style="margin-bottom:60px">
+    <div style="font-size:14px;font-weight:700;letter-spacing:0.1em;color:var(--gold);margin-bottom:32px">ABOUT INSTALLATION</div>
+
+    <div class="faq-item">
+      <div class="faq-q">How long is a full installation?</div>
+      <div class="faq-a">
+        Eight weeks. This includes: hiring profile redesign, compensation model redesign, all five pillars built and installed in your tools, team training, and 30 days of monitoring. It's not a passive consulting engagement. We're building the system with your team.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can we do a partial installation (just fix one or two pillars)?</div>
+      <div class="faq-a">
+        Absolutely. Some teams just need the Targeting Engine fixed. Others need Consistency Layer + Diagnostic Cadence. The audit tells you which pillars are most broken, and we can scope an engagement around just those. Partial installations are typically 4-6 weeks.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Do you work with our existing CRM or do we need to switch?</div>
+      <div class="faq-a">
+        We work with what you have. HubSpot, Salesforce, Pipedrive — we can build the system in any of them. If you're evaluating CRM choices, we can advise, but we're not dependent on a specific tool.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What happens after the 8 weeks?</div>
+      <div class="faq-a">
+        You own the system completely. We provide a 30-day handoff period where we're on call for questions. After that, it's yours to maintain. Some teams bring us back quarterly to optimize, but that's optional.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What if we only have 3-4 SDRs? Does SDR OS scale that small?</div>
+      <div class="faq-a">
+        Yes. The framework doesn't require a minimum size. A 3-person team still benefits from: hiring the right type of person, paying for quality, having a diagnostic rhythm, and early signal detection. Some concepts (like detailed consistency layers) might look different at smaller scale, but the core principles apply.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What if we're an enterprise sales team, not SMB?</div>
+      <div class="faq-a">
+        The OS scales to enterprise. The pillars are still relevant, but the metrics change. Instead of "meeting-to-opportunity," you track "account engagement and buying committee mapping." Instead of "30-day meetings," you track "early meetings with decision makers." We've worked with both enterprise and SMB teams — the architecture is the same, the KPIs are different.
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT RESULTS -->
+  <div style="margin-bottom:60px">
+    <div style="font-size:14px;font-weight:700;letter-spacing:0.1em;color:var(--gold);margin-bottom:32px">ABOUT RESULTS & ROI</div>
+
+    <div class="faq-item">
+      <div class="faq-q">How long before we see results?</div>
+      <div class="faq-a">
+        Early wins: 2-3 weeks (hiring profile changes, comp shifts, early signal detection). Meaningful changes: 6-8 weeks (full system running, baseline metrics established). Major impact: 3-6 months (market data shows true pipeline improvement, retention metrics stabilize).
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What's the typical ROI?</div>
+      <div class="faq-a">
+        It varies, but we typically see: 40-60% reduction in SDR activity while maintaining or improving output (fewer meetings, higher quality), 50-80% improvement in meeting-to-opportunity conversion, 40-60% reduction in turnover, and 20-40% reduction in cost per qualified opportunity. The ROI calculation depends on your current state, but most clients recover the installation cost within 6-8 weeks.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What if we don't see results?</div>
+      <div class="faq-a">
+        We track metrics throughout the installation. If things aren't moving by week 4-5, we diagnose why and adjust the approach. Sometimes it's a tool issue, sometimes it's a process issue, sometimes it's a team adoption issue. We don't just hand off a system — we stay involved until it's working.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Are results guaranteed?</div>
+      <div class="faq-a">
+        Not in writing, but our approach is systematic. The audit tells you if SDR OS is a fit for your team. If it is, and you commit to running the system, results follow. We've seen it across dozens of teams in different industries. But we also know when it's not the right approach — sometimes the problem is product-market fit, not system. An honest audit will tell you.
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGISTICS -->
+  <div style="margin-bottom:60px">
+    <div style="font-size:14px;font-weight:700;letter-spacing:0.1em;color:var(--gold);margin-bottom:32px">LOGISTICS & PROCESS</div>
+
+    <div class="faq-item">
+      <div class="faq-q">How much time do we need to commit?</div>
+      <div class="faq-a">
+        From your team: 5-10 hours per week during the 8-week installation. VP of Sales is more involved early (scoping), less involved late. Managers are involved throughout (training teams). Individual SDRs: 2-3 hours for onboarding, then just running the system daily.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can this happen while we're still operating normally?</div>
+      <div class="faq-a">
+        Yes. We build the system parallel to your current operation, then transition. There's a 1-2 week period where both systems run simultaneously, then you flip over to the new OS. It's minimally disruptive.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What if there's leadership turnover during the installation?</div>
+      <div class="faq-a">
+        It slows things down, but doesn't stop them. We can brief new leaders quickly. The key is that the *system* survives, not the person. If the OS is designed well, a leadership change shouldn't crater everything.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can we do this remotely?</div>
+      <div class="faq-a">
+        Yes. All work is done remotely. We may do 1-2 in-person days if you're a large enterprise, but it's not required.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What's the next step after I run the free diagnostic?</div>
+      <div class="faq-a">
+        You'll get your scores. If you want to go deeper, book a 20-minute call with us. We'll talk through your scores, clarify what the priorities are, and discuss whether an audit or installation makes sense. There's no obligation to buy anything.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="cta-band">
+  <div class="cta-band-inner">
+    <h2>Still have questions?</h2>
+    <p>Schedule a call. We'll answer anything and give you an honest take on whether the SDR OS is right for your team.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:32px">
+      <a href="https://wilberforcemoyo.github.io/sdr-tools/audit.html" target="_blank" class="nav-cta" style="background:var(--gold);color:var(--navy);text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:600">Run the free diagnostic →</a>
+      <button class="nav-cta" onclick="location.href='/contact'" style="background:transparent;color:#F0F6FC;border:1px solid #F0F6FC;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:600;cursor:pointer">Schedule a call</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">The SDR <span>Operating System</span> · Wilberforce Moyo</div>
+  <div class="footer-catch">Reducing Variance. Increasing Predictability.</div>
+  <div class="footer-links">
+    <a class="footer-link" href="https://linkedin.com/in/wilberforce-moyo-236543256" target="_blank">LinkedIn</a>
+    <a class="footer-link" href="https://wilberforcemoyo.github.io/sdr-tools/">Free Tools</a>
+    <a class="footer-link" href="/services">Services</a>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-q').addEventListener('click', () => {
+    item.classList.toggle('active');
+  });
+});
+</script>
+
+</body>
+</html>
