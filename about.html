@@ -2,12 +2,28 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="canonical" href="https://sdroperatingsystem.netlify.app/about">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Wilberforce · The SDR Operating System</title>
-<meta name="description" content="Wilberforce Moyo: 15 years leading SDR teams across three eras. From pre-tools to AI. The story behind the SDR Operating System.">
-<meta property="og:title" content="About Wilberforce Moyo — The SDR Operating System">
-<meta property="og:description" content="15 years. 3 eras. 1 system. Learn why Wilberforce built the SDR OS and what he learned leading outbound teams across pre-tools, tools-era, and AI-era sales.">
+<title>About · Wilberforce Moyo — The SDR Operating System</title>
+<meta name="description" content="What is the SDR Operating System and who built it. Wilberforce Moyo — Outbound Systems Engineer, 18 years SDR Operations across US, UK, South Africa.">
+<link rel="canonical" href="https://sdroperatingsystem.netlify.app/about">
+
+<meta charset="UTF-8">
+<link rel="canonical" href="https://sdroperatingsystem.netlify.app/">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home · Run the Free SDR Diagnostic — The SDR Operating System</title>
+<meta name="description" content="Reducing Variance. Increasing Predictability. SDR Operations Consulting for early-stage B2B SaaS teams.">
+
+
+
+
+
+
+
+<meta name="description" content="Reducing Variance. Increasing Predictability. SDR Operations Consulting for early-stage B2B SaaS teams.">
+<meta property="og:title" content="The SDR Operating System — Wilberforce Moyo">
+<meta property="og:description" content="Five-pillar outbound system for early-stage B2B SaaS. SDR OS Audit and Installation. Reducing Variance. Increasing Predictability.">
+<meta property="og:url" content="https://sdroperatingsystem.netlify.app">
+<meta property="og:image" content="https://wilberforcemoyo.github.io/sdr-tools/og_preview.png">
 <meta property="og:type" content="website">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,6 +59,8 @@
 
 html{scroll-behavior:smooth}
 body{font-family:var(--sans);background:var(--bg);color:var(--white);min-height:100vh;overflow-x:hidden}
+
+
 
 /* ── NAVIGATION ── */
 nav{
@@ -81,6 +99,10 @@ nav{
 }
 .nav-cta:hover{opacity:0.88}
 
+/* ── PAGES ── */
+.page{display:none;padding-top:68px;min-height:100vh;position:relative;z-index:1}
+.page.active{display:block}
+
 /* ── HERO ── */
 .hero{
   min-height:calc(100vh - 68px);display:flex;align-items:center;
@@ -104,325 +126,484 @@ nav{
   line-height:1.08;font-weight:700;margin-bottom:16px;
   max-width:760px;color:#F0F6FC;
 }
+.hero h1 em{font-style:normal;font-weight:700;color:var(--gold)}
+.hero h1 em{font-style:italic;color:var(--gold)}
 .hero-sub{
   font-size:clamp(16px,2vw,20px);color:#94A3B8;
   max-width:520px;line-height:1.7;margin-bottom:48px;font-weight:300;
 }
-
-/* ── SECTIONS ── */
-.section{
-  max-width:1100px;margin:0 auto;padding:96px 40px;
+.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-primary{
+  background:var(--gold);color:var(--navy);font-size:16px;font-weight:600;
+  padding:14px 28px;border-radius:8px;text-decoration:none;
+  transition:all 0.2s;display:inline-block;cursor:pointer;border:none;
+  font-family:var(--sans);
 }
+.btn-primary:hover{opacity:0.88;transform:translateY(-1px)}
+.btn-ghost{
+  color:var(--white);font-size:15px;font-weight:500;
+  padding:14px 28px;border-radius:8px;
+  border:1px solid var(--rule2);text-decoration:none;
+  transition:all 0.2s;display:inline-block;cursor:pointer;background:transparent;
+  font-family:var(--sans);
+}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+.hero-stat-row{
+  display:flex;align-items:center;gap:48px;margin-top:72px;
+  padding-top:40px;border-top:1px solid rgba(255,255,255,0.1);flex-wrap:wrap;
+}
+.hero-stat{display:flex;flex-direction:column;gap:4px}
+.hero-stat-num{font-family:var(--serif);font-size:36px;color:var(--gold);line-height:1}
+.hero-stat-label{font-size:12px;color:#64748B;font-weight:500;letter-spacing:0.06em;text-transform:uppercase}
+
+.hero-right{
+  position:absolute;right:0;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:12px;
+}
+@media(max-width:900px){.hero-right{display:none}}
+.pillar-chip{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);backdrop-filter:blur(8px);
+  border-radius:10px;padding:14px 20px;min-width:240px;
+  transition:border-color 0.3s;
+}
+.pillar-chip:hover{border-color:var(--gold)}
+.pillar-chip-num{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:0.08em;margin-bottom:4px}
+.pillar-chip-name{font-size:14px;color:#F0F6FC;font-weight:600}
+.pillar-chip-desc{font-size:12px;color:#94A3B8;margin-top:2px}
+
+/* ── SECTION LAYOUTS ── */
+.section{padding:96px 40px;max-width:1100px;margin:0 auto}
+.section-sm{padding:64px 40px;max-width:1100px;margin:0 auto}
+
 .section-eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:0.12em;
+  color:var(--navy);background:var(--bg2);padding:4px 12px;border-radius:6px;
   display:inline-flex;align-items:center;gap:10px;
-  font-size:12px;font-weight:600;letter-spacing:0.1em;
-  color:var(--gold);margin-bottom:28px;
+  margin-bottom:16px;text-transform:uppercase;
 }
-.section-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.section-eyebrow::before{content:'';width:24px;height:1px;background:var(--gold)}
 .section-title{
-  font-family:var(--serif);font-size:clamp(32px,4vw,48px);
-  line-height:1.1;font-weight:700;margin-bottom:20px;max-width:800px;
+  font-family:var(--serif);font-size:32px;
+  line-height:1.15;font-weight:700;margin-bottom:20px;color:var(--navy);
 }
-.section-title em{font-style:italic;color:var(--gold)}
-.section-body{
-  font-size:16px;color:var(--muted);line-height:1.8;max-width:700px;
-  margin-bottom:40px;
-}
+.section-title em{font-style:normal;font-weight:700;color:var(--gold)}
+.section-body{font-size:16px;color:var(--off);line-height:1.75;max-width:640px;font-weight:400}
 
-/* ── TIMELINE ── */
-.timeline{display:flex;flex-direction:column;gap:48px;margin-top:60px}
+.divider{height:1px;background:var(--rule);margin:0}
+
+/* ── PROBLEM SECTION ── */
+.problem-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:2px;
+  margin-top:56px;border:1px solid var(--rule);border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+@media(max-width:700px){.problem-grid{grid-template-columns:1fr}}
+.problem-item{
+  background:var(--bg2);padding:36px;
+  border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  transition:background 0.2s;
+}
+.problem-item:hover{background:var(--bg3)}
+.problem-item:nth-child(2n){border-right:none}
+.problem-item:nth-last-child(-n+2){border-bottom:none}
+.problem-icon{font-size:28px;margin-bottom:16px}
+.problem-label{font-size:10px;color:#94A3B8;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;margin-top:12px}
+.problem-text{font-size:18px;color:var(--navy);font-weight:700;line-height:1.3;margin-bottom:10px}
+.problem-sub{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* ── PILLARS ── */
+.pillars-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;margin-top:56px;
+}
+@media(max-width:900px){.pillars-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.pillars-grid{grid-template-columns:1fr}}
+.pillar-card{
+  background:var(--bg2);border:1px solid var(--rule);border-radius:14px;box-shadow:none;
+  padding:28px 22px;transition:all 0.3s;position:relative;overflow:hidden;
+}
+.pillar-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--c,var(--gold));
+}
+.pillar-card:hover{border-color:var(--c,var(--gold));transform:translateY(-3px)}
+.pillar-card-num{
+  font-family:var(--serif);font-size:13px;color:var(--c,var(--gold));
+  font-weight:600;letter-spacing:0.06em;margin-bottom:12px;
+}
+.pillar-card-name{font-size:18px;font-weight:600;color:var(--navy);margin-bottom:8px;line-height:1.3}
+.pillar-card-desc{font-size:13px;color:var(--muted);line-height:1.65}
+
+/* ── SERVICES ── */
+.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
+@media(max-width:700px){.services-grid{grid-template-columns:1fr}}
+.service-card{
+  background:var(--bg);border:1px solid var(--rule);border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,0.12);
+  overflow:hidden;transition:border-color 0.3s;
+}
+.service-card:hover{border-color:var(--gold)}
+.service-header{padding:32px;border-bottom:1px solid var(--rule);border-left:4px solid var(--gold);background:var(--bg);border-radius:0}
+.service-tag{
+  font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--gold);
+  margin-bottom:14px;text-transform:uppercase;
+}
+.service-name{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--navy);margin-bottom:10px;line-height:1.2}
+.service-desc{font-size:15px;color:var(--muted);line-height:1.65}
+.service-price{
+  font-family:var(--serif);font-size:36px;color:var(--navy);
+  margin-top:20px;line-height:1;
+}
+.service-price span{font-family:var(--sans);font-size:14px;color:var(--muted);font-weight:400}
+.service-body{padding:32px}
+.service-feature{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:10px 0;border-bottom:1px solid var(--rule);font-size:14px;color:var(--muted);line-height:1.5;
+}
+.service-feature:last-child{border-bottom:none;padding-bottom:0}
+.service-feature::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:7px}
+
+/* ── TOOLS ── */
+.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+@media(max-width:800px){.tools-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.tools-grid{grid-template-columns:1fr}}
+.tool-card{
+  background:var(--bg);border:1px solid var(--rule);border-left:4px solid var(--c,var(--teal));border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  padding:28px 28px 28px 24px;transition:all 0.3s;text-decoration:none;display:block;
+  position:relative;overflow:hidden;
+}
+.tool-card::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:var(--c,var(--teal));transition:height 0.3s;
+}
+.tool-card:hover{border-color:var(--c,var(--teal));transform:translateY(-2px);background:var(--bg2)}
+.tool-card:hover::before{height:100%;opacity:0.04}
+.tool-num{
+  font-size:12px;font-weight:600;letter-spacing:0.1em;
+  color:var(--c,var(--teal));margin-bottom:12px;
+}
+.tool-name{font-size:18px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.tool-role{font-size:16px;color:var(--navy);font-weight:700;margin-bottom:14px;line-height:1.4}
+.tool-specs{font-size:12px;color:var(--muted);margin-top:12px;padding-top:12px;border-top:1px solid var(--rule)}
+.tool-desc{font-size:14px;color:var(--off);line-height:1.7}
+.tool-arrow{
+  position:absolute;bottom:20px;right:20px;
+  font-size:16px;color:var(--muted);opacity:0.5;transition:all 0.2s;
+  font-weight:600;
+}
+.tool-card:hover .tool-arrow{opacity:1;color:var(--c,var(--teal))}
+
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:80px;align-items:start;margin-top:56px}
+@media(max-width:800px){.about-grid{grid-template-columns:1fr}}
+.about-portrait{
+  background:var(--navy);border:1px solid var(--rule2);border-radius:16px;
+  aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px;text-align:center;position:relative;overflow:hidden;
+}
+.about-portrait::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 30%, rgba(201,168,76,0.08) 0%, transparent 70%);
+}
+.about-initials{
+  font-family:var(--serif);font-size:72px;font-weight:700;color:var(--gold);
+  line-height:1;margin-bottom:16px;position:relative;
+}
+.about-name{font-size:18px;font-weight:600;color:#F0F6FC;margin-bottom:6px}
+.about-title{font-size:13px;color:var(--gold);font-weight:500;letter-spacing:0.06em}
+.about-cert{
+  margin-top:24px;padding:12px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);
+  border-radius:8px;font-size:12px;color:var(--off);position:relative;
+}
+.about-cert strong{color:#F0F6FC;display:block;margin-bottom:2px}
+.about-markets{
+  display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;position:relative;
+}
+.about-market-tag{
+  font-size:11px;color:#94A3B8;background:rgba(255,255,255,0.06);
+  padding:5px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);
+}
+.about-content{}
+.about-lead{
+  font-family:var(--serif);font-size:26px;color:var(--navy);line-height:1.4;
+  margin-bottom:28px;font-weight:400;
+}
+.about-lead em{font-style:italic;color:var(--gold)}
+.about-body{font-size:16px;color:var(--muted);line-height:1.8;margin-bottom:20px;font-weight:400}
+.about-timeline{margin-top:40px;display:flex;flex-direction:column;gap:0}
 .timeline-item{
-  display:grid;grid-template-columns:120px 1fr;gap:40px;
-  padding-bottom:48px;border-bottom:1px solid var(--rule);
+  display:flex;gap:24px;padding:20px 0;border-bottom:1px solid var(--rule);
 }
-.timeline-item:last-child{border-bottom:none}
-.timeline-year{
-  font-family:var(--serif);font-size:32px;font-weight:700;
-  color:var(--gold);line-height:1;
-}
-.timeline-content h3{
-  font-size:20px;font-weight:700;color:var(--navy);margin-bottom:12px;
-  font-family:var(--serif);
-}
-.timeline-content p{
-  font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:16px;
-}
-.timeline-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--bg2);border:1px solid var(--rule);border-radius:6px;
-  padding:8px 14px;font-size:12px;font-weight:600;color:var(--navy);
-  margin-top:8px;
-}
+.timeline-item:last-child{border-bottom:none;padding-bottom:0}
+.timeline-year{font-size:12px;font-weight:600;color:var(--gold);width:80px;flex-shrink:0;padding-top:3px;letter-spacing:0.06em}
+.timeline-text{font-size:15px;color:var(--muted);line-height:1.6}
+.timeline-text strong{color:var(--navy);display:block;margin-bottom:3px}
 
-/* ── LEARNED GRID ── */
-.learned-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-top:60px;
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:56px;align-items:start}
+@media(max-width:700px){.contact-grid{grid-template-columns:1fr}}
+.contact-info{}
+.contact-info-item{
+  display:flex;flex-direction:column;gap:4px;
+  padding:24px 0;border-bottom:1px solid var(--rule);
 }
-.learned-card{
-  background:var(--bg2);border:1px solid var(--rule);border-radius:12px;padding:32px;
+.contact-info-item:last-child{border-bottom:none}
+.contact-info-label{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:0.1em;text-transform:uppercase}
+.contact-info-val{font-size:17px;color:var(--navy);font-weight:600}
+.contact-info-sub{font-size:13px;color:var(--off);margin-top:2px}
+.contact-form{background:var(--bg2);border:1px solid var(--rule);border-radius:16px;padding:36px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.form-group{margin-bottom:20px}
+.form-label{font-size:12px;font-weight:600;color:var(--off);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:8px}
+.form-input,.form-select,.form-textarea{
+  width:100%;background:var(--bg);border:1px solid var(--rule);border-radius:8px;
+  padding:12px 14px;font-family:var(--sans);font-size:14px;color:var(--navy);
+  outline:none;transition:border-color 0.2s;
 }
-.learned-card h3{
-  font-size:18px;font-weight:700;color:var(--navy);margin-bottom:12px;
-  font-family:var(--serif);
-}
-.learned-card p{
-  font-size:14px;color:var(--muted);line-height:1.7;
-}
-.learned-card .label{
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:11px;font-weight:700;letter-spacing:0.08em;
-  color:var(--gold);margin-top:16px;
-}
+.form-input::placeholder,.form-textarea::placeholder{color:#94A3B8}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold)}
+.form-textarea{min-height:100px;resize:vertical;line-height:1.6}
+.form-select option{background:var(--bg2);color:var(--navy)}
 
 /* ── CTA BAND ── */
 .cta-band{
-  background:var(--navy);padding:80px 40px;margin-top:0;text-align:center;
+  background:var(--navy);border-top:none;border-bottom:none;
+  padding:72px 40px;text-align:center;
 }
-.cta-band-inner{max-width:600px;margin:0 auto}
-.cta-band h2{
-  font-family:var(--serif);font-size:clamp(32px,4vw,48px);
-  color:#F0F6FC;line-height:1.2;margin-bottom:20px;
-}
-.cta-band p{
-  font-size:16px;color:#94A3B8;line-height:1.8;margin-bottom:32px;
-}
+.cta-band-inner{max-width:640px;margin:0 auto}
+.cta-band h2{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:700;margin-bottom:16px;line-height:1.2;color:#F0F6FC}
+.cta-band p{font-size:18px;color:#94A3B8;margin-bottom:36px;line-height:1.65;font-weight:300}
 
 /* ── FOOTER ── */
 footer{
-  background:var(--navy);border-top:1px solid var(--rule);
-  padding:40px;text-align:center;color:#94A3B8;
+  padding:48px 40px 32px;
+  border-top:1px solid var(--rule);background:var(--navy);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;
 }
-.footer-brand{font-family:var(--serif);font-size:14px;font-weight:600;color:#F0F6FC;margin-bottom:4px}
+.footer-brand{font-family:var(--serif);font-size:15px;color:#F0F6FC}
 .footer-brand span{color:var(--gold)}
-.footer-catch{font-size:12px;color:var(--muted);margin-bottom:16px}
-.footer-links{display:flex;align-items:center;justify-content:center;gap:24px;font-size:13px}
-.footer-link{color:#94A3B8;text-decoration:none;transition:color 0.2s}
+.footer-catch{font-size:13px;color:#64748B;font-style:italic}
+.footer-links{display:flex;gap:20px}
+.footer-link{font-size:13px;color:var(--off);text-decoration:none;transition:color 0.2s}
 .footer-link:hover{color:var(--gold)}
 
-@media(max-width:640px){
-  .timeline-item{grid-template-columns:1fr;gap:16px}
-  .learned-grid{grid-template-columns:1fr}
+/* ── BOOK TEASER ── */
+.book-band{
+  background:var(--navy);
+  border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:48px;
+  display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;
+  margin-top:56px;position:relative;overflow:hidden;
+}
+@media(max-width:600px){.book-band{grid-template-columns:1fr}}
+.book-band::before{
+  content:'';position:absolute;right:-40px;top:-40px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+}
+.book-eyebrow{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:0.12em;margin-bottom:12px}
+.book-title{font-family:var(--serif);font-size:28px;font-weight:700;color:#F0F6FC;margin-bottom:8px;line-height:1.2}
+.book-subtitle{font-size:15px;color:var(--gold);font-weight:500;margin-bottom:16px}
+.book-desc{font-size:14px;color:#94A3B8;line-height:1.65}
+.book-cover{
+  width:120px;height:160px;background:var(--navy2);
+  border:1px solid var(--gold);border-radius:4px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:16px;text-align:center;flex-shrink:0;
+}
+.book-cover-title{font-family:var(--serif);font-size:12px;color:#F0F6FC;line-height:1.4;margin-bottom:8px}
+.book-cover-author{font-size:10px;color:var(--gold)}
+.book-cover-line{width:40px;height:1px;background:var(--gold);margin:8px auto}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp 0.6s ease both}
+.fade-up-1{animation-delay:0.1s}
+.fade-up-2{animation-delay:0.2s}
+.fade-up-3{animation-delay:0.3s}
+.fade-up-4{animation-delay:0.4s}
+
+
+button:focus,a:focus{outline:2px solid var(--gold);outline-offset:2px}
+.btn-primary:focus{outline:2px solid var(--navy);outline-offset:2px}
+.nav-link:focus{outline:2px solid var(--gold);outline-offset:2px}
+/* ── RESPONSIVE ── */
+@media(max-width:800px){
+  .tools-grid{grid-template-columns:1fr 1fr}
+  .pillars-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+  .about-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+}
+@media(max-width:700px){
   nav{padding:0 20px}
-  .section{padding:60px 20px}
+  .hero{padding:60px 20px}
+  .section,.section-sm{padding:64px 20px}
+  footer{padding:40px 20px 24px}
+  .cta-band{padding:56px 20px}
+  .contact-form{padding:24px}
+  .about-portrait{aspect-ratio:auto;padding:32px}
+  .hero-actions{flex-direction:column;align-items:flex-start}
+  .hero-stat-row{gap:28px}
+}
+@media(max-width:480px){
+  .tools-grid{grid-template-columns:1fr}
+  .hero-stat-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 }
 </style>
+
+
 </head>
 <body>
-
 <nav>
-  <a href="/" class="nav-brand"><div class="nav-logo">SDR</div> <span>OS</span></a>
+  <a class="nav-brand" href="/" style="color:#F0F6FC;text-decoration:none;display:flex;align-items:center;gap:0">
+    <span style="font-family:'Lora',Georgia,serif;font-size:17px;font-weight:700;letter-spacing:-0.01em;color:#F0F6FC">SDR <span style="color:var(--gold)">OS</span></span>
+    <span style="width:1px;height:18px;background:rgba(255,255,255,0.2);margin:0 14px;display:inline-block"></span>
+    <span style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:400;color:#94A3B8;letter-spacing:0.01em">The SDR Operating System</span>
+  </a>
   <div class="nav-links">
-    <a href="/" class="nav-link">Home</a>
-    <a href="/about" class="nav-link active">About</a>
-    <a href="/case-studies" class="nav-link">Case Studies</a>
-    <a href="/services" class="nav-link">Services</a>
-    <a href="https://wilberforcemoyo.github.io/sdr-tools/" target="_blank" class="nav-link">Tools</a>
-    <button class="nav-cta" onclick="location.href='/contact'">Talk to us</button>
+    <a class="nav-link" href="/">Home</a>
+    <a class="nav-link active" href="/about.html">About</a>
+    <a class="nav-link" href="/services.html">Services</a>
+    <a class="nav-link" href="/tools.html">Tools</a>
+    <a class="nav-link" href="/case-studies.html">Case Studies</a>
+    <a class="nav-link" href="/contact.html">Contact</a>
+    <a class="nav-cta" href="/tools.html">Run Diagnostic →</a>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">About Wilberforce Moyo</div>
-    <h1>15 years. 3 eras. <em>One system.</em></h1>
-    <p class="hero-sub">
-      I've led SDR teams from the pre-tools era through today's AI disruption. What I've learned isn't in playbooks. It's in the SDR Operating System.
+<!-- HERO BAND -->
+<div style="background:var(--navy);padding:96px 40px 72px;margin-top:68px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-eyebrow" style="color:var(--gold);background:rgba(201,168,76,0.12);margin-bottom:20px">About</div>
+    <h1 style="font-family:var(--serif);font-size:clamp(34px,5vw,52px);color:#F0F6FC;font-weight:700;margin-bottom:20px;line-height:1.1">
+      The SDR Operating System —<br>
+      <em style="font-style:italic;color:var(--gold)">what it is and who built it</em>
+    </h1>
+    <p style="font-size:18px;color:#94A3B8;max-width:640px;line-height:1.75;font-weight:300">
+      Most outbound operations are built around people, not systems. The SDR Operating System was built to fix that — permanently.
     </p>
   </div>
 </div>
 
-<!-- THE JOURNEY -->
-<div class="section">
-  <div class="section-eyebrow">The journey</div>
-  <h2 class="section-title">How I learned what <em>actually</em> matters</h2>
-  <p class="section-body">
-    Most consultants read case studies. I lived them. Across three distinct eras of outbound sales, I made every mistake in the book—and learned what separates teams that scale from teams that plateau.
-  </p>
+<!-- MAIN CONTENT -->
+<div style="max-width:1100px;margin:0 auto;padding:80px 40px">
 
-  <div class="timeline">
-    <!-- Era 1 -->
-    <div class="timeline-item">
-      <div class="timeline-year">Era 1<br>2009-2014</div>
-      <div class="timeline-content">
-        <h3>The Pre-Tools Era</h3>
-        <p>
-          I started here. No email sequences. No CRM. No intent data. Just phones, spreadsheets, and hustle. I learned the hard way that volume without system doesn't scale. I built my first SDR team by hiring for activity—people who could work 80+ calls a day. It worked until the people changed. Then everything broke.
-        </p>
-        <p>
-          <strong>Lesson:</strong> Systems must survive without the people. If your best rep leaving tanks your pipeline, you don't have a system. You have a person.
-        </p>
-        <div class="timeline-badge">📞 Cold calling era</div>
-      </div>
-    </div>
-
-    <!-- Era 2 -->
-    <div class="timeline-item">
-      <div class="timeline-year">Era 2<br>2014-2019</div>
-      <div class="timeline-content">
-        <h3>The Tools Era</h3>
-        <p>
-          I ran sales operations for a scaling B2B SaaS company. CRM. Email sequences. Intent data. LinkedIn outreach. Suddenly, we had visibility into *what* was working. But I watched teams treat tools like productivity hacks instead of system architecture. They'd implement a CRM but still hire for activity. They'd install sequences but still pay for meetings booked, not qualified opportunities.
-        </p>
-        <p>
-          I realized: Tools don't fix broken systems. Broken hiring + wrong compensation + no operating rhythm still fail—just with better visibility into the failure.
-        </p>
-        <div class="timeline-badge">⚙️ Automation era</div>
-      </div>
-    </div>
-
-    <!-- Era 3 -->
-    <div class="timeline-item">
-      <div class="timeline-year">Era 3<br>2019-Present</div>
-      <div class="timeline-content">
-        <h3>The AI Era</h3>
-        <p>
-          I watched AI change what SDRs actually do. Volume-based prospecting became a $20/month tool. The work that used to be 50% activity became 20% activity, 80% judgment. Teams that understood this thrived. Teams still optimizing for activity started losing people and pipeline quality.
-        </p>
-        <p>
-          I recognized the pattern: The same teams that struggled in Era 1 were struggling now—because they never learned to build systems instead of hiring superstars.
-        </p>
-        <div class="timeline-badge">🤖 Judgment-first era</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- WHAT I LEARNED -->
-<div class="section" style="background:var(--bg2)">
-  <div class="section-eyebrow">Core realizations</div>
-  <h2 class="section-title">What 15 years taught me</h2>
-  
-  <div class="learned-grid">
-    <div class="learned-card">
-      <h3>Hiring is systems design.</h3>
-      <p>
-        The problem isn't finding people. It's that you're hiring for the wrong thing. Teams optimize for activity-focused hires because they're easy to motivate short-term. But they can't scale. I learned to build profiles for judgment instead—people who care about signal, not volume.
-      </p>
-      <div class="label">💡 Pattern across all 3 eras</div>
-    </div>
-
-    <div class="learned-card">
-      <h3>Compensation is your operating system's backbone.</h3>
-      <p>
-        You can't build a quality-focused system on activity-based pay. It's like building a house on sand. Teams I've led that shifted from "pay per meeting" to "pay per qualified outcome" didn't just improve metrics—they became sustainable. People stopped burning out.
-      </p>
-      <div class="label">💡 Most underrated lever</div>
-    </div>
-
-    <div class="learned-card">
-      <h3>Operating rhythm catches problems before they compound.</h3>
-      <p>
-        Most teams diagnose problems at the quarterly forecast. By then, three weeks of bad pipeline are already in motion. I built a five-day diagnostic rhythm that catches breaks on Monday, not Friday. This single change reduced variance more than anything else.
-      </p>
-      <div class="label">💡 Prevention over cure</div>
-    </div>
-
-    <div class="learned-card">
-      <h3>Signal detection is where systems fail.</h3>
-      <p>
-        Teams have data but no dashboard. They know something is wrong but can't point to it. I learned to track four leading indicators—the early warning signals that tell you what's actually broken. Not activity metrics. Real pipeline signals.
-      </p>
-      <div class="label">💡 The hidden layer</div>
-    </div>
-
-    <div class="learned-card">
-      <h3>Targeting is the first filter.</h3>
-      <p>
-        Bad ICP kills everything downstream. Even with perfect gatekeeper logic and great SDRs, if you're prospecting the wrong accounts, you're shipping junk pipeline to AEs. I built frameworks to audit and fix ICP at scale.
-      </p>
-      <div class="label">💡 Fixes 30% of broken pipelines</div>
-    </div>
-
-    <div class="learned-card">
-      <h3>Consistency is harder than you think.</h3>
-      <p>
-        Sales leaders want reps to be free agents. But best practice SDR teams have a standard—the same steps, every rep, every time. When new reps can copy the playbook instead of inventing their own, quality becomes reproducible.
-      </p>
-      <div class="label">💡 The execution layer</div>
-    </div>
-  </div>
-</div>
-
-<!-- WHY THE SDR OS -->
-<div class="section">
-  <div class="section-eyebrow">Why I built this</div>
-  <h2 class="section-title">The problem I kept seeing</h2>
-  <p class="section-body">
-    By 2023, I'd seen the same pattern a hundred times:
-  </p>
-
-  <div style="background:var(--bg2);border-left:4px solid var(--gold);border-radius:8px;padding:32px;margin-top:40px">
-    <p style="font-size:16px;color:var(--navy);line-height:1.8;margin:0">
-      <strong>CEO/VP:</strong> "Our pipeline is unpredictable. One strong rep leaves and we crater. Our AEs are drowning in bad meetings. We've tried five tools. Nothing sticks."
+  <!-- SECTION 1: What is the SDR OS -->
+  <div style="max-width:760px;margin-bottom:64px">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:var(--gold);margin-bottom:16px;text-transform:uppercase">What is the SDR Operating System</div>
+    <p style="font-size:17px;color:var(--off);line-height:1.85;margin-bottom:20px">
+      The SDR Operating System is a five-pillar diagnostic framework that installs the operating model your SDR team runs on — regardless of who is in the seat. It is not a playbook. It is not a training programme. It is an operating system — designed to run whether you are in the room or not.
     </p>
-    <p style="font-size:16px;color:var(--navy);line-height:1.8;margin-top:16px;margin-bottom:0">
-      <strong>What they actually had:</strong> No hiring architecture. Activity-based pay. No diagnostic rhythm. No signal detection. Five random tools trying to patch a broken operating model.
+    <p style="font-size:17px;color:var(--off);line-height:1.85;margin-bottom:20px">
+      Each pillar addresses a specific failure mode in outbound operations: how accounts are targeted, how they are filtered before entering sequences, how reps execute against a standard, how the week is diagnosed before problems compound, and how four leading signals are monitored to catch variance early.
+    </p>
+    <p style="font-size:17px;color:var(--off);line-height:1.85">
+      When all five pillars are installed, the team produces consistent pipeline. When one is missing, the system shows exactly which one — and what it is costing.
     </p>
   </div>
 
-  <p class="section-body" style="margin-top:40px">
-    I realized: They don't need another playbook. They need to think about their SDR team like they think about engineering. As an operating system, not a cost center.
-  </p>
-  <p class="section-body">
-    So I built one. The SDR OS is based on three core principles:
-  </p>
+  <div style="height:1px;background:var(--rule);margin-bottom:64px"></div>
 
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px">
-    <div style="background:var(--navy);border-radius:12px;padding:28px;color:#F0F6FC">
-      <div style="font-size:28px;font-weight:700;font-family:var(--serif);color:var(--gold);margin-bottom:12px">01</div>
-      <div style="font-size:16px;font-weight:700;margin-bottom:8px">People architecture matters more than process.</div>
-      <div style="font-size:14px;color:#94A3B8;line-height:1.6">Who you hire and how you pay them determines whether your system works or fails.</div>
-    </div>
+  <!-- SECTION 2: The five pillars — clean list -->
+  <div style="margin-bottom:64px">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:var(--gold);margin-bottom:24px;text-transform:uppercase">The five pillars</div>
+    <div style="display:flex;flex-direction:column;gap:0">
 
-    <div style="background:var(--navy);border-radius:12px;padding:28px;color:#F0F6FC">
-      <div style="font-size:28px;font-weight:700;font-family:var(--serif);color:var(--gold);margin-bottom:12px">02</div>
-      <div style="font-size:16px;font-weight:700;margin-bottom:8px">Operating rhythm prevents crisis management.</div>
-      <div style="font-size:14px;color:#94A3B8;line-height:1.6">You can't fix variance at the forecast. You diagnose it at Monday. Early detection beats late treatment.</div>
-    </div>
+      <div style="display:flex;align-items:flex-start;gap:24px;padding:20px 0;border-bottom:1px solid var(--rule)">
+        <div style="font-size:13px;font-weight:700;color:var(--gold);width:28px;flex-shrink:0;padding-top:2px">01</div>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:4px">The Targeting Engine</div>
+          <div style="font-size:14px;color:var(--muted)">ICP definition, account sourcing, ABM intent layer, tech stack readiness, rep onboarding standard. The foundation before sequences run.</div>
+        </div>
+      </div>
 
-    <div style="background:var(--navy);border-radius:12px;padding:28px;color:#F0F6FC">
-      <div style="font-size:28px;font-weight:700;font-family:var(--serif);color:var(--gold);margin-bottom:12px">03</div>
-      <div style="font-size:16px;font-weight:700;margin-bottom:8px">Systems survive people changes.</div>
-      <div style="font-size:14px;color:#94A3B8;line-height:1.6">If your pipeline depends on one person, you don't have a system. You have a liability.</div>
-    </div>
-  </div>
-</div>
+      <div style="display:flex;align-items:flex-start;gap:24px;padding:20px 0;border-bottom:1px solid var(--rule)">
+        <div style="font-size:13px;font-weight:700;color:var(--gold);width:28px;flex-shrink:0;padding-top:2px">02</div>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:4px">The Gatekeeper</div>
+          <div style="font-size:14px;color:var(--muted)">Two verified filters every account clears before entering a sequence — Problem Likelihood and Role Accessibility. No manual override.</div>
+        </div>
+      </div>
 
-<!-- MY PERSPECTIVE ON THE FUTURE -->
-<div class="section" style="background:var(--bg2)">
-  <div class="section-eyebrow">Looking forward</div>
-  <h2 class="section-title">What's coming next</h2>
-  <p class="section-body">
-    AI will keep changing the work SDRs do. But the fundamentals won't change:
-  </p>
+      <div style="display:flex;align-items:flex-start;gap:24px;padding:20px 0;border-bottom:1px solid var(--rule)">
+        <div style="font-size:13px;font-weight:700;color:var(--gold);width:28px;flex-shrink:0;padding-top:2px">03</div>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:4px">The Consistency Layer</div>
+          <div style="font-size:14px;color:var(--muted)">Same steps, every rep, every time. The execution standard reps are scored against weekly. When multiple reps fail the same step — the step is broken, not the rep.</div>
+        </div>
+      </div>
 
-  <ul style="font-size:15px;color:var(--muted);line-height:2;max-width:700px;list-style:none;margin-top:32px">
-    <li style="display:flex;gap:12px;align-items:flex-start;margin-bottom:20px">
-      <span style="color:var(--gold);font-weight:700;flex-shrink:0">→</span>
-      <span><strong style="color:var(--navy)">Hiring will become more selective.</strong> As AI handles volume, judgment-based hiring becomes critical. The teams that build great hiring profiles will have unfair advantages.</span>
-    </li>
-    <li style="display:flex;gap:12px;align-items:flex-start;margin-bottom:20px">
-      <span style="color:var(--gold);font-weight:700;flex-shrink:0">→</span>
-      <span><strong style="color:var(--navy)">Compensation will shift to outcomes.</strong> You can't pay people for work AI does better. You'll pay them for judgment, relationships, and pipeline quality.</span>
-    </li>
-    <li style="display:flex;gap:12px;align-items:flex-start;margin-bottom:20px">
-      <span style="color:var(--gold);font-weight:700;flex-shrink:0">→</span>
-      <span><strong style="color:var(--navy)">Diagnostic rhythm becomes non-negotiable.</strong> With market changes accelerating, the teams that adapt fastest will win. That requires early signal detection.</span>
-    </li>
-  </ul>
-</div>
+      <div style="display:flex;align-items:flex-start;gap:24px;padding:20px 0;border-bottom:1px solid var(--rule)">
+        <div style="font-size:13px;font-weight:700;color:var(--gold);width:28px;flex-shrink:0;padding-top:2px">04</div>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:4px">The Diagnostic Cadence</div>
+          <div style="font-size:14px;color:var(--muted)">A five-day diagnostic rhythm. Monday through Friday. Problems caught at the start of the week — not at the Friday forecast.</div>
+        </div>
+      </div>
 
-<!-- CTA -->
-<div class="cta-band">
-  <div class="cta-band-inner">
-    <h2>Ready to audit your operating system?</h2>
-    <p>Run the free diagnostic first. Twenty minutes. No sign-up. You'll see exactly which pillars need work — and whether the problem is in your people architecture or your operating model.</p>
-    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:32px">
-      <a href="https://wilberforcemoyo.github.io/sdr-tools/audit.html" target="_blank" class="nav-cta" style="background:var(--gold);color:var(--navy);text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:600">Run the free diagnostic →</a>
-      <button class="btn-ghost" onclick="location.href='/contact'" style="color:#F0F6FC;border-color:#F0F6FC;padding:14px 28px;border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;background:transparent">Schedule a call</button>
+      <div style="display:flex;align-items:flex-start;gap:24px;padding:20px 0">
+        <div style="font-size:13px;font-weight:700;color:var(--gold);width:28px;flex-shrink:0;padding-top:2px">05</div>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:4px">The Signal Tower</div>
+          <div style="font-size:14px;color:var(--muted)">Four leading indicators reviewed weekly — Re-Entry Rate, Abandonment Rate, Composition Score, Meeting-to-Opportunity Rate. The early warning layer that catches variance before it reaches the forecast.</div>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <div style="height:1px;background:var(--rule);margin-bottom:64px"></div>
+
+  <!-- SECTION 3: Who built it — Wilberforce -->
+  <div style="margin-bottom:64px">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:var(--gold);margin-bottom:24px;text-transform:uppercase">Who built it</div>
+    <div style="max-width:760px;margin-bottom:40px">
+      <p style="font-size:17px;color:var(--off);line-height:1.85;margin-bottom:20px">
+        Wilberforce Moyo is an Outbound Systems Engineer with 18 years of B2B SaaS experience running, building, and diagnosing SDR operations across the US, UK, and South Africa. He has led SDR teams across SalesTech, PropTech, FinTech, and HR Tech — owning hiring, onboarding, KPI design, and pipeline targets at each stage.
+      </p>
+      <p style="font-size:17px;color:var(--off);line-height:1.85">
+        The SDR Operating System was built from the patterns he observed across dozens of teams — the same failure modes appearing regardless of the tech stack, the market, or the headcount. The framework is the distilled answer to one question: what does a team need installed so the pipeline does not depend on any one person?
+      </p>
+    </div>
+
+    <!-- Credentials grid — clean white cards -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:#FFFFFF;border:1px solid var(--rule);border-radius:12px;padding:28px">
+        <div style="font-size:28px;font-weight:700;font-family:var(--serif);color:var(--navy);margin-bottom:6px">18 yrs</div>
+        <div style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px">SDR Operations Experience</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.65">Built and led SDR teams across multiple B2B SaaS verticals in the US, UK, and South Africa. Owned hiring, onboarding, KPI design, and pipeline targets.</div>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid var(--rule);border-radius:12px;padding:28px">
+        <div style="font-size:28px;font-weight:700;font-family:var(--serif);color:var(--navy);margin-bottom:6px">3 markets</div>
+        <div style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px">US · UK · South Africa</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.65">Deep multi-market experience across enterprise, mid-market, and scaling teams. Seed to Series B B2B SaaS environments.</div>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid var(--rule);border-radius:12px;padding:28px">
+        <div style="font-size:28px;font-weight:700;font-family:var(--serif);color:var(--navy);margin-bottom:6px">5</div>
+        <div style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px">Active Certifications</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.65">Demandbase ABM Certified · HubSpot Sales Management · HubSpot Sales Enablement · HubSpot Revenue Operations · HubSpot Sales Hub Software.</div>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid var(--rule);border-radius:12px;padding:28px">
+        <div style="font-size:28px;font-weight:700;font-family:var(--serif);color:var(--navy);margin-bottom:6px">Hands-on</div>
+        <div style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px">Installed in live SDR teams</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.65">Every pillar has been run, tested, and refined inside real SDR teams before it was built into the framework. This is operational experience — not theory.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:1px;background:var(--rule);margin-bottom:64px"></div>
+
+  <!-- SECTION 4: Closing statement — the engineer framing -->
+  <div style="max-width:760px">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:var(--gold);margin-bottom:20px;text-transform:uppercase">The approach</div>
+    <p style="font-family:var(--serif);font-size:24px;color:var(--navy);line-height:1.5;margin-bottom:24px;font-weight:600">
+      I do not manage SDR teams.<br>I build the system they run on.
+    </p>
+    <p style="font-size:17px;color:var(--off);line-height:1.85;margin-bottom:20px">
+      The difference between a practitioner and an engineer is what they leave behind. A practitioner leaves experience. An engineer leaves a system.
+    </p>
+    <p style="font-size:17px;color:var(--off);line-height:1.85;margin-bottom:36px">
+      The SDR Operating System is designed to run without me in the room — a five-pillar diagnostic framework installed inside your HubSpot, with thresholds, alerts, and a weekly operating cadence your team owns permanently.
+    </p>
+    <a href="/services.html" class="btn-primary" style="text-decoration:none;display:inline-block">View services &amp; pricing →</a>
+  </div>
+
 </div>
 
 <footer>
@@ -430,10 +611,12 @@ footer{
   <div class="footer-catch">Reducing Variance. Increasing Predictability.</div>
   <div class="footer-links">
     <a class="footer-link" href="https://linkedin.com/in/wilberforce-moyo-236543256" target="_blank">LinkedIn</a>
-    <a class="footer-link" href="https://wilberforcemoyo.github.io/sdr-tools/">Free Tools</a>
-    <a class="footer-link" href="/services">Services</a>
+    <a class="footer-link" href="/tools.html">Free Tools</a>
+    <a class="footer-link" href="/services.html">Services</a>
+    <a class="footer-link" href="/about.html">About</a>
+    <a class="footer-link" href="/case-studies.html">Case Studies</a>
+    <a class="footer-link" href="/faq.html">FAQ</a>
   </div>
 </footer>
-
 </body>
 </html>
